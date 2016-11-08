@@ -1,0 +1,40 @@
+//
+//  LTLPrefixHeader.pch
+//  音乐播放器
+//
+//  Created by LiTaiLiang on 16/10/31.
+//  Copyright © 2016年 LiTaiLiang. All rights reserved.
+//
+
+#ifndef LTLPrefixHeader_pch
+#define LTLPrefixHeader_pch
+//用于存放全局宏定义 或者 静态字符串
+#import "LTLConstants.h"
+//网络请求类
+#import "LTLNetworkRequest.h"
+///播放器
+#import "LTLPlayManager.h"
+//为系统类写的分类
+#import "UIView+LTLView.h"
+#import "UIView+LTLAnimations.h"
+#import "NSDate+LTLNSDate.h"
+//喜马拉雅 SDK
+#import "XMSDK.h"
+//为喜马拉雅 SDK 的模型数据添加分类 因为 SDK.M 文件不开放
+#import "XMAlbum+LTLXMAlbum.h"
+#import "XMTrack+LTLXMTrack.h"
+///手势抽屉效果控件
+#import "MMDrawerController.h"
+#import "MMExampleDrawerVisualStateManager.h"
+#import "UIViewController+MMDrawerController.h"
+#import "MJExtension.h"
+///SDImage 框架
+#import "UIImageView+WebCache.h"
+#import "UIButton+WebCache.h"
+//布局框架
+#import "Masonry.h"
+
+// Include any system framework and library headers here that should be included in all compilation units.
+// You will also need to set the Prefix Header build setting of one or more of your targets to reference this file.
+
+#endif /* LTLPrefixHeader_pch */
