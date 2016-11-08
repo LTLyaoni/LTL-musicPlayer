@@ -31,8 +31,6 @@
 @property (nonatomic) BOOL isFinishLoad; //是否下载完毕
 
 @property (nonatomic, strong) NSMutableDictionary *soundIDs;//音效
-///当前正在播放的
-@property (nonatomic,strong) XMTrack *tracksVM;
 ///当前播放下标
 @property (nonatomic,assign) NSInteger indexPathRow;
 ///列表总数
@@ -158,11 +156,7 @@ static LTLPlayManager *_instance = nil;
 }
 
 #pragma mark - 返回数据
-///返回当前播放的歌
--(XMTrack *)currentTrack
-{
-    return self.Playlist[_indexPathRow];
-}
+
 ///播放器状态
 -(AVPlayerStatus)status
 {
@@ -225,13 +219,28 @@ static LTLPlayManager *_instance = nil;
     if (!self.currentPlayerItem) {
         return;
     }
-    [self updateLockedScreenMusic];//控制中心
-    
+
     [self.currentPlayerItem addObserver:self forKeyPath:@"status" options:NSKeyValueObservingOptionNew context:nil];
     [self.currentPlayerItem addObserver:self forKeyPath:@"loadedTimeRanges" options:NSKeyValueObservingOptionNew context:nil];
     [self.currentPlayerItem addObserver:self forKeyPath:@"playbackBufferEmpty" options:NSKeyValueObservingOptionNew context:nil];
     [self.currentPlayerItem addObserver:self forKeyPath:@"playbackLikelyToKeepUp" options:NSKeyValueObservingOptionNew context:nil];
+    [self addMusicTime];
     
+}
+- (NSString *)convertTime:(NSTimeInterval)second{
+    NSDate *date = [NSDate dateWithTimeIntervalSince1970:second];
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    if (second/3600 >= 1) {
+        [dateFormatter setDateFormat:@"HH:mm:ss"];
+    } else {
+        [dateFormatter setDateFormat:@"mm:ss"];
+    }
+    NSString *showtimeNew = [dateFormatter stringFromDate:date];
+    return showtimeNew;
+}
+///进度监听
+-(void)addMusicTime
+{
     __weak typeof(self) weakSelf = self;
     _timeObserve = [self.player addPeriodicTimeObserverForInterval:CMTimeMake(1, 1) queue:NULL usingBlock:^(CMTime time) {
         
@@ -248,19 +257,8 @@ static LTLPlayManager *_instance = nil;
         }
         
     }];
-}
-- (NSString *)convertTime:(NSTimeInterval)second{
-    NSDate *date = [NSDate dateWithTimeIntervalSince1970:second];
-    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-    if (second/3600 >= 1) {
-        [dateFormatter setDateFormat:@"HH:mm:ss"];
-    } else {
-        [dateFormatter setDateFormat:@"mm:ss"];
-    }
-    NSString *showtimeNew = [dateFormatter stringFromDate:date];
-    return showtimeNew;
-}
 
+}
 ///删除音乐监听
 -(void)removeMusicMonitor
 {
@@ -269,7 +267,10 @@ static LTLPlayManager *_instance = nil;
         return;
     }
     //移除
-    [_player removeTimeObserver:_timeObserve];
+    if (_timeObserve) {
+        [_player removeTimeObserver:_timeObserve];
+    }
+    //移除
     [self.currentPlayerItem removeObserver:self forKeyPath:@"status"];
     [self.currentPlayerItem removeObserver:self forKeyPath:@"loadedTimeRanges"];
     [self.currentPlayerItem removeObserver:self forKeyPath:@"playbackBufferEmpty"];
@@ -287,16 +288,15 @@ static LTLPlayManager *_instance = nil;
         
         if ([keyPath isEqualToString:@"status"])
         {
-//            if ([playerItem status] == AVPlayerStatusReadyToPlay)
-//            {
-//                //status 点进去看 有三种状态
-//                
-//                CGFloat duration = playerItem.duration.value / playerItem.duration.timescale; //视频总时间
-//                NSLog(@"准备好播放了，总时间：%.2f", duration);//还可以获得播放的进度，这里可以给播放进度条赋值了
-//                
-//                
-//                
-//            }
+            if ([playerItem status] == AVPlayerStatusReadyToPlay)
+            {
+                //status 点进去看 有三种状态
+                
+                CGFloat duration = playerItem.duration.value / playerItem.duration.timescale; //视频总时间
+                NSLog(@"准备好播放了，总时间：%.2f", duration);//还可以获得播放的进度，这里可以给播放进度条赋值了
+                [self updateLockedScreenMusic];//控制中心
+
+            }
 //            else if ([playerItem status] == AVPlayerStatusFailed || [playerItem status] == AVPlayerStatusUnknown)
 //            {
 ////                [_player pause];
@@ -418,9 +418,9 @@ static LTLPlayManager *_instance = nil;
             _indexPathRow = _rowNumber-1;
         }
         
-        XMTrack *tracks  = self.Playlist[_indexPathRow];
+        _tracksVM  = self.Playlist[_indexPathRow];
         
-        NSURL *musicURL = [NSURL URLWithString:tracks.playUrl64];
+        NSURL *musicURL = [NSURL URLWithString:_tracksVM.playUrl64];
         _currentPlayerItem = [AVPlayerItem playerItemWithURL:musicURL];
         
         //[_player replaceCurrentItemWithPlayerItem:_currentPlayerItem];
@@ -450,9 +450,9 @@ static LTLPlayManager *_instance = nil;
             _indexPathRow = 0;
         }
         
-        XMTrack *tracks  = self.Playlist[_indexPathRow];
+        _tracksVM  = self.Playlist[_indexPathRow];
         
-        NSURL *musicURL = [NSURL URLWithString:tracks.playUrl64];
+        NSURL *musicURL = [NSURL URLWithString:_tracksVM.playUrl64];
         _currentPlayerItem = [AVPlayerItem playerItemWithURL:musicURL];
         
         _player = [[AVPlayer alloc] initWithPlayerItem:_currentPlayerItem];
@@ -479,9 +479,9 @@ static LTLPlayManager *_instance = nil;
         ///取随机数
         _indexPathRow = arc4random() % _rowNumber;
         
-        XMTrack *tracks  = self.Playlist[_indexPathRow];
+        _tracksVM  = self.Playlist[_indexPathRow];
         
-        NSURL *musicURL = [NSURL URLWithString:tracks.playUrl64];
+        NSURL *musicURL = [NSURL URLWithString:_tracksVM.playUrl64];
         _currentPlayerItem = [AVPlayerItem playerItemWithURL:musicURL];
         
 //        [_player replaceCurrentItemWithPlayerItem:_currentPlayerItem];
@@ -512,26 +512,6 @@ static LTLPlayManager *_instance = nil;
     
 }
 
-#pragma mark - 返回
-
-
-- (NSArray *)favoriteMusicItems{
-    
-    NSArray *items = [NSArray arrayWithArray:self.favoriteMusic];
-    return [items copy];
-}
-
-- (NSArray *)historyMusicItems{
-    
-    NSArray *items = [NSArray arrayWithArray:self.historyMusic];
-    return [items copy];
-}
-
-- (BOOL)havePlay{
-    
-    return _play;
-}
-
 #pragma mark - 锁屏时候的设置，效果需要在真机上才可以看到
 - (void)updateLockedScreenMusic{
     
@@ -541,11 +521,12 @@ static LTLPlayManager *_instance = nil;
     // 初始化播放信息
     NSMutableDictionary *info = [NSMutableDictionary dictionary];
     // 专辑名称
-    info[MPMediaItemPropertyAlbumTitle] = self.tracksVM.subordinatedAlbum.albumTitle;
+    info[MPMediaItemPropertyAlbumTitle] = _tracksVM.subordinatedAlbum.albumTitle;
     // 歌手
-    info[MPMediaItemPropertyArtist] = self.tracksVM.announcer.nickname;
+    info[MPMediaItemPropertyArtist] = _tracksVM.announcer.nickname;
     // 歌曲名称
-    info[MPMediaItemPropertyTitle] = self.tracksVM.trackTitle;
+    info[MPMediaItemPropertyTitle] = _tracksVM.trackTitle;
+
     UIImage *image = [self playCoverImage];
     if (image != nil) {
         // 设置图片
@@ -572,7 +553,7 @@ static LTLPlayManager *_instance = nil;
     
     UIImageView *imageCoverView = [[UIImageView alloc] init];
     [imageCoverView sd_setImageWithURL:[NSURL URLWithString:self.tracksVM.coverUrlLarge] placeholderImage:[UIImage imageNamed:@"music_placeholder"]];
-    
+
     return [imageCoverView.image copy];
 }
 #pragma mark - 音效

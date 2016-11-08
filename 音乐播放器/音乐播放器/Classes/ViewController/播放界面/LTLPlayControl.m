@@ -161,7 +161,7 @@
 #pragma mark - 设置数据
 -(void)setData
 {
-    XMTrack *Track = [self.player currentTrack];
+    XMTrack *Track = self.player.tracksVM;
     NSURL *url = [NSURL URLWithString:Track.coverUrlMiddle];
     [self.songImage sd_setImageWithURL:url placeholderImage:[UIImage imageNamed:@"9"]];
     self.songName.text = Track.trackTitle;

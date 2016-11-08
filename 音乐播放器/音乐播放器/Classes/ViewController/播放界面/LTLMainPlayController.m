@@ -102,7 +102,7 @@
 #pragma mark - 设置数据
 -(void)setData
 {
-    XMTrack *Track = [self.player currentTrack];
+    XMTrack *Track = self.player.tracksVM;
     NSURL *url = [NSURL URLWithString:Track.coverUrlMiddle];
     [self.albumImageView sd_setImageWithURL:url placeholderImage:[UIImage imageNamed:@"9"]];
     [self.backgroudImageView sd_setImageWithURL:url];
@@ -174,12 +174,7 @@
 ///设置播放模式按钮图片
 -(void)setTouchCycle
 {
-    /**
-     XMTrackPlayerModeList = 0,       // 列表 (默认)
-     XMTrackModeSingle,         // 单曲循环
-     XMTrackModeRandom,         // 随机顺序
-     
-     XMTrackPlayerModeEnd          // mark for rounded*/
+
     switch (_cycle) {
         case  theSong:
             [_musicCycleButton setImage:[UIImage imageNamed:@"loop_single_icon"] forState:UIControlStateNormal];

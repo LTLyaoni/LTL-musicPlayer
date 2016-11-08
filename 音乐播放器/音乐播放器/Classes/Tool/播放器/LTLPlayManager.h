@@ -38,6 +38,15 @@ typedef NS_ENUM(NSInteger, itemModel) {
 
 ///是否正在播放
 @property (nonatomic ,readonly, getter = isPlay ) BOOL play;
+///当前正在播放的
+@property (nonatomic,strong,readonly) XMTrack *tracksVM;
+///喜欢列表
+@property (nonatomic, strong,readonly) NSMutableArray *favoriteMusic;
+///历史列表
+@property (nonatomic, strong,readonly) NSMutableArray *historyMusic;
+///正在播放列表
+@property (nonatomic, strong,readonly)  NSArray *Playlist;
+
 /**AVPlayerStatusUnknown,     ////影音播放器状态未知
 	AVPlayerStatusReadyToPlay,////影音播放器状态准备
 	AVPlayerStatusFailed      ////影音播放器状态失败
@@ -54,7 +63,6 @@ typedef NS_ENUM(NSInteger, itemModel) {
 - (void)playWithModel:(XMTrack *)tracks playlist:(NSArray *)playlist;
 ///播放或暂停音乐
 - (void)pauseMusic;
--(XMTrack *)currentTrack;
 ///上一首
 - (void)previousMusic;
 ///下一首
@@ -69,8 +77,6 @@ typedef NS_ENUM(NSInteger, itemModel) {
 - (void)stopMusic;
 
 /** 数据查询 */
-- (NSArray *)favoriteMusicItems;
-- (NSArray *)historyMusicItems;
 - (UIImage *)playCoverImage;
 /** 保存 */
 //- (BOOL)saveChanges;
