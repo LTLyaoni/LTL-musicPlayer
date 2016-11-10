@@ -98,33 +98,17 @@
         [self.mainVC DataAcquisition];
     }
 }
-
-//// 在具体的控制器或其它类中捕获处理远程控制事件
-//- (void)remoteControlReceivedWithEvent:(UIEvent *)event
-//{
-//    // 根据事件的子类型(subtype) 来判断具体的事件类型, 并做出处理
-//    switch (event.subtype) {
-//        case UIEventSubtypeRemoteControlPlay:
-//        case UIEventSubtypeRemoteControlPause: {
-//            // 执行播放或暂停的相关操作 (锁屏界面和上拉快捷功能菜单处的播放按钮)
-//            break;
-//        }
-//        case UIEventSubtypeRemoteControlPreviousTrack: {
-//            // 执行上一曲的相关操作 (锁屏界面和上拉快捷功能菜单处的上一曲按钮)
-//            break;
-//        }
-//        case UIEventSubtypeRemoteControlNextTrack: {
-//            // 执行下一曲的相关操作 (锁屏界面和上拉快捷功能菜单处的下一曲按钮)
-//            break;
-//        }
-//        case UIEventSubtypeRemoteControlTogglePlayPause: {
-//            // 进行播放/暂停的相关操作 (耳机的播放/暂停按钮)
-//            break;
-//        }
-//        default:
-//            break;
-//    }
-//}
+// 接收到内存警告就会调用
+- (void)applicationDidReceiveMemoryWarning:(UIApplication *)application
+{
+    //    DDActionLog;
+    
+    // 1.停止当前下载
+    [[SDWebImageManager sharedManager] cancelAll];
+    
+    // 2.清空内存缓存
+    [[SDWebImageManager sharedManager].imageCache clearMemory];
+}
 
 - (void)applicationWillResignActive:(UIApplication *)application {
     // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
