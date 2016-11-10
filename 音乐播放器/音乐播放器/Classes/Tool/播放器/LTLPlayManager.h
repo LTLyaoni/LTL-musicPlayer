@@ -15,8 +15,10 @@
 @optional
 ///每次下一首的时候将会调用
 - (void)changeMusic;
-//播放时被调用，频率为1s，告知当前播放进度和播放时间
+///播放时被调用，频率为1s，告知当前播放进度和播放时间
 - (void)playNotifyProcess:(CGFloat)percent currentSecond:(NSString *)currentSecond;
+
+-(void)playBufferProcess:(CGFloat)percent;
 
 @end
 
@@ -46,6 +48,10 @@ typedef NS_ENUM(NSInteger, itemModel) {
 @property (nonatomic, strong,readonly) NSMutableArray *historyMusic;
 ///正在播放列表
 @property (nonatomic, strong,readonly)  NSArray *Playlist;
+///播放进度
+@property (nonatomic,assign,readonly) CGFloat playPercent;
+///缓冲进度
+@property (nonatomic,assign,readonly) CGFloat playBuffer;
 
 /**AVPlayerStatusUnknown,     ////影音播放器状态未知
 	AVPlayerStatusReadyToPlay,////影音播放器状态准备
@@ -69,7 +75,10 @@ typedef NS_ENUM(NSInteger, itemModel) {
 - (void)nextMusic;
 ///切换模式
 - (void)nextCycle:(LTLPlayerCycle)cycle;
-
+/**
+ * 设置播放器从特定的时间播放
+ */
+- (void)seekToTime:(CGFloat)percent;
 
 
 - (void)delAllHistoryMusic;

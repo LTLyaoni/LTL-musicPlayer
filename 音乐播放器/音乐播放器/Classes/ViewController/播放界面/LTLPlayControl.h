@@ -22,6 +22,8 @@
 @property (weak, nonatomic) IBOutlet UIProgressView *jingDu;
 ///播放进度
 @property (weak, nonatomic) IBOutlet UIProgressView *playProgress;
+///是否播放
+@property (nonatomic) BOOL musicIsPlaying;
 ///更新
 -(void)setData;
 @end

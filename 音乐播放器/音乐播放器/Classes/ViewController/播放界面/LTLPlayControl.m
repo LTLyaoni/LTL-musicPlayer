@@ -23,11 +23,14 @@
 @property (strong ,nonatomic) UIBezierPath *finalPath;
 ///播放器
 @property (nonatomic,strong) LTLPlayManager *player;
-///是否播放
-@property (nonatomic) BOOL musicIsPlaying;
 ///播放按钮
 @property (weak, nonatomic) IBOutlet UIButton *musicToggleButton;
-
+///NextHead
+@property (weak, nonatomic) IBOutlet UIButton *NextHead;
+///play
+@property (weak, nonatomic) IBOutlet UIButton *play;
+///LastOne
+@property (weak, nonatomic) IBOutlet UIButton *LastOne;
 
 @end
 
@@ -112,13 +115,16 @@
 -(void)playNotification:(NSNotification *)notification
 {
     LTLuserInfo *userInfo = notification.userInfo[@"Play"];
-    
 //    ///点击的歌
     XMTrack *TrackData = userInfo.songArray[userInfo.serialNumber];
 
     [self.player playWithModel:TrackData playlist:userInfo.songArray];
     
     self.musicIsPlaying = _player.isPlay;
+    
+    _play.enabled = YES;
+    _NextHead.enabled = YES;
+    _LastOne.enabled = YES;
 }
 
 
@@ -152,6 +158,11 @@
 //    if ([self.delegate respondsToSelector:@selector(disPlayController:)]) {
 //        [self.delegate disPlayController:self];
 //    }
+    if (!_player.isPlay) {
+        [SVProgressHUD setMinimumDismissTimeInterval:1.8];
+        [SVProgressHUD showErrorWithStatus:@"当前没有音乐播放!!!"];
+        return;
+    }
     LTLMainPlayController *MainPlay = [[LTLMainPlayController alloc]initWithNibName:@"LTLMainPlayController" bundle:nil];
     ///解决 Presenting view controllers on detached view controllers is discouraged 警告
     UIWindow *win = [UIApplication sharedApplication].keyWindow;

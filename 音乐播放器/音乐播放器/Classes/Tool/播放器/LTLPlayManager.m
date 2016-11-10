@@ -18,7 +18,7 @@
 #include <sys/sysctl.h>
 
 @interface LTLPlayManager ()
-///用于缓存播放
+///用于缓冲播放
 @property (nonatomic, strong) AVPlayerItem   *currentPlayerItem;
 ///喜欢列表
 @property (nonatomic, strong) NSMutableArray *favoriteMusic;
@@ -44,7 +44,7 @@
 
 @end
 
-static LTLPlayManager *_instance = nil;
+
 
 @implementation LTLPlayManager
 {
@@ -53,6 +53,8 @@ static LTLPlayManager *_instance = nil;
 //////懒加载
 /////////////////////单例
 + (instancetype)sharedInstance {
+    static LTLPlayManager *_instance = nil;
+    
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         _instance = [[self alloc] init];
@@ -193,7 +195,7 @@ static LTLPlayManager *_instance = nil;
     self.Playlist = playlist;
     _indexPathRow = tracks.orderNum;
     _rowNumber = playlist.count;
-    //缓存播放实现，可自行查找AVAssetResourceLoader资料,或采用AudioQueue实现
+    //缓冲播放实现，可自行查找AVAssetResourceLoader资料,或采用AudioQueue实现
 //    NSURL *musicURL = [self.tracksVM playURLForRow:_indexPathRow];
     NSURL *musicURL = [NSURL URLWithString:tracks.playUrl64 ] ;
     _currentPlayerItem = [AVPlayerItem playerItemWithURL:musicURL];
@@ -227,17 +229,6 @@ static LTLPlayManager *_instance = nil;
     [self addMusicTime];
     
 }
-- (NSString *)convertTime:(NSTimeInterval)second{
-    NSDate *date = [NSDate dateWithTimeIntervalSince1970:second];
-    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-    if (second/3600 >= 1) {
-        [dateFormatter setDateFormat:@"HH:mm:ss"];
-    } else {
-        [dateFormatter setDateFormat:@"mm:ss"];
-    }
-    NSString *showtimeNew = [dateFormatter stringFromDate:date];
-    return showtimeNew;
-}
 ///进度监听
 -(void)addMusicTime
 {
@@ -251,13 +242,24 @@ static LTLPlayManager *_instance = nil;
         NSString *timeString = [weakSelf convertTime:current];
         
         CGFloat Percentage = current /duration;
-        
+        _playPercent = Percentage;
         if ([weakSelf.delegate respondsToSelector:@selector(playNotifyProcess:currentSecond:)]) {
             [weakSelf.delegate playNotifyProcess:Percentage currentSecond:timeString];
         }
         
     }];
 
+}
+- (NSString *)convertTime:(NSTimeInterval)second{
+    NSDate *date = [NSDate dateWithTimeIntervalSince1970:second];
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    if (second/3600 >= 1) {
+        [dateFormatter setDateFormat:@"HH:mm:ss"];
+    } else {
+        [dateFormatter setDateFormat:@"mm:ss"];
+    }
+    NSString *showtimeNew = [dateFormatter stringFromDate:date];
+    return showtimeNew;
 }
 ///删除音乐监听
 -(void)removeMusicMonitor
@@ -313,7 +315,10 @@ static LTLPlayManager *_instance = nil;
             NSTimeInterval timeInterval = startSeconds + durationSeconds;// 计算缓冲总进度
             CMTime duration = playerItem.duration;
             CGFloat totalDuration = CMTimeGetSeconds(duration);
-            
+            _playBuffer = totalDuration;
+            if ([self.delegate respondsToSelector:@selector(playBufferProcess:)]) {
+                [self.delegate playBufferProcess:totalDuration];
+            }
             NSLog(@"下载进度：%.2f", timeInterval / totalDuration);
             
 //        } else if ([keyPath isEqualToString:@"playbackBufferEmpty"]) { //监听播放器在缓冲数据的状态
@@ -509,6 +514,15 @@ static LTLPlayManager *_instance = nil;
 }
 
 - (void)stopMusic{
+    
+}
+- (void)seekToTime:(CGFloat)percent
+{
+    //根据值计算时间
+    float time = percent * CMTimeGetSeconds(self.player.currentItem.duration);
+    //跳转到当前指定时间
+    //转换成CMTime才能给player来控制播放进度
+    [self.player seekToTime:CMTimeMake(time, 1)];
     
 }
 

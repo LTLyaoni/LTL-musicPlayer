@@ -39,6 +39,11 @@
 		1F2239F91DC5DB3E00BA3BB3 /* LTLsongSheetCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F2239F71DC5DB3E00BA3BB3 /* LTLsongSheetCell.m */; };
 		1F2239FA1DC5DB3E00BA3BB3 /* LTLsongSheetCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1F2239F81DC5DB3E00BA3BB3 /* LTLsongSheetCell.xib */; };
 		1F2239FE1DC5EAB700BA3BB3 /* XMAlbum+LTLXMAlbum.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F2239FD1DC5EAB700BA3BB3 /* XMAlbum+LTLXMAlbum.m */; };
+		1F3C23021DD49AC800034715 /* SVIndefiniteAnimatedView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F3C22F91DD49AC800034715 /* SVIndefiniteAnimatedView.m */; };
+		1F3C23031DD49AC800034715 /* SVProgressAnimatedView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F3C22FB1DD49AC800034715 /* SVProgressAnimatedView.m */; };
+		1F3C23041DD49AC800034715 /* SVProgressHUD.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 1F3C22FD1DD49AC800034715 /* SVProgressHUD.bundle */; };
+		1F3C23051DD49AC800034715 /* SVProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F3C22FF1DD49AC800034715 /* SVProgressHUD.m */; };
+		1F3C23061DD49AC800034715 /* SVRadialGradientLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F3C23011DD49AC800034715 /* SVRadialGradientLayer.m */; };
 		1F63817A1DCC88DC005EC19D /* LTLCarouselView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1F6381791DCC88DC005EC19D /* LTLCarouselView.xib */; };
 		1F63817D1DCCB181005EC19D /* LTLPlayControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F63817C1DCCB181005EC19D /* LTLPlayControl.m */; };
 		1F63817F1DCCB195005EC19D /* LTLPlayControl.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1F63817E1DCCB195005EC19D /* LTLPlayControl.xib */; };
@@ -163,6 +168,16 @@
 		1F2239FC1DC5EAB700BA3BB3 /* XMAlbum+LTLXMAlbum.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "XMAlbum+LTLXMAlbum.h"; sourceTree = "<group>"; };
 		1F2239FD1DC5EAB700BA3BB3 /* XMAlbum+LTLXMAlbum.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "XMAlbum+LTLXMAlbum.m"; sourceTree = "<group>"; };
 		1F223A051DC621C400BA3BB3 /* LTLNetworkEnum.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LTLNetworkEnum.h; sourceTree = "<group>"; };
+		1F3C22F81DD49AC800034715 /* SVIndefiniteAnimatedView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVIndefiniteAnimatedView.h; sourceTree = "<group>"; };
+		1F3C22F91DD49AC800034715 /* SVIndefiniteAnimatedView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVIndefiniteAnimatedView.m; sourceTree = "<group>"; };
+		1F3C22FA1DD49AC800034715 /* SVProgressAnimatedView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVProgressAnimatedView.h; sourceTree = "<group>"; };
+		1F3C22FB1DD49AC800034715 /* SVProgressAnimatedView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVProgressAnimatedView.m; sourceTree = "<group>"; };
+		1F3C22FC1DD49AC800034715 /* SVProgressHUD-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SVProgressHUD-Prefix.pch"; sourceTree = "<group>"; };
+		1F3C22FD1DD49AC800034715 /* SVProgressHUD.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = SVProgressHUD.bundle; sourceTree = "<group>"; };
+		1F3C22FE1DD49AC800034715 /* SVProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVProgressHUD.h; sourceTree = "<group>"; };
+		1F3C22FF1DD49AC800034715 /* SVProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVProgressHUD.m; sourceTree = "<group>"; };
+		1F3C23001DD49AC800034715 /* SVRadialGradientLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVRadialGradientLayer.h; sourceTree = "<group>"; };
+		1F3C23011DD49AC800034715 /* SVRadialGradientLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVRadialGradientLayer.m; sourceTree = "<group>"; };
 		1F6381791DCC88DC005EC19D /* LTLCarouselView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LTLCarouselView.xib; sourceTree = "<group>"; };
 		1F63817B1DCCB181005EC19D /* LTLPlayControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LTLPlayControl.h; sourceTree = "<group>"; };
 		1F63817C1DCCB181005EC19D /* LTLPlayControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LTLPlayControl.m; sourceTree = "<group>"; };
@@ -455,9 +470,27 @@
 			path = "歌单详细界面";
 			sourceTree = "<group>";
 		};
+		1F3C22F71DD49AC800034715 /* SVProgressHUD */ = {
+			isa = PBXGroup;
+			children = (
+				1F3C22F81DD49AC800034715 /* SVIndefiniteAnimatedView.h */,
+				1F3C22F91DD49AC800034715 /* SVIndefiniteAnimatedView.m */,
+				1F3C22FA1DD49AC800034715 /* SVProgressAnimatedView.h */,
+				1F3C22FB1DD49AC800034715 /* SVProgressAnimatedView.m */,
+				1F3C22FC1DD49AC800034715 /* SVProgressHUD-Prefix.pch */,
+				1F3C22FD1DD49AC800034715 /* SVProgressHUD.bundle */,
+				1F3C22FE1DD49AC800034715 /* SVProgressHUD.h */,
+				1F3C22FF1DD49AC800034715 /* SVProgressHUD.m */,
+				1F3C23001DD49AC800034715 /* SVRadialGradientLayer.h */,
+				1F3C23011DD49AC800034715 /* SVRadialGradientLayer.m */,
+			);
+			path = SVProgressHUD;
+			sourceTree = "<group>";
+		};
 		1F75C0C51DC227270061402B /* Lib */ = {
 			isa = PBXGroup;
 			children = (
+				1F3C22F71DD49AC800034715 /* SVProgressHUD */,
 				1F00B38B1DC4D8B800EDAE04 /* SDWebImage */,
 				1F00B3221DC4AE0B00EDAE04 /* Masonry */,
 				C30A191B1DC2EEA200894453 /* MJExtension */,
@@ -853,6 +886,7 @@
 				1FFC36D01DC394E5007D5A09 /* Main.storyboard in Resources */,
 				1F63817F1DCCB195005EC19D /* LTLPlayControl.xib in Resources */,
 				1F75C0DC1DC24F6B0061402B /* LTLloginSet.xib in Resources */,
+				1F3C23041DD49AC800034715 /* SVProgressHUD.bundle in Resources */,
 				1FCFBC951DCB75620031572D /* LTLMainPlayController.xib in Resources */,
 				C3CE7E521DC052A500F5619E /* LaunchScreen.storyboard in Resources */,
 				1F2239FA1DC5DB3E00BA3BB3 /* LTLsongSheetCell.xib in Resources */,
@@ -872,6 +906,7 @@
 				1F00B3451DC4AE0B00EDAE04 /* NSLayoutConstraint+MASDebugAdditions.m in Sources */,
 				C30A19311DC2EEA300894453 /* MJExtensionConst.m in Sources */,
 				C3CE7E531DC052A500F5619E /* main.m in Sources */,
+				1F3C23021DD49AC800034715 /* SVIndefiniteAnimatedView.m in Sources */,
 				1FCFBC9E1DCB78CA0031572D /* UIView+LTLAnimations.m in Sources */,
 				1F63817D1DCCB181005EC19D /* LTLPlayControl.m in Sources */,
 				1F00B3421DC4AE0B00EDAE04 /* MASViewAttribute.m in Sources */,
@@ -879,6 +914,7 @@
 				1FB67BDD1DC0B12600FCA42D /* UIWindow+LTLWindow.m in Sources */,
 				1F00B3BE1DC4D8B800EDAE04 /* SDWebImageDecoder.m in Sources */,
 				1F00B3BC1DC4D8B800EDAE04 /* SDWebImageDownloaderOperation.m in Sources */,
+				1F3C23031DD49AC800034715 /* SVProgressAnimatedView.m in Sources */,
 				1F2239F91DC5DB3E00BA3BB3 /* LTLsongSheetCell.m in Sources */,
 				1F00B3B21DC4D8B800EDAE04 /* MKAnnotationView+WebCache.m in Sources */,
 				1FCFBC9B1DCB77230031572D /* MusicSlider.m in Sources */,
@@ -906,6 +942,7 @@
 				1F00B3B11DC4D8B800EDAE04 /* SDImageCache.m in Sources */,
 				1F00B3BD1DC4D8B800EDAE04 /* SDWebImageCompat.m in Sources */,
 				1F7D09D31DC85F4100D6C1B6 /* NSDate+LTLNSDate.m in Sources */,
+				1F3C23051DD49AC800034715 /* SVProgressHUD.m in Sources */,
 				1F00B3B91DC4D8B800EDAE04 /* UIImageView+WebCache.m in Sources */,
 				1FFC36CF1DC394E5007D5A09 /* LTLMainController.m in Sources */,
 				1F2239FE1DC5EAB700BA3BB3 /* XMAlbum+LTLXMAlbum.m in Sources */,
@@ -927,6 +964,7 @@
 				C30A19341DC2EEA300894453 /* MJPropertyKey.m in Sources */,
 				1FA586161DC7620100AC7ED3 /* LTLMusicDetailCell.m in Sources */,
 				C30A19391DC2EEA300894453 /* NSObject+MJProperty.m in Sources */,
+				1F3C23061DD49AC800034715 /* SVRadialGradientLayer.m in Sources */,
 				1F75C0D01DC227320061402B /* MMDrawerBarButtonItem.m in Sources */,
 				1F00B3B31DC4D8B800EDAE04 /* NSData+ImageContentType.m in Sources */,
 				1FB67BDC1DC0B12600FCA42D /* UIView+LTLView.m in Sources */,

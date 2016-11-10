@@ -85,6 +85,8 @@
     [self setTouchCycle];
     //////////设置播放按钮
     self.musicIsPlaying = _player.isPlay;
+    _progressBar.progress = _player.playBuffer;
+    _musicSlider.value = _player.playPercent;
     [self setData];
     _musicIsChange = YES;
     _tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(actionTapGesture:)];
@@ -92,13 +94,25 @@
     [_musicSlider addGestureRecognizer:_tapGesture];
 }
 #pragma mark - FYPlayManagerDelegate
+///每次下一首的时候将会调用
 -(void)changeMusic
 {
     self.musicIsPlaying = _player.isPlay;
     [self setData];
 }
-
-
+///播放时被调用，频率为1s，告知当前播放进度和播放时间
+-(void)playNotifyProcess:(CGFloat)percent currentSecond:(NSString *)currentSecond
+{
+    if (_musicIsChange) {
+        _musicSlider.value = percent;
+    }
+    _beginTimeLabel.text = currentSecond;
+}
+///缓冲
+-(void)playBufferProcess:(CGFloat)percent
+{
+    self.progressBar.progress = percent;
+}
 #pragma mark - 设置数据
 -(void)setData
 {
@@ -215,8 +229,10 @@
     NSLog(@"1");
 }
 - (IBAction)setMusicTime:(MusicSlider *)sender {
-    
+    _tapGesture.enabled = YES;
+    _musicIsChange = YES;
     NSLog(@"2");
+    [_player seekToTime:sender.value];
 
 }
 - (void)actionTapGesture:(UITapGestureRecognizer *)sender {
@@ -226,7 +242,7 @@
     //设置
     [_musicSlider setValue:value animated:YES];
 
-    
+    [_player seekToTime:value];
 }
 #pragma mark - 视图出入设置
 //即将消失,取消代理
@@ -235,6 +251,7 @@
     [super viewWillDisappear:animated];
     self.player .delegate = nil;
 }
+
 -(void)dealloc
 {
     NSLog(@"LTLMainPlayController销毁");

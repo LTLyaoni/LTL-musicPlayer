@@ -42,7 +42,16 @@
 - (void)changeMusic
 {
     [self.PlayControl setData];
+    self.PlayControl.musicIsPlaying = [LTLPlayManager sharedInstance].isPlay;
 }
-
-
+///播放时被调用，频率为1s，告知当前播放进度和播放时间
+-(void)playNotifyProcess:(CGFloat)percent currentSecond:(NSString *)currentSecond
+{
+    self.PlayControl.playProgress.progress = percent;
+}
+///缓冲
+-(void)playBufferProcess:(CGFloat)percent
+{
+    self.PlayControl.jingDu.progress = percent;
+}
 @end
