@@ -11,5 +11,7 @@
 @interface LTLsongSheetCell : UICollectionViewCell
 ///数据模型
 @property (nonatomic , weak ) XMAlbum *model ;
+///图片
+@property (weak, nonatomic) IBOutlet UIImageView *icon;
 
 @end

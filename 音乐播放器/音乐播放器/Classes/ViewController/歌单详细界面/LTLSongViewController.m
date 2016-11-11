@@ -7,17 +7,14 @@
 //
 
 #import "LTLSongViewController.h"
-// 头部展示页
-#import "LTLHeaderView.h"
+#import "LTLAnimate.h"
 // 自定义Cell
 #import "LTLMusicDetailCell.h"
 #import "LTLuserInfo.h"
 
-@interface LTLSongViewController ()<UITableViewDataSource,UITableViewDelegate>
+@interface LTLSongViewController ()<UITableViewDataSource,UITableViewDelegate,UINavigationControllerDelegate>
 //歌单
 @property (nonatomic,strong) UITableView *tableView;
-//头视图
-@property (nonatomic,strong) LTLHeaderView  *infoView;
 // 升序降序标签: 默认升序
 @property (nonatomic,assign) BOOL isAsc;
 //歌单数据
@@ -39,24 +36,36 @@
 #pragma mark - 入出 设置
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
-
-    [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleLightContent;
-
+    //遵守navigationController的代理协议
+    self.navigationController.delegate = self;
+//    self.navigationController.delegate = self;
 }
-
--(void)viewWillDisappear:(BOOL)animated{
-    [super viewWillDisappear:animated];
-    [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleDefault;
+#pragma mark - 自定义转场
+///实现下面方法来自定义转场
+-(id<UIViewControllerAnimatedTransitioning>)navigationController:(UINavigationController *)navigationController animationControllerForOperation:(UINavigationControllerOperation)operation fromViewController:(UIViewController *)fromVC toViewController:(UIViewController *)toVC
+{
+    ///判断转场类型
+    if (operation == UINavigationControllerOperationPop) {
+        ///初始化转场动画及数据
+        LTLAnimate *animate = [LTLAnimate initWithAnimateType:LTLanimate_pop andDuration:0.6F];
+        //返回动画
+        return (id<UIViewControllerAnimatedTransitioning>)animate;
+        
+    }else{
+        return nil;
+    }
+    
 }
-
+#pragma mark - 初始化
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self navigation];
     //初始化头视图及添加透视图
     [self initHeaderView];
-    
+    self.navigationController.delegate = self;
     self.view.backgroundColor = [UIColor redColor];
     [self DataAcquisition];
+    
 }
 //设置navigationController
 -(void)navigation
@@ -68,14 +77,14 @@
 //    {
 //        [self.navigationController.navigationBar setShadowImage:[[UIImage alloc]init]];
 //    }
-    [self.navigationController.navigationBar setBackgroundImage:[[UIImage alloc]init] forBarMetrics:UIBarMetricsDefault];
+//    [self.navigationController.navigationBar setBackgroundImage:[[UIImage alloc]init] forBarMetrics:UIBarMetricsDefault];
 //    UIImage *image = [UIImage imageNamed:@"findsubject_mask"];
 //    ///window的layer层添加内容
 //    self.navigationController.navigationBar.layer.contents = (id) image.CGImage;    // 如果需要背景透明加上下面这句
 //    self.navigationController.navigationBar.layer.backgroundColor = [UIColor clearColor].CGColor;
 //    
-    self.navigationItem.title = self.XMAlbumModel.albumTitle;
-    
+//    self.navigationItem.title = self.XMAlbumModel.albumTitle;
+//    
     self.mm_drawerController.openDrawerGestureModeMask = MMOpenDrawerGestureModeNone;
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"btn_back_n"] style:UIBarButtonItemStylePlain target:self action:@selector(back:)];
 }
@@ -171,7 +180,6 @@
     }];
 
 }
-
 ////头视图为空
 //- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
 //    return nil;

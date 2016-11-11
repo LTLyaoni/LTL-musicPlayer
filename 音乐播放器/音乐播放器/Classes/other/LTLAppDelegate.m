@@ -10,6 +10,8 @@
 #import "LTLloginSet.h"
 #import "LTLSearchController.h"
 #import "LTLMainController.h"
+//#import "MMDrawerController.h"
+//#import "MMExampleDrawerVisualStateManager.h"
 
 @interface LTLAppDelegate ()<XMReqDelegate>
 @property (nonatomic,strong) MMDrawerController * drawerController;
@@ -36,8 +38,10 @@
     ///////////////////////////////////////////
     ///第三方滑动菜单动画框架
     self.drawerController = [[MMDrawerController alloc]initWithCenterViewController:mianController leftDrawerViewController:log];
+//    [self.drawerController setCenterViewController:mianController withCloseAnimation:NO completion:nil];
+//    self.drawerController.leftDrawerViewController =log;
 //    self.drawerController = [[MMDrawerController alloc]initWithCenterViewController:mianController leftDrawerViewController:log rightDrawerViewController:nav];
-    //阴影
+//    阴影
     self.drawerController.showsShadow = YES;
     //
     self.drawerController.maximumLeftDrawerWidth = LTL_WindowW*4/5;
@@ -64,6 +68,7 @@
     self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
     ///设置根控制器
     self.window.rootViewController = self.drawerController;
+//     self.window.rootViewController = mianController;
     ///显示窗口
     [self.window makeKeyAndVisible];
     

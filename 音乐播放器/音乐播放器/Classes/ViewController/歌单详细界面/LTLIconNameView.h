@@ -10,7 +10,7 @@
 /**
  *  头像及昵称
  */
-@interface IconNameView : UIView
+@interface LTLIconNameView : UIView
 
 @property (nonatomic,strong) UIImageView *icon;
 @property (nonatomic,strong) UILabel *name;

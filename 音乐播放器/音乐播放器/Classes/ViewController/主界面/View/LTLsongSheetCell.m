@@ -10,8 +10,7 @@
 #define jianXi  15
 
 @interface LTLsongSheetCell ()
-//图片
-@property (weak, nonatomic) IBOutlet UIImageView *icon;
+
 //图片高度
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *iconW;
 //标题

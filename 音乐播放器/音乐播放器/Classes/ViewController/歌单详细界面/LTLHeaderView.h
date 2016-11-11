@@ -7,12 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "LTLPicView.h"
 
 @interface LTLHeaderView : UIImageView
 //歌单数据
 @property (nonatomic,strong) XMAlbum *XMAlbumModel;
 
 @property (nonatomic) CGRect visualEffectFrame;
-
+/// 背景图 和 方向图
+@property (nonatomic,strong) PicView *picView;
 
 @end

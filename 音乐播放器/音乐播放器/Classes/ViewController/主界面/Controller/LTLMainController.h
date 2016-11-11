@@ -9,6 +9,8 @@
 #import <UIKit/UIKit.h>
 
 @interface LTLMainController : UIViewController
+///歌单视图
+@property (weak, nonatomic) IBOutlet UICollectionView *CollectionView;
 #pragma mark - 数据
 -(void)DataAcquisition;
 @end

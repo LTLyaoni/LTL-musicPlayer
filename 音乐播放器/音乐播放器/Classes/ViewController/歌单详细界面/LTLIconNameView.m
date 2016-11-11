@@ -8,7 +8,7 @@
 
 #import "LTLIconNameView.h"
 
-@implementation IconNameView
+@implementation LTLIconNameView
 
 - (instancetype)init {
     if (self = [super init]) {

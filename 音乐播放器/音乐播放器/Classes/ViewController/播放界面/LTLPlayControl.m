@@ -145,6 +145,7 @@
     self.layer.mask = maskLayer;
     
     CABasicAnimation *animation = [CABasicAnimation animationWithKeyPath:@"path"];
+    
     animation.fromValue = (__bridge id _Nullable)(bezierPath.CGPath);
     animation.toValue = (__bridge id _Nullable)(finalPath.CGPath);
     animation.duration = 2;

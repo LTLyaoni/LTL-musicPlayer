@@ -7,22 +7,21 @@
 //
 #import "LTLHeaderView.h"
 
-#import "LTLPicView.h"
-#import "LTLIconNameView.h"
+
 #import "LTLDescView.h"
 
+#import "LTLIconNameView.h"
 @interface LTLHeaderView ()
 
 
 /// 头像旁边标题(与头部视图text相等)
 @property (nonatomic,strong) UILabel *smallTitle;
-/// 背景图 和 方向图
-@property (nonatomic,strong) PicView *picView;
-/// 自定义头像按钮
-@property (nonatomic,strong) IconNameView *nameView;
+
+
 /// 自定义描述按钮
 @property (nonatomic,strong) DescView *descView;
-
+/// 自定义头像按钮
+@property (nonatomic,strong) LTLIconNameView *nameView;
 //@property (nonatomic,strong) UIButton *topLeftBtn;
 //@property (nonatomic,strong) UIButton *topRightBtn;
 @property (strong, nonatomic) UIVisualEffectView *visualEffectView;
@@ -80,20 +79,20 @@
 //歌单图片
 - (PicView *)picView {
     if (!_picView) {
-        _picView = [PicView new];
+        _picView = [[PicView alloc]initWithFrame:CGRectMake(20, 88, 100, 100)];
         [self addSubview:_picView];
-        [_picView mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.size.mas_equalTo(CGSizeMake(100, 100));
-            make.left.mas_equalTo(20);
-            make.top.mas_equalTo(self.mas_top).mas_equalTo(88);
-        }];
+//        [_picView mas_makeConstraints:^(MASConstraintMaker *make) {
+//            make.size.mas_equalTo(CGSizeMake(100, 100));
+//            make.left.mas_equalTo(20);
+//            make.top.mas_equalTo(self.mas_top).mas_equalTo(88);
+//        }];
     }
     return _picView;
 }
 //// 自定义头像按钮
-- (IconNameView *)nameView {
+- (LTLIconNameView *)nameView {
     if (!_nameView) {
-        _nameView = [IconNameView new];
+        _nameView = [LTLIconNameView new];
         [self addSubview:_nameView];
         [_nameView mas_makeConstraints:^(MASConstraintMaker *make) {
             make.topMargin.mas_equalTo(self.picView);

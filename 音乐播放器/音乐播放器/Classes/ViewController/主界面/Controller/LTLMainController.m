@@ -10,17 +10,15 @@
 #import "LTLCarouselView.h"
 #import "LTLsongSheetCell.h"
 #import "LTLSongViewController.h"
-
+#import "LTLAnimate.h"
 
 
 #define jianXi  15
-@interface LTLMainController ()<UICollectionViewDelegate,UICollectionViewDataSource>
+@interface LTLMainController ()<UICollectionViewDelegate,UICollectionViewDataSource,UINavigationControllerDelegate>
 /**
  *  歌单数组
  */
 @property(nonatomic,strong)NSMutableArray *songSheetArray;
-
-@property (weak, nonatomic) IBOutlet UICollectionView *CollectionView;
 //头视图
 @property(nonatomic,strong)LTLCarouselView *CarouseView;
 //约束
@@ -58,7 +56,7 @@ static NSString *cellID = @"colleCell";
 #pragma mark - 初始化
 - (void)viewDidLoad {
     [super viewDidLoad];
-
+//    [self.mm_drawerController setCenterViewController:centerNavCtl withFullCloseAnimation:NO completion:nil];
 //    NSLog(@"LTL%@",NSStringFromCGRect(self.PlayControl.songImage.frame));
 //    CGRect newFream = [self.PlayControl.songImage convertRect:self.PlayControl.songImage.bounds toView:self.navigationController.view];
 //    UIButton *button = [[UIButton alloc]initWithFrame:newFream];
@@ -133,7 +131,9 @@ static NSString *cellID = @"colleCell";
 {
 //    NSLog(@"%ld",indexPath.row);
     LTLSongViewController *song = [[LTLSongViewController alloc]init];
+    
     song.XMAlbumModel = self.songSheetArray[indexPath.row];
+    
     [self.navigationController pushViewController:song animated:YES];
 }
 #pragma mark - 数据
@@ -148,8 +148,33 @@ static NSString *cellID = @"colleCell";
         
     }];
 }
-
-
+#pragma mark - 即将显示
+- (void)viewDidAppear:(BOOL)animated{
+    [super viewDidAppear:animated];
+    ///自定义转场需要遵守navigationController的代理协议
+    self.navigationController.delegate = self;
+}
+-(void)viewWillAppear:(BOOL)animated{
+    
+    [self beginAppearanceTransition: YES animated: animated];
+    
+}
+#pragma mark - 自定义转场
+///要实现下列方法来返回转场动画
+-(id<UIViewControllerAnimatedTransitioning>)navigationController:(UINavigationController *)navigationController animationControllerForOperation:(UINavigationControllerOperation)operation fromViewController:(UIViewController *)fromVC toViewController:(UIViewController *)toVC
+{
+    ///判断转场类型
+    if (operation == UINavigationControllerOperationPush) {
+        ///初始化动画及动画类型
+        LTLAnimate *animate = [LTLAnimate initWithAnimateType:LTLanimate_push andDuration:0.6F];
+       ///返回动画
+        return (id<UIViewControllerAnimatedTransitioning>)animate;
+        
+    }else{
+        return nil;
+    }
+    
+}
 #pragma mark - 导航栏左按钮点击事件
 - (IBAction)left:(UIButton *)sender
 {
