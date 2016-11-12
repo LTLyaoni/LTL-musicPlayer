@@ -189,7 +189,7 @@
 -(void)setTouchCycle
 {
 
-    switch (_cycle) {
+    switch (_player.playerCycle) {
         case  theSong:
             [_musicCycleButton setImage:[UIImage imageNamed:@"loop_single_icon"] forState:UIControlStateNormal];
 //            [self showMiddleHint:@"单曲循环"];

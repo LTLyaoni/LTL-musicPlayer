@@ -11,7 +11,8 @@
 #import "LTLsongSheetCell.h"
 #import "LTLSongViewController.h"
 #import "LTLAnimate.h"
-
+#import "LTLGroupHeader.h"
+#import "LTLRecommendAlbums.h"
 
 #define jianXi  15
 @interface LTLMainController ()<UICollectionViewDelegate,UICollectionViewDataSource,UINavigationControllerDelegate>
@@ -23,6 +24,7 @@
 @property(nonatomic,strong)LTLCarouselView *CarouseView;
 //约束
 @property (weak, nonatomic) IBOutlet UICollectionViewFlowLayout *flowtLayout;
+
 
 
 @end
@@ -63,13 +65,14 @@ static NSString *cellID = @"colleCell";
 //    button.backgroundColor = [UIColor redColor];
 //    [self.navigationController.view addSubview:button];
     //实现了一个下拉刷新的时候顶部轮播器的停留
-    self.CollectionView.contentInset = UIEdgeInsetsMake(self.CarouseView.highly, 0, 0, 0);
+    self.CollectionView.contentInset = UIEdgeInsetsMake(self.CarouseView.highly, 0, 100, 0);
     ///设置 cell 大小
     CGFloat w = (LTL_WindowW-30-2*jianXi)/3;
     self.flowtLayout.itemSize = CGSizeMake( w, w+30);
     ///注册 cell
     [self.CollectionView registerNib:[UINib nibWithNibName:@"LTLsongSheetCell" bundle:nil] forCellWithReuseIdentifier:cellID];
     self.mm_drawerController.openDrawerGestureModeMask = MMOpenDrawerGestureModeAll;
+    //获取数据
     [self DataAcquisition];
 }
 // 连带滚动方法
@@ -99,9 +102,15 @@ static NSString *cellID = @"colleCell";
 //Items数
 -(NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
-    NSLog(@"%ld",self.songSheetArray.count);
-    return self.songSheetArray.count;
+    LTLRecommendAlbums *model =self.songSheetArray[section];
+
+    return model.albums.count;
 //    return 100;
+}
+//组
+- (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView
+{
+   return self.songSheetArray.count;
 }
 -(UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -110,7 +119,8 @@ static NSString *cellID = @"colleCell";
     ///从循环池从取出 cell
     LTLsongSheetCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:cellID forIndexPath:indexPath];
     //取出模型数据
-     XMAlbum *model = self.songSheetArray[indexPath.row];
+     LTLRecommendAlbums *Recommend = self.songSheetArray[indexPath.section];
+    XMAlbum *model = Recommend.albums[indexPath.row];
     //赋值模型数据
     cell.model = model;
     
@@ -122,7 +132,13 @@ static NSString *cellID = @"colleCell";
     //重用标识符
     static NSString *ID = @"HeaderView";
     ///从循环池从取出 cellheadView
-    UICollectionReusableView *headView = [collectionView dequeueReusableSupplementaryViewOfKind:kind withReuseIdentifier:ID forIndexPath:indexPath];
+    LTLGroupHeader *headView = [collectionView dequeueReusableSupplementaryViewOfKind:kind withReuseIdentifier:ID forIndexPath:indexPath];
+    headView.tag = indexPath.section;
+    
+    LTLRecommendAlbums *model = self.songSheetArray[indexPath.section];
+    
+    headView.GroupHeader.text = model.display_tag_name;
+    
     headView.backgroundColor = [UIColor blueColor];
     return headView;
 }
@@ -132,7 +148,9 @@ static NSString *cellID = @"colleCell";
 //    NSLog(@"%ld",indexPath.row);
     LTLSongViewController *song = [[LTLSongViewController alloc]init];
     
-    song.XMAlbumModel = self.songSheetArray[indexPath.row];
+    LTLRecommendAlbums *model = self.songSheetArray[indexPath.section];
+    
+    song.XMAlbumModel = model.albums[indexPath.row];
     
     [self.navigationController pushViewController:song animated:YES];
 }
@@ -140,13 +158,20 @@ static NSString *cellID = @"colleCell";
 -(void)DataAcquisition
 {
     [self.CarouseView DataAcquisition];
-    [LTLNetworkRequest MetadataAlbumsPage:1 dimension:LTLDimensionTheFire dadt:^(NSMutableArray * _Nullable modelArray, XMErrorModel * _Nullable error) {
-        
+//    [LTLNetworkRequest MetadataAlbumsPage:1 dimension:LTLDimensionTheFire dadt:^(NSMutableArray * _Nullable modelArray, XMErrorModel * _Nullable error) {
+//        
+//        [self.songSheetArray addObjectsFromArray:modelArray];
+//        
+//        [self.CollectionView reloadData];
+//    }];
+    
+    
+    [LTLNetworkRequest RecommendAlbums:^(NSMutableArray * _Nullable modelArray, XMErrorModel * _Nullable error) {
         [self.songSheetArray addObjectsFromArray:modelArray];
         
         [self.CollectionView reloadData];
-        
     }];
+    
 }
 #pragma mark - 即将显示
 - (void)viewDidAppear:(BOOL)animated{
@@ -154,11 +179,7 @@ static NSString *cellID = @"colleCell";
     ///自定义转场需要遵守navigationController的代理协议
     self.navigationController.delegate = self;
 }
--(void)viewWillAppear:(BOOL)animated{
-    
-    [self beginAppearanceTransition: YES animated: animated];
-    
-}
+
 #pragma mark - 自定义转场
 ///要实现下列方法来返回转场动画
 -(id<UIViewControllerAnimatedTransitioning>)navigationController:(UINavigationController *)navigationController animationControllerForOperation:(UINavigationControllerOperation)operation fromViewController:(UIViewController *)fromVC toViewController:(UIViewController *)toVC

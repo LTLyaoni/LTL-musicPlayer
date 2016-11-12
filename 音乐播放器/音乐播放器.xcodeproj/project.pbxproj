@@ -76,6 +76,8 @@
 		1FCFBC9B1DCB77230031572D /* MusicSlider.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FCFBC9A1DCB77230031572D /* MusicSlider.m */; };
 		1FCFBC9E1DCB78CA0031572D /* UIView+LTLAnimations.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FCFBC9D1DCB78CA0031572D /* UIView+LTLAnimations.m */; };
 		1FD780631DD5FF2700A2B07A /* LTLAnimate.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FD780621DD5FF2700A2B07A /* LTLAnimate.m */; };
+		1FE977D61DD73B1100CE29F2 /* LTLRecommendAlbums.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FE977D51DD73B1100CE29F2 /* LTLRecommendAlbums.m */; };
+		1FE977D91DD746E700CE29F2 /* LTLGroupHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FE977D81DD746E700CE29F2 /* LTLGroupHeader.m */; };
 		1FF875E81DCECBA300354DE5 /* LTLNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FF875E71DCECBA300354DE5 /* LTLNavigationController.m */; };
 		1FF875EC1DCEFC0200354DE5 /* LTLPlayManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FF875EB1DCEFC0200354DE5 /* LTLPlayManager.m */; };
 		1FFC36CF1DC394E5007D5A09 /* LTLMainController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FFC36CD1DC394E5007D5A09 /* LTLMainController.m */; };
@@ -239,6 +241,10 @@
 		1FCFBC9D1DCB78CA0031572D /* UIView+LTLAnimations.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+LTLAnimations.m"; sourceTree = "<group>"; };
 		1FD780611DD5FF2700A2B07A /* LTLAnimate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LTLAnimate.h; sourceTree = "<group>"; };
 		1FD780621DD5FF2700A2B07A /* LTLAnimate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LTLAnimate.m; sourceTree = "<group>"; };
+		1FE977D41DD73B1100CE29F2 /* LTLRecommendAlbums.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LTLRecommendAlbums.h; sourceTree = "<group>"; };
+		1FE977D51DD73B1100CE29F2 /* LTLRecommendAlbums.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LTLRecommendAlbums.m; sourceTree = "<group>"; };
+		1FE977D71DD746E700CE29F2 /* LTLGroupHeader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LTLGroupHeader.h; sourceTree = "<group>"; };
+		1FE977D81DD746E700CE29F2 /* LTLGroupHeader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LTLGroupHeader.m; sourceTree = "<group>"; };
 		1FF875E61DCECBA300354DE5 /* LTLNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LTLNavigationController.h; sourceTree = "<group>"; };
 		1FF875E71DCECBA300354DE5 /* LTLNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LTLNavigationController.m; sourceTree = "<group>"; };
 		1FF875EA1DCEFC0200354DE5 /* LTLPlayManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LTLPlayManager.h; sourceTree = "<group>"; };
@@ -597,6 +603,7 @@
 		1FB67BCF1DC0B10000FCA42D /* Tool */ = {
 			isa = PBXGroup;
 			children = (
+				1FE977D31DD73A9C00CE29F2 /* model */,
 				1FF875E91DCEFC0200354DE5 /* 播放器 */,
 				1F2239FB1DC5EA8300BA3BB3 /* SDKExtend */,
 				1F00B3C21DC4F2B000EDAE04 /* other */,
@@ -647,6 +654,15 @@
 				1FD780621DD5FF2700A2B07A /* LTLAnimate.m */,
 			);
 			path = other;
+			sourceTree = "<group>";
+		};
+		1FE977D31DD73A9C00CE29F2 /* model */ = {
+			isa = PBXGroup;
+			children = (
+				1FE977D41DD73B1100CE29F2 /* LTLRecommendAlbums.h */,
+				1FE977D51DD73B1100CE29F2 /* LTLRecommendAlbums.m */,
+			);
+			path = model;
 			sourceTree = "<group>";
 		};
 		1FF875E91DCEFC0200354DE5 /* 播放器 */ = {
@@ -784,6 +800,8 @@
 				1F2239F61DC5DB3E00BA3BB3 /* LTLsongSheetCell.h */,
 				1F2239F71DC5DB3E00BA3BB3 /* LTLsongSheetCell.m */,
 				1F2239F81DC5DB3E00BA3BB3 /* LTLsongSheetCell.xib */,
+				1FE977D71DD746E700CE29F2 /* LTLGroupHeader.h */,
+				1FE977D81DD746E700CE29F2 /* LTLGroupHeader.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -950,6 +968,7 @@
 				C30A193A1DC2EEA300894453 /* NSString+MJExtension.m in Sources */,
 				C30A19331DC2EEA300894453 /* MJProperty.m in Sources */,
 				1F00B3B51DC4D8B800EDAE04 /* UIImage+GIF.m in Sources */,
+				1FE977D61DD73B1100CE29F2 /* LTLRecommendAlbums.m in Sources */,
 				1F00B3C01DC4D8B800EDAE04 /* SDWebImagePrefetcher.m in Sources */,
 				C30A19321DC2EEA300894453 /* MJFoundation.m in Sources */,
 				1F75C0D61DC2386F0061402B /* MMExampleDrawerVisualStateManager.m in Sources */,
@@ -982,6 +1001,7 @@
 				1F75C0D01DC227320061402B /* MMDrawerBarButtonItem.m in Sources */,
 				1F00B3B31DC4D8B800EDAE04 /* NSData+ImageContentType.m in Sources */,
 				1FB67BDC1DC0B12600FCA42D /* UIView+LTLView.m in Sources */,
+				1FE977D91DD746E700CE29F2 /* LTLGroupHeader.m in Sources */,
 				1F00B3211DC49EE700EDAE04 /* LTLCarouselView.m in Sources */,
 				1F00B3441DC4AE0B00EDAE04 /* NSArray+MASAdditions.m in Sources */,
 				1FA586171DC7620100AC7ED3 /* LTLSongViewController.m in Sources */,

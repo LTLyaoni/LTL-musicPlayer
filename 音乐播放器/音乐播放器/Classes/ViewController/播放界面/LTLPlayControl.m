@@ -161,7 +161,7 @@
 //    }
     if (!_player.isPlay) {
         [SVProgressHUD setMinimumDismissTimeInterval:1.8];
-        [SVProgressHUD showErrorWithStatus:@"当前没有音乐播放!!!"];
+        [SVProgressHUD showErrorWithStatus:@"当前没有播放音乐!!!"];
         return;
     }
     LTLMainPlayController *MainPlay = [[LTLMainPlayController alloc]initWithNibName:@"LTLMainPlayController" bundle:nil];

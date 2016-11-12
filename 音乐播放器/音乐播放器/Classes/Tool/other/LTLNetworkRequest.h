@@ -28,5 +28,6 @@ typedef void (^LTL)(NSMutableArray * _Nullable modelArray , XMErrorModel   * _Nu
  @param LTL 数据返回
  */
 +(void)MetadataAlbumsPage:(NSInteger )page dimension: (LTLDimension)dimension dadt:( LTL _Nullable )LTL;
-
+#pragma mark - 获取分类推荐
++(void)RecommendAlbums:( LTL _Nullable )LTL;
 @end

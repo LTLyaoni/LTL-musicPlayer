@@ -391,6 +391,7 @@
     NSNumber *userCycle = [NSNumber numberWithInt:cycle];
     NSUserDefaults *user = [NSUserDefaults standardUserDefaults];
     [user setObject:userCycle forKey:@"cycle"];
+    
     _playerCycle = cycle;
     
 }
@@ -541,11 +542,11 @@
     // 歌曲名称
     info[MPMediaItemPropertyTitle] = _tracksVM.trackTitle;
 
-    UIImage *image = [self playCoverImage];
-    if (image != nil) {
-        // 设置图片
-        info[MPMediaItemPropertyArtwork] = [[MPMediaItemArtwork alloc] initWithImage:image];
-    }
+//    UIImage *image = [self playCoverImage];
+//    if (image != nil) {
+//        // 设置图片
+//        info[MPMediaItemPropertyArtwork] = [[MPMediaItemArtwork alloc] initWithImage:image];
+//    }
     // 设置持续时间（歌曲的总时间）
     [info setObject:[NSNumber numberWithFloat:CMTimeGetSeconds([self.player.currentItem duration])] forKey:MPMediaItemPropertyPlaybackDuration];
     // 设置当前播放进度
@@ -558,6 +559,16 @@
     {
         [info setObject:[NSNumber numberWithFloat:1.0] forKey:MPNowPlayingInfoPropertyPlaybackRate];
     }
+    ///下载后图片
+    [[SDWebImageManager sharedManager] downloadImageWithURL:[NSURL URLWithString:self.tracksVM.coverUrlLarge] options:SDWebImageRetryFailed progress:^(NSInteger receivedSize, NSInteger expectedSize) {
+        
+    } completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, BOOL finished, NSURL *imageURL) {
+        // 设置图片
+        info[MPMediaItemPropertyArtwork] = [[MPMediaItemArtwork alloc] initWithImage:image];
+        // 切换播放信息
+        center.nowPlayingInfo = info;
+    }];
+    
     // 切换播放信息
     center.nowPlayingInfo = info;
     
@@ -566,8 +577,9 @@
 - (UIImage *)playCoverImage{
     
     UIImageView *imageCoverView = [[UIImageView alloc] init];
-    [imageCoverView sd_setImageWithURL:[NSURL URLWithString:self.tracksVM.coverUrlLarge] placeholderImage:[UIImage imageNamed:@"music_placeholder"]];
+//    [imageCoverView sd_setImageWithURL:[NSURL URLWithString:self.tracksVM.coverUrlLarge] placeholderImage:[UIImage imageNamed:@"music_placeholder"]];
 
+    
     return [imageCoverView.image copy];
 }
 #pragma mark - 音效

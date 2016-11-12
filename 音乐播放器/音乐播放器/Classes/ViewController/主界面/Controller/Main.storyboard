@@ -52,15 +52,43 @@
                                 <color key="backgroundColor" cocoaTouchSystemColor="lightTextColor"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="15" minimumInteritemSpacing="15" id="Qv9-aJ-BeD">
                                     <size key="itemSize" width="80" height="80"/>
-                                    <size key="headerReferenceSize" width="50" height="36"/>
+                                    <size key="headerReferenceSize" width="60" height="30"/>
                                     <size key="footerReferenceSize" width="0.0" height="0.0"/>
                                     <inset key="sectionInset" minX="15" minY="15" maxX="15" maxY="0.0"/>
                                 </collectionViewFlowLayout>
                                 <cells/>
-                                <collectionReusableView key="sectionHeaderView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="HeaderView" id="buF-Ex-M9o">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="36"/>
+                                <collectionReusableView key="sectionHeaderView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="HeaderView" id="buF-Ex-M9o" customClass="LTLGroupHeader">
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="30"/>
                                     <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ORE-LS-zge">
+                                            <rect key="frame" x="35" y="0.0" width="42" height="30"/>
+                                            <color key="backgroundColor" red="1" green="1" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9ym-nK-HGX">
+                                            <rect key="frame" x="310" y="0.0" width="31" height="30"/>
+                                            <color key="backgroundColor" red="1" green="1" blue="0.40000000600000002" alpha="1" colorSpace="calibratedRGB"/>
+                                            <state key="normal" title="更多"/>
+                                            <connections>
+                                                <action selector="More:" destination="buF-Ex-M9o" eventType="touchUpInside" id="2rF-Mf-MZA"/>
+                                            </connections>
+                                        </button>
+                                    </subviews>
                                     <color key="backgroundColor" red="1" green="0.080904397680000004" blue="0.1011615506" alpha="1" colorSpace="calibratedRGB"/>
+                                    <constraints>
+                                        <constraint firstAttribute="bottom" secondItem="ORE-LS-zge" secondAttribute="bottom" id="57W-e4-u9y"/>
+                                        <constraint firstItem="ORE-LS-zge" firstAttribute="top" secondItem="buF-Ex-M9o" secondAttribute="top" id="5vo-91-cNI"/>
+                                        <constraint firstAttribute="bottom" secondItem="9ym-nK-HGX" secondAttribute="bottom" id="6KO-UJ-Phz"/>
+                                        <constraint firstItem="ORE-LS-zge" firstAttribute="leading" secondItem="buF-Ex-M9o" secondAttribute="leading" constant="35" id="RlD-Wa-HIq"/>
+                                        <constraint firstAttribute="trailing" secondItem="9ym-nK-HGX" secondAttribute="trailing" constant="34" id="kY2-q0-wSE"/>
+                                        <constraint firstItem="9ym-nK-HGX" firstAttribute="top" secondItem="buF-Ex-M9o" secondAttribute="top" id="xKk-dO-Rew"/>
+                                    </constraints>
+                                    <connections>
+                                        <outlet property="GroupHeader" destination="ORE-LS-zge" id="JPc-TX-K7e"/>
+                                    </connections>
                                 </collectionReusableView>
                                 <connections>
                                     <outlet property="dataSource" destination="dG6-DH-3De" id="7vh-On-twS"/>

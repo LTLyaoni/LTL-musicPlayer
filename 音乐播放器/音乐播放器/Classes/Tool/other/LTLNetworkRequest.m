@@ -7,6 +7,7 @@
 //
 
 #import "LTLNetworkRequest.h"
+#import "LTLRecommendAlbums.h"
 
 @implementation LTLNetworkRequest
 
@@ -19,8 +20,8 @@
     NSMutableArray *array = [NSMutableArray array];
     /** 获取分类推荐的焦点图列表 */
     NSMutableDictionary *params = [NSMutableDictionary dictionary];
-//    [params setObject:@10 forKey:@"channel"];
-//    [params setObject:@10 forKey:@"app_version"];
+//    [params setObject:@2 forKey:@"channel"];
+    [params setObject:@2 forKey:@"app_version"];
 //    [params setObject:@3 forKey:@"image_scale"];
     [params setObject:@2 forKey:@"category_id"];
     [params setObject:@"album" forKey:@"content_type"];
@@ -41,11 +42,7 @@
 #pragma mark - 获取分类内容
 +(void)CategoriesList:( LTL )LTL
 {
-    [[XMReqMgr sharedInstance] requestXMData:XMReqType_CategoriesList params:nil withCompletionHander:^(id result, XMErrorModel *error) {
 
-        NSLog(@"%@",result);
-
-    }];
     //分类元数据
     NSMutableDictionary *params2 = [NSMutableDictionary dictionary];
     [params2 setObject:@2 forKey:@"category_id"];
@@ -57,6 +54,34 @@
             NSLog(@"Error: error_no:%ld, error_code:%@, error_desc:%@",(long)error.error_no, error.error_code, error.error_desc);
     }];
 }
+#pragma mark - 获取分类推荐
++(void)RecommendAlbums:( LTL )LTL
+{
+    ///获取分类推荐数组
+    NSMutableArray *array = [NSMutableArray array];
+    //分类元数据
+    NSMutableDictionary *params = [NSMutableDictionary dictionary];
+    [params setObject:@2 forKey:@"category_id"];
+    [params setObject:@6 forKey:@"display_count"];
+    [[XMReqMgr sharedInstance] requestXMData:XMReqType_CategoryRecommendAlbums params:params withCompletionHander:^(id result, XMErrorModel *error) {
+        if(!error)
+        {
+            [result enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            LTLRecommendAlbums * model = [[LTLRecommendAlbums alloc]initWithDictionary:obj];
+//                NSLog(@"%@",model.display_tag_name );
+            [array addObject:model];
+            
+            }];
+
+        }
+        else
+            NSLog(@"获取分类推荐数据Error: error_no:%ld, error_code:%@, error_desc:%@",(long)error.error_no, error.error_code, error.error_desc);
+        LTL(array,error);
+    }];
+    [self CategoriesList:nil];
+}
+
+
 #pragma mark - 获取歌单
 +(void)MetadataAlbumsPage:(NSInteger )page dimension: (LTLDimension)dimension dadt:( LTL )LTL
 {

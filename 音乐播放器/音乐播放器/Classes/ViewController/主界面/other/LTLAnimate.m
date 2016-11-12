@@ -24,7 +24,6 @@
 ///毛玻璃
 @property (strong, nonatomic) UIVisualEffectView *visualEffectView;
 
-@property (strong ,nonatomic)LTLSongViewController *SongVC;
 
 @end
 
@@ -153,15 +152,16 @@
     fromVC.infoView.picView.hidden = YES;
     //添加快照
     [containView addSubview:snapShotView];
-    self.SongVC = fromVC;
+    
     ///layer层动画
     [self addPathAnimateWithView:fromVC.view fromPoint:snapShotView.frame view:snapShotView  Transition:transitionContext];
     
-    //用延时执行动画就是等layer层动画执行完
+    //用延时执行动画就是等layer层动画执行完再执行延时动画
     [UIView animateWithDuration:[self transitionDuration:transitionContext] delay:[self transitionDuration:transitionContext] options:UIViewAnimationOptionLayoutSubviews  animations:^{
         //执行的动画
-        
+
         snapShotView.frame   = fromVC.finalCellRect;
+        
         _visualEffectView.alpha =0;
         
     } completion:^(BOOL finished) {
@@ -184,7 +184,7 @@
     ///路径
     UIBezierPath *maskStartBP =  [UIBezierPath bezierPathWithOvalInRect:Rect];
     
-    CGPoint finalPoint = CGPointMake(view.center.x, view.center.y);
+//    CGPoint finalPoint = CGPointMake(view.center.x, view.center.y);
     ///半径
     CGFloat radius =  LTL_WindowH;
 
@@ -209,6 +209,10 @@
     maskLayerAnimation.duration = [self transitionDuration:transitionContext];
     ///timingFunction为动画速度控制函数，控制动画运行的节奏
     maskLayerAnimation.timingFunction = [CAMediaTimingFunction  functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
+    ///执行动画后不恢复初始状态
+    maskLayerAnimation.removedOnCompletion = NO;
+    maskLayerAnimation.fillMode = kCAFillModeForwards;
+    
     
     maskLayerAnimation.delegate = self;
     ///往maskLayer添加动画
@@ -217,23 +221,12 @@
 #pragma mark - CABasicAnimation的Delegate
 - (void)animationDidStop:(CAAnimation *)anim finished:(BOOL)flag
 {
-    
-    //告诉 iOS 这个 transition 完成
-    [self.transitionContext completeTransition:![self. transitionContext transitionWasCancelled]];
-    //清除 fromVC 的 mask
-//    [self.transitionContext viewControllerForKey:UITransitionContextFromViewControllerKey].view.layer.mask = nil;
-//    [self.transitionContext viewControllerForKey:UITransitionContextToViewControllerKey].view.layer.mask = nil;
-   
-    //告诉 iOS 这个 transition 完成
-    if (_type) {
-        ///逻辑还有点问题 在POP 转场的时候有时会有闪动 或许是layer层动画和图片移动动画执行有间隔;日后再排查;
-        ///先样layer层动画执行后隐藏SongVC控制器;这样消除闪动.........
-        self.SongVC.view.hidden = YES;
-        return;
-    } else {
+    if (!_type)
+    {
         ///移除毛玻璃
         [self.visualEffectView removeFromSuperview];
-//        [self.transitionContext completeTransition:![self. transitionContext transitionWasCancelled]];
+        //告诉 iOS 这个 transition 完成
+        [self.transitionContext completeTransition:![self. transitionContext transitionWasCancelled]];
     }
     
 }
