@@ -48,8 +48,16 @@
     [params2 setObject:@2 forKey:@"category_id"];
     [[XMReqMgr sharedInstance] requestXMData:XMReqType_MetadataList params:params2 withCompletionHander:^(id result, XMErrorModel *error) {
         if(!error)
+        {
 //            [sself showReceivedData:result className:@"XMMetadata" valuePath:@"metadata" titleNeedShow:@"displayName"];
+            [result enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+                
+                
+                
+            }];
+        
             NSLog(@"%@",result);
+        }
         else
             NSLog(@"Error: error_no:%ld, error_code:%@, error_desc:%@",(long)error.error_no, error.error_code, error.error_desc);
     }];
@@ -78,8 +86,26 @@
             NSLog(@"获取分类推荐数据Error: error_no:%ld, error_code:%@, error_desc:%@",(long)error.error_no, error.error_code, error.error_desc);
         LTL(array,error);
     }];
-    [self CategoriesList:nil];
+//    [self CategoriesList:nil];
+//    [self AlbumsGuessLike];
+    [self MetadataAlbumsPage:1 dimension:LTLDimensionTheFire dadt:^(NSMutableArray * _Nullable modelArray, XMErrorModel * _Nullable error) {
+        
+    }];
 }
+
+#pragma mark - 获取猜你喜欢
++(void)AlbumsGuessLike
+{
+    [[XMReqMgr sharedInstance] requestXMData:XMReqType_DiscoveryRecommendAlbums params:nil withCompletionHander:^(id result, XMErrorModel *error) {
+        if(!error)
+//            [sself showReceivedData:result className:@"XMCategoryHumanRecommend" valuePath:nil titleNeedShow:@"categoryName"];
+            NSLog(@"%@",result);
+        else
+            NSLog(@"%@",error.description);
+    }];
+
+}
+
 
 
 #pragma mark - 获取歌单
@@ -100,13 +126,13 @@
     [[XMReqMgr sharedInstance] requestXMData:XMReqType_MetadataAlbums params:params withCompletionHander:^(id result, XMErrorModel *error) {
         if(!error)
         {
-//            NSLog(@"%@",result[@"albums"]);
-            [result[@"albums"] enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-                XMAlbum *model = [[XMAlbum alloc]initWithDictionary:obj];
-                model.PlayNumber = @"LTL";
-                [model LabelProcessing:model.albumTags];
-                [array addObject:model];
-        }];
+            NSLog(@"%@",result[@"albums"]);
+//            [result[@"albums"] enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+//                XMAlbum *model = [[XMAlbum alloc]initWithDictionary:obj];
+//                model.PlayNumber = @"LTL";
+//                [model LabelProcessing:model.albumTags];
+//                [array addObject:model];
+//            }];
             LTL(array,nil);
         }
         else

@@ -36,6 +36,7 @@
 		1F00B3C01DC4D8B800EDAE04 /* SDWebImagePrefetcher.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F00B3B01DC4D8B800EDAE04 /* SDWebImagePrefetcher.m */; };
 		1F00B3C51DC4F2FC00EDAE04 /* LTLNetworkRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F00B3C41DC4F2FC00EDAE04 /* LTLNetworkRequest.m */; };
 		1F0396031DCDFAD2002C093E /* LTLuserInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F0396021DCDFAD2002C093E /* LTLuserInfo.m */; };
+		1F1CF7EA1DD81B730090C91D /* libXMOpenPlatform.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F1CF7E91DD81B730090C91D /* libXMOpenPlatform.a */; };
 		1F2239F91DC5DB3E00BA3BB3 /* LTLsongSheetCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F2239F71DC5DB3E00BA3BB3 /* LTLsongSheetCell.m */; };
 		1F2239FA1DC5DB3E00BA3BB3 /* LTLsongSheetCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1F2239F81DC5DB3E00BA3BB3 /* LTLsongSheetCell.xib */; };
 		1F2239FE1DC5EAB700BA3BB3 /* XMAlbum+LTLXMAlbum.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F2239FD1DC5EAB700BA3BB3 /* XMAlbum+LTLXMAlbum.m */; };
@@ -84,7 +85,6 @@
 		1FFC36D01DC394E5007D5A09 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1FFC36CE1DC394E5007D5A09 /* Main.storyboard */; };
 		C30A18EF1DC2CFAB00894453 /* LTLSearchController.m in Sources */ = {isa = PBXBuildFile; fileRef = C30A18ED1DC2CFAB00894453 /* LTLSearchController.m */; };
 		C30A18F01DC2CFAB00894453 /* LTLSearchController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C30A18EE1DC2CFAB00894453 /* LTLSearchController.xib */; };
-		C30A191A1DC2D90E00894453 /* libXMOpenPlatform.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C30A19191DC2D90E00894453 /* libXMOpenPlatform.a */; };
 		C30A19311DC2EEA300894453 /* MJExtensionConst.m in Sources */ = {isa = PBXBuildFile; fileRef = C30A191E1DC2EEA200894453 /* MJExtensionConst.m */; };
 		C30A19321DC2EEA300894453 /* MJFoundation.m in Sources */ = {isa = PBXBuildFile; fileRef = C30A19201DC2EEA200894453 /* MJFoundation.m */; };
 		C30A19331DC2EEA300894453 /* MJProperty.m in Sources */ = {isa = PBXBuildFile; fileRef = C30A19221DC2EEA300894453 /* MJProperty.m */; };
@@ -165,6 +165,44 @@
 		1F00B3C41DC4F2FC00EDAE04 /* LTLNetworkRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LTLNetworkRequest.m; sourceTree = "<group>"; };
 		1F0396011DCDFAD2002C093E /* LTLuserInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LTLuserInfo.h; sourceTree = "<group>"; };
 		1F0396021DCDFAD2002C093E /* LTLuserInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LTLuserInfo.m; sourceTree = "<group>"; };
+		1F1CF7C01DD81B730090C91D /* XMSDKDownloadManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XMSDKDownloadManager.h; sourceTree = "<group>"; };
+		1F1CF7C21DD81B730090C91D /* XMAlbum.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XMAlbum.h; sourceTree = "<group>"; };
+		1F1CF7C31DD81B730090C91D /* XMAlbumGuessLike.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XMAlbumGuessLike.h; sourceTree = "<group>"; };
+		1F1CF7C41DD81B730090C91D /* XMAnnouncer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XMAnnouncer.h; sourceTree = "<group>"; };
+		1F1CF7C51DD81B730090C91D /* XMAnnouncerCategory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XMAnnouncerCategory.h; sourceTree = "<group>"; };
+		1F1CF7C61DD81B730090C91D /* XMAttribute.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XMAttribute.h; sourceTree = "<group>"; };
+		1F1CF7C71DD81B730090C91D /* XMBanner.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XMBanner.h; sourceTree = "<group>"; };
+		1F1CF7C81DD81B730090C91D /* XMCacheTrack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XMCacheTrack.h; sourceTree = "<group>"; };
+		1F1CF7C91DD81B730090C91D /* XMCategory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XMCategory.h; sourceTree = "<group>"; };
+		1F1CF7CA1DD81B730090C91D /* XMCategoryHumanRecommend.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XMCategoryHumanRecommend.h; sourceTree = "<group>"; };
+		1F1CF7CB1DD81B730090C91D /* XMColdbootDetail.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XMColdbootDetail.h; sourceTree = "<group>"; };
+		1F1CF7CC1DD81B730090C91D /* XMColdbootTag.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XMColdbootTag.h; sourceTree = "<group>"; };
+		1F1CF7CD1DD81B730090C91D /* XMColumn.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XMColumn.h; sourceTree = "<group>"; };
+		1F1CF7CE1DD81B730090C91D /* XMColumnDetail.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XMColumnDetail.h; sourceTree = "<group>"; };
+		1F1CF7CF1DD81B730090C91D /* XMColumnEditor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XMColumnEditor.h; sourceTree = "<group>"; };
+		1F1CF7D01DD81B730090C91D /* XMColumnList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XMColumnList.h; sourceTree = "<group>"; };
+		1F1CF7D11DD81B730090C91D /* XMHotTrack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XMHotTrack.h; sourceTree = "<group>"; };
+		1F1CF7D21DD81B730090C91D /* XMHotword.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XMHotword.h; sourceTree = "<group>"; };
+		1F1CF7D31DD81B730090C91D /* XMIndexRankItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XMIndexRankItem.h; sourceTree = "<group>"; };
+		1F1CF7D41DD81B730090C91D /* XMLastUptrack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XMLastUptrack.h; sourceTree = "<group>"; };
+		1F1CF7D51DD81B730090C91D /* XMLiveAnnouncer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XMLiveAnnouncer.h; sourceTree = "<group>"; };
+		1F1CF7D61DD81B730090C91D /* XMLiveCity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XMLiveCity.h; sourceTree = "<group>"; };
+		1F1CF7D71DD81B730090C91D /* XMMetadata.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XMMetadata.h; sourceTree = "<group>"; };
+		1F1CF7D81DD81B730090C91D /* XMProvince.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XMProvince.h; sourceTree = "<group>"; };
+		1F1CF7D91DD81B730090C91D /* XMRadio.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XMRadio.h; sourceTree = "<group>"; };
+		1F1CF7DA1DD81B730090C91D /* XMRadioSchedule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XMRadioSchedule.h; sourceTree = "<group>"; };
+		1F1CF7DB1DD81B730090C91D /* XMRankSectionList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XMRankSectionList.h; sourceTree = "<group>"; };
+		1F1CF7DC1DD81B730090C91D /* XMRelatedProgram.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XMRelatedProgram.h; sourceTree = "<group>"; };
+		1F1CF7DD1DD81B730090C91D /* XMSubordinatedAlbum.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XMSubordinatedAlbum.h; sourceTree = "<group>"; };
+		1F1CF7DE1DD81B730090C91D /* XMTag.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XMTag.h; sourceTree = "<group>"; };
+		1F1CF7DF1DD81B730090C91D /* XMTrack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XMTrack.h; sourceTree = "<group>"; };
+		1F1CF7E11DD81B730090C91D /* XMSDKPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XMSDKPlayer.h; sourceTree = "<group>"; };
+		1F1CF7E21DD81B730090C91D /* XMSDKPlayerDataCollector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XMSDKPlayerDataCollector.h; sourceTree = "<group>"; };
+		1F1CF7E41DD81B730090C91D /* XMReqMgr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XMReqMgr.h; sourceTree = "<group>"; };
+		1F1CF7E61DD81B730090C91D /* XMSDK.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XMSDK.h; sourceTree = "<group>"; };
+		1F1CF7E71DD81B730090C91D /* XMSDKInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XMSDKInfo.h; sourceTree = "<group>"; };
+		1F1CF7E81DD81B730090C91D /* XMSingleTone.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XMSingleTone.h; sourceTree = "<group>"; };
+		1F1CF7E91DD81B730090C91D /* libXMOpenPlatform.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libXMOpenPlatform.a; sourceTree = "<group>"; };
 		1F2239F61DC5DB3E00BA3BB3 /* LTLsongSheetCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LTLsongSheetCell.h; sourceTree = "<group>"; };
 		1F2239F71DC5DB3E00BA3BB3 /* LTLsongSheetCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LTLsongSheetCell.m; sourceTree = "<group>"; };
 		1F2239F81DC5DB3E00BA3BB3 /* LTLsongSheetCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LTLsongSheetCell.xib; sourceTree = "<group>"; };
@@ -255,43 +293,6 @@
 		C30A18EC1DC2CFAB00894453 /* LTLSearchController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LTLSearchController.h; sourceTree = "<group>"; };
 		C30A18ED1DC2CFAB00894453 /* LTLSearchController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LTLSearchController.m; sourceTree = "<group>"; };
 		C30A18EE1DC2CFAB00894453 /* LTLSearchController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LTLSearchController.xib; sourceTree = "<group>"; };
-		C30A18F31DC2D90E00894453 /* XMSDKDownloadManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XMSDKDownloadManager.h; sourceTree = "<group>"; };
-		C30A18F51DC2D90E00894453 /* XMAlbum.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XMAlbum.h; sourceTree = "<group>"; };
-		C30A18F61DC2D90E00894453 /* XMAlbumGuessLike.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XMAlbumGuessLike.h; sourceTree = "<group>"; };
-		C30A18F71DC2D90E00894453 /* XMAnnouncer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XMAnnouncer.h; sourceTree = "<group>"; };
-		C30A18F81DC2D90E00894453 /* XMAnnouncerCategory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XMAnnouncerCategory.h; sourceTree = "<group>"; };
-		C30A18F91DC2D90E00894453 /* XMAttribute.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XMAttribute.h; sourceTree = "<group>"; };
-		C30A18FA1DC2D90E00894453 /* XMBanner.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XMBanner.h; sourceTree = "<group>"; };
-		C30A18FB1DC2D90E00894453 /* XMCacheTrack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XMCacheTrack.h; sourceTree = "<group>"; };
-		C30A18FC1DC2D90E00894453 /* XMCategory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XMCategory.h; sourceTree = "<group>"; };
-		C30A18FD1DC2D90E00894453 /* XMCategoryHumanRecommend.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XMCategoryHumanRecommend.h; sourceTree = "<group>"; };
-		C30A18FE1DC2D90E00894453 /* XMColdbootDetail.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XMColdbootDetail.h; sourceTree = "<group>"; };
-		C30A18FF1DC2D90E00894453 /* XMColdbootTag.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XMColdbootTag.h; sourceTree = "<group>"; };
-		C30A19001DC2D90E00894453 /* XMColumn.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XMColumn.h; sourceTree = "<group>"; };
-		C30A19011DC2D90E00894453 /* XMColumnDetail.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XMColumnDetail.h; sourceTree = "<group>"; };
-		C30A19021DC2D90E00894453 /* XMColumnEditor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XMColumnEditor.h; sourceTree = "<group>"; };
-		C30A19031DC2D90E00894453 /* XMColumnList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XMColumnList.h; sourceTree = "<group>"; };
-		C30A19041DC2D90E00894453 /* XMHotTrack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XMHotTrack.h; sourceTree = "<group>"; };
-		C30A19051DC2D90E00894453 /* XMHotword.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XMHotword.h; sourceTree = "<group>"; };
-		C30A19061DC2D90E00894453 /* XMIndexRankItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XMIndexRankItem.h; sourceTree = "<group>"; };
-		C30A19071DC2D90E00894453 /* XMLastUptrack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XMLastUptrack.h; sourceTree = "<group>"; };
-		C30A19081DC2D90E00894453 /* XMLiveAnnouncer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XMLiveAnnouncer.h; sourceTree = "<group>"; };
-		C30A19091DC2D90E00894453 /* XMLiveCity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XMLiveCity.h; sourceTree = "<group>"; };
-		C30A190A1DC2D90E00894453 /* XMMetadata.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XMMetadata.h; sourceTree = "<group>"; };
-		C30A190B1DC2D90E00894453 /* XMProvince.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XMProvince.h; sourceTree = "<group>"; };
-		C30A190C1DC2D90E00894453 /* XMRadio.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XMRadio.h; sourceTree = "<group>"; };
-		C30A190D1DC2D90E00894453 /* XMRadioSchedule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XMRadioSchedule.h; sourceTree = "<group>"; };
-		C30A190E1DC2D90E00894453 /* XMRankSectionList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XMRankSectionList.h; sourceTree = "<group>"; };
-		C30A190F1DC2D90E00894453 /* XMRelatedProgram.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XMRelatedProgram.h; sourceTree = "<group>"; };
-		C30A19101DC2D90E00894453 /* XMSubordinatedAlbum.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XMSubordinatedAlbum.h; sourceTree = "<group>"; };
-		C30A19111DC2D90E00894453 /* XMTag.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XMTag.h; sourceTree = "<group>"; };
-		C30A19121DC2D90E00894453 /* XMTrack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XMTrack.h; sourceTree = "<group>"; };
-		C30A19141DC2D90E00894453 /* XMSDKPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XMSDKPlayer.h; sourceTree = "<group>"; };
-		C30A19151DC2D90E00894453 /* XMSDKPlayerDataCollector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XMSDKPlayerDataCollector.h; sourceTree = "<group>"; };
-		C30A19161DC2D90E00894453 /* XMReqMgr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XMReqMgr.h; sourceTree = "<group>"; };
-		C30A19171DC2D90E00894453 /* XMSDK.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XMSDK.h; sourceTree = "<group>"; };
-		C30A19181DC2D90E00894453 /* XMSDKInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XMSDKInfo.h; sourceTree = "<group>"; };
-		C30A19191DC2D90E00894453 /* libXMOpenPlatform.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libXMOpenPlatform.a; sourceTree = "<group>"; };
 		C30A191C1DC2EEA200894453 /* MJExtension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MJExtension.h; sourceTree = "<group>"; };
 		C30A191D1DC2EEA200894453 /* MJExtensionConst.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MJExtensionConst.h; sourceTree = "<group>"; };
 		C30A191E1DC2EEA200894453 /* MJExtensionConst.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MJExtensionConst.m; sourceTree = "<group>"; };
@@ -328,7 +329,7 @@
 				1F75C1351DC254990061402B /* libz.tbd in Frameworks */,
 				1F75C1331DC254870061402B /* CoreTelephony.framework in Frameworks */,
 				1F75C1311DC254780061402B /* SystemConfiguration.framework in Frameworks */,
-				C30A191A1DC2D90E00894453 /* libXMOpenPlatform.a in Frameworks */,
+				1F1CF7EA1DD81B730090C91D /* libXMOpenPlatform.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -449,6 +450,90 @@
 			path = other;
 			sourceTree = "<group>";
 		};
+		1F1CF7BE1DD81B730090C91D /* include */ = {
+			isa = PBXGroup;
+			children = (
+				1F1CF7BF1DD81B730090C91D /* Downloader */,
+				1F1CF7C11DD81B730090C91D /* Model */,
+				1F1CF7E01DD81B730090C91D /* Player */,
+				1F1CF7E31DD81B730090C91D /* Request */,
+				1F1CF7E51DD81B730090C91D /* Utility */,
+			);
+			path = include;
+			sourceTree = "<group>";
+		};
+		1F1CF7BF1DD81B730090C91D /* Downloader */ = {
+			isa = PBXGroup;
+			children = (
+				1F1CF7C01DD81B730090C91D /* XMSDKDownloadManager.h */,
+			);
+			path = Downloader;
+			sourceTree = "<group>";
+		};
+		1F1CF7C11DD81B730090C91D /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				1F1CF7C21DD81B730090C91D /* XMAlbum.h */,
+				1F1CF7C31DD81B730090C91D /* XMAlbumGuessLike.h */,
+				1F1CF7C41DD81B730090C91D /* XMAnnouncer.h */,
+				1F1CF7C51DD81B730090C91D /* XMAnnouncerCategory.h */,
+				1F1CF7C61DD81B730090C91D /* XMAttribute.h */,
+				1F1CF7C71DD81B730090C91D /* XMBanner.h */,
+				1F1CF7C81DD81B730090C91D /* XMCacheTrack.h */,
+				1F1CF7C91DD81B730090C91D /* XMCategory.h */,
+				1F1CF7CA1DD81B730090C91D /* XMCategoryHumanRecommend.h */,
+				1F1CF7CB1DD81B730090C91D /* XMColdbootDetail.h */,
+				1F1CF7CC1DD81B730090C91D /* XMColdbootTag.h */,
+				1F1CF7CD1DD81B730090C91D /* XMColumn.h */,
+				1F1CF7CE1DD81B730090C91D /* XMColumnDetail.h */,
+				1F1CF7CF1DD81B730090C91D /* XMColumnEditor.h */,
+				1F1CF7D01DD81B730090C91D /* XMColumnList.h */,
+				1F1CF7D11DD81B730090C91D /* XMHotTrack.h */,
+				1F1CF7D21DD81B730090C91D /* XMHotword.h */,
+				1F1CF7D31DD81B730090C91D /* XMIndexRankItem.h */,
+				1F1CF7D41DD81B730090C91D /* XMLastUptrack.h */,
+				1F1CF7D51DD81B730090C91D /* XMLiveAnnouncer.h */,
+				1F1CF7D61DD81B730090C91D /* XMLiveCity.h */,
+				1F1CF7D71DD81B730090C91D /* XMMetadata.h */,
+				1F1CF7D81DD81B730090C91D /* XMProvince.h */,
+				1F1CF7D91DD81B730090C91D /* XMRadio.h */,
+				1F1CF7DA1DD81B730090C91D /* XMRadioSchedule.h */,
+				1F1CF7DB1DD81B730090C91D /* XMRankSectionList.h */,
+				1F1CF7DC1DD81B730090C91D /* XMRelatedProgram.h */,
+				1F1CF7DD1DD81B730090C91D /* XMSubordinatedAlbum.h */,
+				1F1CF7DE1DD81B730090C91D /* XMTag.h */,
+				1F1CF7DF1DD81B730090C91D /* XMTrack.h */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		1F1CF7E01DD81B730090C91D /* Player */ = {
+			isa = PBXGroup;
+			children = (
+				1F1CF7E11DD81B730090C91D /* XMSDKPlayer.h */,
+				1F1CF7E21DD81B730090C91D /* XMSDKPlayerDataCollector.h */,
+			);
+			path = Player;
+			sourceTree = "<group>";
+		};
+		1F1CF7E31DD81B730090C91D /* Request */ = {
+			isa = PBXGroup;
+			children = (
+				1F1CF7E41DD81B730090C91D /* XMReqMgr.h */,
+			);
+			path = Request;
+			sourceTree = "<group>";
+		};
+		1F1CF7E51DD81B730090C91D /* Utility */ = {
+			isa = PBXGroup;
+			children = (
+				1F1CF7E61DD81B730090C91D /* XMSDK.h */,
+				1F1CF7E71DD81B730090C91D /* XMSDKInfo.h */,
+				1F1CF7E81DD81B730090C91D /* XMSingleTone.h */,
+			);
+			path = Utility;
+			sourceTree = "<group>";
+		};
 		1F2239FB1DC5EA8300BA3BB3 /* SDKExtend */ = {
 			isa = PBXGroup;
 			children = (
@@ -539,8 +624,8 @@
 		1F75C0DD1DC252710061402B /* 喜马拉雅SDK */ = {
 			isa = PBXGroup;
 			children = (
-				C30A18F11DC2D90E00894453 /* include */,
-				C30A19191DC2D90E00894453 /* libXMOpenPlatform.a */,
+				1F1CF7BE1DD81B730090C91D /* include */,
+				1F1CF7E91DD81B730090C91D /* libXMOpenPlatform.a */,
 			);
 			path = "喜马拉雅SDK";
 			sourceTree = "<group>";
@@ -694,73 +779,6 @@
 				C30A18EE1DC2CFAB00894453 /* LTLSearchController.xib */,
 			);
 			path = "搜索界面";
-			sourceTree = "<group>";
-		};
-		C30A18F11DC2D90E00894453 /* include */ = {
-			isa = PBXGroup;
-			children = (
-				C30A18F21DC2D90E00894453 /* Downloader */,
-				C30A18F41DC2D90E00894453 /* Model */,
-				C30A19131DC2D90E00894453 /* Player */,
-				C30A19161DC2D90E00894453 /* XMReqMgr.h */,
-				C30A19171DC2D90E00894453 /* XMSDK.h */,
-				C30A19181DC2D90E00894453 /* XMSDKInfo.h */,
-			);
-			path = include;
-			sourceTree = "<group>";
-		};
-		C30A18F21DC2D90E00894453 /* Downloader */ = {
-			isa = PBXGroup;
-			children = (
-				C30A18F31DC2D90E00894453 /* XMSDKDownloadManager.h */,
-			);
-			path = Downloader;
-			sourceTree = "<group>";
-		};
-		C30A18F41DC2D90E00894453 /* Model */ = {
-			isa = PBXGroup;
-			children = (
-				C30A18F51DC2D90E00894453 /* XMAlbum.h */,
-				C30A18F61DC2D90E00894453 /* XMAlbumGuessLike.h */,
-				C30A18F71DC2D90E00894453 /* XMAnnouncer.h */,
-				C30A18F81DC2D90E00894453 /* XMAnnouncerCategory.h */,
-				C30A18F91DC2D90E00894453 /* XMAttribute.h */,
-				C30A18FA1DC2D90E00894453 /* XMBanner.h */,
-				C30A18FB1DC2D90E00894453 /* XMCacheTrack.h */,
-				C30A18FC1DC2D90E00894453 /* XMCategory.h */,
-				C30A18FD1DC2D90E00894453 /* XMCategoryHumanRecommend.h */,
-				C30A18FE1DC2D90E00894453 /* XMColdbootDetail.h */,
-				C30A18FF1DC2D90E00894453 /* XMColdbootTag.h */,
-				C30A19001DC2D90E00894453 /* XMColumn.h */,
-				C30A19011DC2D90E00894453 /* XMColumnDetail.h */,
-				C30A19021DC2D90E00894453 /* XMColumnEditor.h */,
-				C30A19031DC2D90E00894453 /* XMColumnList.h */,
-				C30A19041DC2D90E00894453 /* XMHotTrack.h */,
-				C30A19051DC2D90E00894453 /* XMHotword.h */,
-				C30A19061DC2D90E00894453 /* XMIndexRankItem.h */,
-				C30A19071DC2D90E00894453 /* XMLastUptrack.h */,
-				C30A19081DC2D90E00894453 /* XMLiveAnnouncer.h */,
-				C30A19091DC2D90E00894453 /* XMLiveCity.h */,
-				C30A190A1DC2D90E00894453 /* XMMetadata.h */,
-				C30A190B1DC2D90E00894453 /* XMProvince.h */,
-				C30A190C1DC2D90E00894453 /* XMRadio.h */,
-				C30A190D1DC2D90E00894453 /* XMRadioSchedule.h */,
-				C30A190E1DC2D90E00894453 /* XMRankSectionList.h */,
-				C30A190F1DC2D90E00894453 /* XMRelatedProgram.h */,
-				C30A19101DC2D90E00894453 /* XMSubordinatedAlbum.h */,
-				C30A19111DC2D90E00894453 /* XMTag.h */,
-				C30A19121DC2D90E00894453 /* XMTrack.h */,
-			);
-			path = Model;
-			sourceTree = "<group>";
-		};
-		C30A19131DC2D90E00894453 /* Player */ = {
-			isa = PBXGroup;
-			children = (
-				C30A19141DC2D90E00894453 /* XMSDKPlayer.h */,
-				C30A19151DC2D90E00894453 /* XMSDKPlayerDataCollector.h */,
-			);
-			path = Player;
 			sourceTree = "<group>";
 		};
 		C30A191B1DC2EEA200894453 /* MJExtension */ = {
@@ -1124,6 +1142,7 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/音乐播放器/Classes/喜马拉雅SDK",
+					"$(PROJECT_DIR)/音乐播放器/Classes/喜马拉雅SDK/SDK",
 				);
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = LTLMusic;
@@ -1143,6 +1162,7 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/音乐播放器/Classes/喜马拉雅SDK",
+					"$(PROJECT_DIR)/音乐播放器/Classes/喜马拉雅SDK/SDK",
 				);
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = LTLMusic;
