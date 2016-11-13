@@ -37,6 +37,11 @@
 		1F00B3C51DC4F2FC00EDAE04 /* LTLNetworkRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F00B3C41DC4F2FC00EDAE04 /* LTLNetworkRequest.m */; };
 		1F0396031DCDFAD2002C093E /* LTLuserInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F0396021DCDFAD2002C093E /* LTLuserInfo.m */; };
 		1F1CF7EA1DD81B730090C91D /* libXMOpenPlatform.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F1CF7E91DD81B730090C91D /* libXMOpenPlatform.a */; };
+		1F1CF7F71DD81CA20090C91D /* FMDatabase.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F1CF7ED1DD81CA20090C91D /* FMDatabase.m */; };
+		1F1CF7F81DD81CA20090C91D /* FMDatabaseAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F1CF7EF1DD81CA20090C91D /* FMDatabaseAdditions.m */; };
+		1F1CF7F91DD81CA20090C91D /* FMDatabasePool.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F1CF7F11DD81CA20090C91D /* FMDatabasePool.m */; };
+		1F1CF7FA1DD81CA20090C91D /* FMDatabaseQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F1CF7F31DD81CA20090C91D /* FMDatabaseQueue.m */; };
+		1F1CF7FB1DD81CA20090C91D /* FMResultSet.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F1CF7F61DD81CA20090C91D /* FMResultSet.m */; };
 		1F2239F91DC5DB3E00BA3BB3 /* LTLsongSheetCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F2239F71DC5DB3E00BA3BB3 /* LTLsongSheetCell.m */; };
 		1F2239FA1DC5DB3E00BA3BB3 /* LTLsongSheetCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1F2239F81DC5DB3E00BA3BB3 /* LTLsongSheetCell.xib */; };
 		1F2239FE1DC5EAB700BA3BB3 /* XMAlbum+LTLXMAlbum.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F2239FD1DC5EAB700BA3BB3 /* XMAlbum+LTLXMAlbum.m */; };
@@ -203,6 +208,17 @@
 		1F1CF7E71DD81B730090C91D /* XMSDKInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XMSDKInfo.h; sourceTree = "<group>"; };
 		1F1CF7E81DD81B730090C91D /* XMSingleTone.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XMSingleTone.h; sourceTree = "<group>"; };
 		1F1CF7E91DD81B730090C91D /* libXMOpenPlatform.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libXMOpenPlatform.a; sourceTree = "<group>"; };
+		1F1CF7EC1DD81CA20090C91D /* FMDatabase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMDatabase.h; sourceTree = "<group>"; };
+		1F1CF7ED1DD81CA20090C91D /* FMDatabase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMDatabase.m; sourceTree = "<group>"; };
+		1F1CF7EE1DD81CA20090C91D /* FMDatabaseAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMDatabaseAdditions.h; sourceTree = "<group>"; };
+		1F1CF7EF1DD81CA20090C91D /* FMDatabaseAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMDatabaseAdditions.m; sourceTree = "<group>"; };
+		1F1CF7F01DD81CA20090C91D /* FMDatabasePool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMDatabasePool.h; sourceTree = "<group>"; };
+		1F1CF7F11DD81CA20090C91D /* FMDatabasePool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMDatabasePool.m; sourceTree = "<group>"; };
+		1F1CF7F21DD81CA20090C91D /* FMDatabaseQueue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMDatabaseQueue.h; sourceTree = "<group>"; };
+		1F1CF7F31DD81CA20090C91D /* FMDatabaseQueue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMDatabaseQueue.m; sourceTree = "<group>"; };
+		1F1CF7F41DD81CA20090C91D /* FMDB.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMDB.h; sourceTree = "<group>"; };
+		1F1CF7F51DD81CA20090C91D /* FMResultSet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMResultSet.h; sourceTree = "<group>"; };
+		1F1CF7F61DD81CA20090C91D /* FMResultSet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMResultSet.m; sourceTree = "<group>"; };
 		1F2239F61DC5DB3E00BA3BB3 /* LTLsongSheetCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LTLsongSheetCell.h; sourceTree = "<group>"; };
 		1F2239F71DC5DB3E00BA3BB3 /* LTLsongSheetCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LTLsongSheetCell.m; sourceTree = "<group>"; };
 		1F2239F81DC5DB3E00BA3BB3 /* LTLsongSheetCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LTLsongSheetCell.xib; sourceTree = "<group>"; };
@@ -534,6 +550,24 @@
 			path = Utility;
 			sourceTree = "<group>";
 		};
+		1F1CF7EB1DD81CA20090C91D /* FMDB */ = {
+			isa = PBXGroup;
+			children = (
+				1F1CF7EC1DD81CA20090C91D /* FMDatabase.h */,
+				1F1CF7ED1DD81CA20090C91D /* FMDatabase.m */,
+				1F1CF7EE1DD81CA20090C91D /* FMDatabaseAdditions.h */,
+				1F1CF7EF1DD81CA20090C91D /* FMDatabaseAdditions.m */,
+				1F1CF7F01DD81CA20090C91D /* FMDatabasePool.h */,
+				1F1CF7F11DD81CA20090C91D /* FMDatabasePool.m */,
+				1F1CF7F21DD81CA20090C91D /* FMDatabaseQueue.h */,
+				1F1CF7F31DD81CA20090C91D /* FMDatabaseQueue.m */,
+				1F1CF7F41DD81CA20090C91D /* FMDB.h */,
+				1F1CF7F51DD81CA20090C91D /* FMResultSet.h */,
+				1F1CF7F61DD81CA20090C91D /* FMResultSet.m */,
+			);
+			path = FMDB;
+			sourceTree = "<group>";
+		};
 		1F2239FB1DC5EA8300BA3BB3 /* SDKExtend */ = {
 			isa = PBXGroup;
 			children = (
@@ -584,6 +618,7 @@
 		1F75C0C51DC227270061402B /* Lib */ = {
 			isa = PBXGroup;
 			children = (
+				1F1CF7EB1DD81CA20090C91D /* FMDB */,
 				1F3C22F71DD49AC800034715 /* SVProgressHUD */,
 				1F00B38B1DC4D8B800EDAE04 /* SDWebImage */,
 				1F00B3221DC4AE0B00EDAE04 /* Masonry */,
@@ -975,12 +1010,14 @@
 				C30A19381DC2EEA300894453 /* NSObject+MJKeyValue.m in Sources */,
 				C3CE7E511DC052A500F5619E /* LTLAppDelegate.m in Sources */,
 				1F00B3401DC4AE0B00EDAE04 /* MASConstraintMaker.m in Sources */,
+				1F1CF7FA1DD81CA20090C91D /* FMDatabaseQueue.m in Sources */,
 				1F00B33F1DC4AE0B00EDAE04 /* MASConstraint.m in Sources */,
 				1F00B3BF1DC4D8B800EDAE04 /* SDWebImageManager.m in Sources */,
 				1FA586151DC7620100AC7ED3 /* LTLHeaderView.m in Sources */,
 				1FF875E81DCECBA300354DE5 /* LTLNavigationController.m in Sources */,
 				1F00B33E1DC4AE0B00EDAE04 /* MASCompositeConstraint.m in Sources */,
 				1F00B3431DC4AE0B00EDAE04 /* MASViewConstraint.m in Sources */,
+				1F1CF7F71DD81CA20090C91D /* FMDatabase.m in Sources */,
 				1F75C0D11DC227320061402B /* MMDrawerController.m in Sources */,
 				1F0396031DCDFAD2002C093E /* LTLuserInfo.m in Sources */,
 				C30A193A1DC2EEA300894453 /* NSString+MJExtension.m in Sources */,
@@ -994,8 +1031,10 @@
 				1F00B3BD1DC4D8B800EDAE04 /* SDWebImageCompat.m in Sources */,
 				1F7D09D31DC85F4100D6C1B6 /* NSDate+LTLNSDate.m in Sources */,
 				1F3C23051DD49AC800034715 /* SVProgressHUD.m in Sources */,
+				1F1CF7F91DD81CA20090C91D /* FMDatabasePool.m in Sources */,
 				1F00B3B91DC4D8B800EDAE04 /* UIImageView+WebCache.m in Sources */,
 				1FFC36CF1DC394E5007D5A09 /* LTLMainController.m in Sources */,
+				1F1CF7F81DD81CA20090C91D /* FMDatabaseAdditions.m in Sources */,
 				1F2239FE1DC5EAB700BA3BB3 /* XMAlbum+LTLXMAlbum.m in Sources */,
 				1F00B3B41DC4D8B800EDAE04 /* UIButton+WebCache.m in Sources */,
 				1FB67BDA1DC0B12600FCA42D /* UIButton+LTLbutton.m in Sources */,
@@ -1015,6 +1054,7 @@
 				C30A19341DC2EEA300894453 /* MJPropertyKey.m in Sources */,
 				1FA586161DC7620100AC7ED3 /* LTLMusicDetailCell.m in Sources */,
 				C30A19391DC2EEA300894453 /* NSObject+MJProperty.m in Sources */,
+				1F1CF7FB1DD81CA20090C91D /* FMResultSet.m in Sources */,
 				1F3C23061DD49AC800034715 /* SVRadialGradientLayer.m in Sources */,
 				1F75C0D01DC227320061402B /* MMDrawerBarButtonItem.m in Sources */,
 				1F00B3B31DC4D8B800EDAE04 /* NSData+ImageContentType.m in Sources */,
