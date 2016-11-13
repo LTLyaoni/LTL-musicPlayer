@@ -159,7 +159,6 @@
     //用延时执行动画就是等layer层动画执行完再执行延时动画
     [UIView animateWithDuration:[self transitionDuration:transitionContext] delay:[self transitionDuration:transitionContext] options:UIViewAnimationOptionLayoutSubviews  animations:^{
         //执行的动画
-
         snapShotView.frame   = fromVC.finalCellRect;
         
         _visualEffectView.alpha =0;
@@ -183,8 +182,8 @@
     
     ///路径
     UIBezierPath *maskStartBP =  [UIBezierPath bezierPathWithOvalInRect:Rect];
-    
-//    CGPoint finalPoint = CGPointMake(view.center.x, view.center.y);
+    UIBezierPath *maskStartBP2 =  [UIBezierPath bezierPathWithOvalInRect:CGRectInset(Rect, 50, 50)];
+
     ///半径
     CGFloat radius =  LTL_WindowH;
 
@@ -203,7 +202,7 @@
     ///layer层动画初始位置
     maskLayerAnimation.fromValue = (_type == LTLanimate_push) ?  (__bridge id)(maskStartBP.CGPath) :  (__bridge id)((maskFinalBP.CGPath));
     ///layer层动画最终位置
-    maskLayerAnimation.toValue =  (_type == LTLanimate_push) ? (__bridge id)((maskFinalBP.CGPath)) : (__bridge id)(maskStartBP.CGPath) ;
+    maskLayerAnimation.toValue =  (_type == LTLanimate_push) ? (__bridge id)((maskFinalBP.CGPath)) : (__bridge id)(maskStartBP2.CGPath) ;
     
     ///layer层动画时间
     maskLayerAnimation.duration = [self transitionDuration:transitionContext];

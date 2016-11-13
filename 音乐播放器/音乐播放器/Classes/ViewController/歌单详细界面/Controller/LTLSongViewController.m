@@ -11,6 +11,8 @@
 // 自定义Cell
 #import "LTLMusicDetailCell.h"
 #import "LTLuserInfo.h"
+#import "LTLMainController.h"
+#import "LTLsongSheetCell.h"
 
 @interface LTLSongViewController ()<UITableViewDataSource,UITableViewDelegate,UINavigationControllerDelegate>
 //歌单
@@ -46,6 +48,19 @@
 {
     ///判断转场类型
     if (operation == UINavigationControllerOperationPop) {
+        
+        CGRect rect = [self.view convertRect:self.infoView.picView.frame fromView:self.infoView.picView.superview];
+        
+        
+        
+        if (CGRectGetMidY(rect)<0)
+        {
+            LTLMainController *main = (LTLMainController *)toVC;
+            //获取toVC中图片的位置
+            LTLsongSheetCell *cell = (LTLsongSheetCell *)[main.CollectionView cellForItemAtIndexPath:self.indexPath];
+            cell.icon.hidden = NO;
+            return nil;
+        }
         ///初始化转场动画及数据
         LTLAnimate *animate = [LTLAnimate initWithAnimateType:LTLanimate_pop andDuration:0.6F];
         //返回动画

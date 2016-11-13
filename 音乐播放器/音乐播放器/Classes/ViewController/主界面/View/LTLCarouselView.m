@@ -47,53 +47,7 @@
     [self DataAcquisition];
     [self addTimer:nil];
 }
-#pragma mark - 布局
-//-(void)layoutSubviews
-//{
-//    [super layoutSubviews];
-//    
-//    [_scrollView mas_makeConstraints:^(MASConstraintMaker *make) {
-//        make.top.equalTo(self.mas_top);
-//        make.left.equalTo(self.mas_left);
-//        make.right.equalTo(self.mas_right);
-//        make.height.mas_equalTo(mainWidth*300.0/640.0);
-//    }];
-//    [_pageControl mas_makeConstraints:^(MASConstraintMaker *make) {
-//        make.centerX.equalTo(_scrollView.mas_centerX);
-//        make.bottom.equalTo(_scrollView.mas_bottom);
-//        make.width.mas_equalTo(200);
-//        make.height.mas_equalTo(36);
-//    }];
-//    
-//}
- #pragma mark - 添加控件及控件初始化
-//-(void)ScrollView
-//{   //创建UIScrollView
-//    UIScrollView *ScrollView= [[UIScrollView alloc]init];
-//    //赋给变量
-//    self.scrollView = ScrollView;
-//    //代理属性
-//    self.scrollView.delegate = self;
-//    //水平滚动指示器
-//    ScrollView.showsHorizontalScrollIndicator = NO;
-//    //关闭弹簧效果
-//    ScrollView.bounces = NO;
-//    //分页效果
-//    ScrollView.pagingEnabled = YES;
-//    //添加到视图
-//    [self addSubview:ScrollView];
-//    _scrollView.backgroundColor = [UIColor redColor];
-//}
-//-(void)PageControl
-//{   //创建UIPageControl
-//    UIPageControl *pageControl = [[UIPageControl alloc]init];
-//    //赋给变量
-//    self.pageControl = pageControl;
-//    //指示器颜色
-////    pageControl.pageIndicatorTintColor = [UIColor grayColor];
-//    //添加到视图
-//    [self addSubview:pageControl];
-//}
+
 #pragma mark - 数据传送过来做处理
 -(void)setArryr:(NSArray *)arryr
 {
@@ -135,9 +89,6 @@
             self.arryr = modelArray;
             //            [self.CollectionView reloadData];
         }
-//            else {
-//            NSLog(@"Error: error_no:%ld, error_code:%@, error_desc:%@",(long)error.error_no, error.error_code, error.error_desc);
-//        }
     }];
 }
 #pragma mark - 点击轮播图片

@@ -9,6 +9,8 @@
 #import "LTLNetworkRequest.h"
 #import "LTLRecommendAlbums.h"
 
+
+
 @implementation LTLNetworkRequest
 
 
@@ -20,10 +22,15 @@
     NSMutableArray *array = [NSMutableArray array];
     /** 获取分类推荐的焦点图列表 */
     NSMutableDictionary *params = [NSMutableDictionary dictionary];
+    ///app的渠道号（对应渠道焦点图配置），默认值为“and-f5”
 //    [params setObject:@2 forKey:@"channel"];
+    ///app版本号，默认值为“4.3.2.2”
     [params setObject:@2 forKey:@"app_version"];
+    ///控制焦点图图片大小参数，scale=2为iphone适配类型，scale=3为iphone6适配机型；机型为android时的一般设置scale=2。默认值为“2”
 //    [params setObject:@3 forKey:@"image_scale"];
+    ///分类ID
     [params setObject:@2 forKey:@"category_id"];
+    ///内容类型：暂时仅专辑(album)
     [params setObject:@"album" forKey:@"content_type"];
     [[XMReqMgr sharedInstance] requestXMData:XMReqType_CategoryBanner params:params withCompletionHander:^(id result, XMErrorModel *error) {
 //        NSLog(@"LTL%@",result);
@@ -39,24 +46,24 @@
         LTL(array,error);
     }];
 }
-#pragma mark - 获取分类内容
+#pragma mark - 获取分类元数据
 +(void)CategoriesList:( LTL )LTL
 {
 
     //分类元数据
     NSMutableDictionary *params2 = [NSMutableDictionary dictionary];
+    //分类id
     [params2 setObject:@2 forKey:@"category_id"];
     [[XMReqMgr sharedInstance] requestXMData:XMReqType_MetadataList params:params2 withCompletionHander:^(id result, XMErrorModel *error) {
         if(!error)
         {
-//            [sself showReceivedData:result className:@"XMMetadata" valuePath:@"metadata" titleNeedShow:@"displayName"];
             [result enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+                XMMetadata *model = [[XMMetadata alloc]initWithDictionary:obj];
                 
-                
+                NSLog(@"%@",model.displayName);
                 
             }];
-        
-            NSLog(@"%@",result);
+            
         }
         else
             NSLog(@"Error: error_no:%ld, error_code:%@, error_desc:%@",(long)error.error_no, error.error_code, error.error_desc);
@@ -86,11 +93,11 @@
             NSLog(@"获取分类推荐数据Error: error_no:%ld, error_code:%@, error_desc:%@",(long)error.error_no, error.error_code, error.error_desc);
         LTL(array,error);
     }];
-//    [self CategoriesList:nil];
+    [self CategoriesList:nil];
 //    [self AlbumsGuessLike];
-    [self MetadataAlbumsPage:1 dimension:LTLDimensionTheFire dadt:^(NSMutableArray * _Nullable modelArray, XMErrorModel * _Nullable error) {
-        
-    }];
+//    [self MetadataAlbumsPage:1 dimension:LTLDimensionTheFire dadt:^(NSMutableArray * _Nullable modelArray, XMErrorModel * _Nullable error) {
+//        
+//    }];
 }
 
 #pragma mark - 获取猜你喜欢
@@ -117,11 +124,16 @@
     }
     NSMutableArray *array = [NSMutableArray array];
     NSMutableDictionary *params = [NSMutableDictionary dictionary];
+    ///分类ID，指定分类，为0表示热门分类
     [params setObject:@2 forKey:@"category_id"];
+    //每页多少条，默认20，最多不超过200
 //    [params setObject:@20 forKey:@"count"];
     [params setObject:@18 forKey:@"count"];
+    ///计算维度,现支持最火(1),最新(2), 经典或播放最多(3) 做成枚举
     [params setObject:@(dimension) forKey:@"calc_dimension"];
+    ///返回第几页，必须大于等于1，不填默认为1
     [params setObject:@(page) forKey:@"page"];
+    ///元数据组合   比如现在想取已完本的穿越类有声小说，我们先从XMReqType_MetadataList接口得到穿越对应的元数据的attr_key、attr_value分别为97、”穿越”，然后拿到已完本对应的元数据的attr_key、attr_value分别为131、”2”，最后就可以按照本接口参数要求构造请求拿到数据
     [params setObject:@"8:歌单" forKey:@"metadata_attributes"];
     [[XMReqMgr sharedInstance] requestXMData:XMReqType_MetadataAlbums params:params withCompletionHander:^(id result, XMErrorModel *error) {
         if(!error)
