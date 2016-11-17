@@ -302,7 +302,7 @@
 		1FF875E61DCECBA300354DE5 /* LTLNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LTLNavigationController.h; sourceTree = "<group>"; };
 		1FF875E71DCECBA300354DE5 /* LTLNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LTLNavigationController.m; sourceTree = "<group>"; };
 		1FF875EA1DCEFC0200354DE5 /* LTLPlayManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LTLPlayManager.h; sourceTree = "<group>"; };
-		1FF875EB1DCEFC0200354DE5 /* LTLPlayManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LTLPlayManager.m; sourceTree = "<group>"; };
+		1FF875EB1DCEFC0200354DE5 /* LTLPlayManager.m */ = {isa = PBXFileReference; fileEncoding = 4; indentWidth = 3; lastKnownFileType = sourcecode.c.objc; path = LTLPlayManager.m; sourceTree = "<group>"; };
 		1FFC36CC1DC394E5007D5A09 /* LTLMainController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LTLMainController.h; sourceTree = "<group>"; };
 		1FFC36CD1DC394E5007D5A09 /* LTLMainController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LTLMainController.m; sourceTree = "<group>"; };
 		1FFC36CE1DC394E5007D5A09 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
