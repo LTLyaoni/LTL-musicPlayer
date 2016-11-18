@@ -220,7 +220,7 @@
 //        self.contentView.backgroundColor = [UIColor blueColor];
         //设置cell被选中后的背景色
         UIView *view=[UIView new];
-        view.backgroundColor=s_RGBColor(243, 255, 254);
+        view.backgroundColor=LTL_RGBColor(243, 255, 254);
         self.selectedBackgroundView=view;
         //分割线距离左侧空间
         self.separatorInset=UIEdgeInsetsMake(0, 76, 0, 0);

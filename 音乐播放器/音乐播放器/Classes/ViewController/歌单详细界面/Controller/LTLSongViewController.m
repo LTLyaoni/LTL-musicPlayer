@@ -11,7 +11,7 @@
 // 自定义Cell
 #import "LTLMusicDetailCell.h"
 #import "LTLuserInfo.h"
-#import "LTLMainController.h"
+#import "LTLMainInterface.h"
 #import "LTLsongSheetCell.h"
 
 @interface LTLSongViewController ()<UITableViewDataSource,UITableViewDelegate,UINavigationControllerDelegate>
@@ -55,7 +55,7 @@
         
         if (CGRectGetMidY(rect)<0)
         {
-            LTLMainController *main = (LTLMainController *)toVC;
+            LTLMainInterface *main = (LTLMainInterface *)toVC;
             //获取toVC中图片的位置
             LTLsongSheetCell *cell = (LTLsongSheetCell *)[main.CollectionView cellForItemAtIndexPath:self.indexPath];
             cell.icon.hidden = NO;

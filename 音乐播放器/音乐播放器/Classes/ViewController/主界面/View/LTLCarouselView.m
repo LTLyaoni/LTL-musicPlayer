@@ -46,6 +46,7 @@
     self.gao.constant = LTL_WindowW *300.0/640.0;
     [self DataAcquisition];
     [self addTimer:nil];
+    _scrollView.delegate = self;
 }
 
 #pragma mark - 数据传送过来做处理
@@ -127,6 +128,7 @@
     //设置中心
     CGFloat offsetX = page*self.scrollView.frame.size.width;
     CGPoint offset=CGPointMake(offsetX, 0);
+    
     //偏移
     [self.scrollView setContentOffset:offset animated:YES];
 }

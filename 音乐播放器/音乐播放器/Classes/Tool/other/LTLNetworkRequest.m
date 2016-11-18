@@ -9,11 +9,35 @@
 #import "LTLNetworkRequest.h"
 #import "LTLRecommendAlbums.h"
 
+@interface LTLNetworkRequest ()
 
+@property(nonatomic,strong)NSArray<XMMetadata *>* _Nullable dataArray;
+
+@end
 
 @implementation LTLNetworkRequest
+#pragma mark - 单例
+//单例
++ (instancetype)sharedManager {
+    static id instance;
+    
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        instance = [[self alloc] init];
+    });
+    
+    return instance;
+}
 
-
+-(instancetype)init
+{
+    if (self = [super init]) {
+        [LTLNetworkRequest CategoriesList:^(NSArray<XMMetadata *> *array) {
+            self.dataArray = array;
+        }];
+    }
+    return self;
+}
 
 #pragma mark - 获取分类推荐的焦点图列表数据
 +(void)CategoryBanner:( LTL )LTL
@@ -47,9 +71,8 @@
     }];
 }
 #pragma mark - 获取分类元数据
-+(void)CategoriesList:( LTL )LTL
++(void)CategoriesList:( void(^)(NSArray<XMMetadata *> *array))LTL
 {
-
     //分类元数据
     NSMutableDictionary *params2 = [NSMutableDictionary dictionary];
     //分类id
@@ -57,20 +80,24 @@
     [[XMReqMgr sharedInstance] requestXMData:XMReqType_MetadataList params:params2 withCompletionHander:^(id result, XMErrorModel *error) {
         if(!error)
         {
+            NSMutableArray *lingShi = [NSMutableArray array];
+            
             [result enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+                
                 XMMetadata *model = [[XMMetadata alloc]initWithDictionary:obj];
                 
-                NSLog(@"%@",model.displayName);
+                [lingShi addObject:model];
                 
             }];
             
+            LTL(lingShi);
         }
         else
             NSLog(@"Error: error_no:%ld, error_code:%@, error_desc:%@",(long)error.error_no, error.error_code, error.error_desc);
     }];
 }
 #pragma mark - 获取分类推荐
-+(void)RecommendAlbums:( LTL )LTL
++(void)RecommendAlbums:(nonnull void (^)(NSArray <LTLRecommendAlbums *>* _Nullable modelArray) )LTL
 {
     ///获取分类推荐数组
     NSMutableArray *array = [NSMutableArray array];
@@ -87,11 +114,11 @@
             [array addObject:model];
             
             }];
-
+            LTL([array copy]);
         }
         else
             NSLog(@"获取分类推荐数据Error: error_no:%ld, error_code:%@, error_desc:%@",(long)error.error_no, error.error_code, error.error_desc);
-        LTL(array,error);
+        ;
     }];
     [self CategoriesList:nil];
 //    [self AlbumsGuessLike];

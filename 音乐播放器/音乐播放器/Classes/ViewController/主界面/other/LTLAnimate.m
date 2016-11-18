@@ -14,7 +14,7 @@
 
 #import "LTLAnimate.h"
 ///控制器
-#import "LTLMainController.h"
+#import "LTLMainInterface.h"
 #import "LTLSongViewController.h"
 #import "LTLsongSheetCell.h"
 
@@ -78,7 +78,7 @@
 - (void)pushAnimateWithanimateTransition:(id<UIViewControllerContextTransitioning>)transitionContext
 {
     ///起始视图控制器
-    LTLMainController *fromVC = [transitionContext viewControllerForKey:UITransitionContextFromViewControllerKey];
+    LTLMainInterface *fromVC = [transitionContext viewControllerForKey:UITransitionContextFromViewControllerKey];
     ///目标视图控制器
     LTLSongViewController *toVC = [transitionContext viewControllerForKey:UITransitionContextToViewControllerKey];
     ///在这个视图上实现跳转动画
@@ -130,7 +130,7 @@
     ///起始视图控制器
     LTLSongViewController *fromVC = [transitionContext viewControllerForKey:UITransitionContextFromViewControllerKey];
     ///目标视图控制器
-    LTLMainController *toVC = [transitionContext viewControllerForKey:UITransitionContextToViewControllerKey];
+    LTLMainInterface *toVC = [transitionContext viewControllerForKey:UITransitionContextToViewControllerKey];
     ///在这个视图上实现跳转动画
     UIView *containView = [transitionContext containerView];
     

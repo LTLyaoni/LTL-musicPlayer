@@ -9,13 +9,13 @@
 #import "LTLAppDelegate.h"
 #import "LTLloginSet.h"
 #import "LTLSearchController.h"
-#import "LTLMainController.h"
+#import "LTLMainInterface.h"
 //#import "MMDrawerController.h"
 //#import "MMExampleDrawerVisualStateManager.h"
 
 @interface LTLAppDelegate ()<XMReqDelegate>
 @property (nonatomic,strong) MMDrawerController * drawerController;
-@property (nonatomic,strong) LTLMainController *mainVC;
+@property (nonatomic,strong) LTLMainInterface *mainVC;
 @end
 
 @implementation LTLAppDelegate
@@ -27,9 +27,9 @@
     ///注册喜马拉雅
     [self RegisteredHimalaya];
     ///主视图
-    UIStoryboard *Storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+    UIStoryboard *Storyboard = [UIStoryboard storyboardWithName:@"LTLMainInterface" bundle:nil];
     UINavigationController *mianController = [Storyboard instantiateInitialViewController];
-    self.mainVC = (LTLMainController *) mianController.topViewController;
+    self.mainVC = (LTLMainInterface *) mianController.topViewController;
     ///右滑视图
     LTLloginSet *log = [[LTLloginSet alloc]initWithNibName:@"LTLloginSet" bundle:nil];
     
@@ -47,7 +47,7 @@
     self.drawerController.maximumLeftDrawerWidth = LTL_WindowW*4/5;
     self.drawerController.maximumRightDrawerWidth = LTL_WindowW;
     //4、设置打开/关闭抽屉的手势
-//    self.drawerController.openDrawerGestureModeMask = MMOpenDrawerGestureModeAll;
+    self.drawerController.openDrawerGestureModeMask = MMOpenDrawerGestureModeAll;
     self.drawerController.closeDrawerGestureModeMask =MMCloseDrawerGestureModeAll;
     //////设置抽屉的视觉状态
     [self.drawerController
@@ -100,7 +100,7 @@
 {
     NSLog(@"注册成功 %d" , result);
     if (result) {
-        [self.mainVC DataAcquisition];
+//        [self.mainVC DataAcquisition];
     }
 }
 // 接收到内存警告就会调用
