@@ -67,7 +67,11 @@
         }
         else
             NSLog(@"获取分类推荐的焦点图列表数据Error: error_no:%ld, error_code:%@, error_desc:%@",(long)error.error_no, error.error_code, error.error_desc);
-        LTL(array,error);
+        if (LTL) {
+            
+            LTL(array,error);
+        }
+        
     }];
 }
 #pragma mark - 获取分类元数据
@@ -89,8 +93,11 @@
                 [lingShi addObject:model];
                 
             }];
+            if (LTL) {
+                
+                LTL([lingShi copy]);
+            }
             
-            LTL([lingShi copy]);
         }
         else
             NSLog(@"Error: error_no:%ld, error_code:%@, error_desc:%@",(long)error.error_no, error.error_code, error.error_desc);
@@ -114,7 +121,10 @@
             [array addObject:model];
             
             }];
-            LTL([array copy]);
+            if (LTL) {
+                
+                LTL([array copy]);
+            }
         }
         else
             NSLog(@"获取分类推荐数据Error: error_no:%ld, error_code:%@, error_desc:%@",(long)error.error_no, error.error_code, error.error_desc);
@@ -177,13 +187,11 @@
         if(!error)
         {
             NSLog(@"%@",result[@"albums"]);
-//            [result[@"albums"] enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-//                XMAlbum *model = [[XMAlbum alloc]initWithDictionary:obj];
-//                model.PlayNumber = @"LTL";
-//                [model LabelProcessing:model.albumTags];
-//                [array addObject:model];
-//            }];
-            LTL(array,nil);
+
+            if (LTL) {
+                
+                LTL(array,nil);
+            }
         }
         else
         {
