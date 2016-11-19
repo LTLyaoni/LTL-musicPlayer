@@ -11,7 +11,8 @@
 #import "LTLuserInfo.h"
 
 
-@interface LTLPlayControl ()<CAAnimationDelegate>
+@interface LTLPlayControl ()
+///<CAAnimationDelegate>
 
 ///歌手名
 @property (weak, nonatomic) IBOutlet UILabel *SingerName;

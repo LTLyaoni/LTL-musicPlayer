@@ -90,7 +90,7 @@
                 
             }];
             
-            LTL(lingShi);
+            LTL([lingShi copy]);
         }
         else
             NSLog(@"Error: error_no:%ld, error_code:%@, error_desc:%@",(long)error.error_no, error.error_code, error.error_desc);
@@ -120,11 +120,22 @@
             NSLog(@"获取分类推荐数据Error: error_no:%ld, error_code:%@, error_desc:%@",(long)error.error_no, error.error_code, error.error_desc);
         ;
     }];
-    [self CategoriesList:nil];
+//    [self CategoriesList:nil];
 //    [self AlbumsGuessLike];
 //    [self MetadataAlbumsPage:1 dimension:LTLDimensionTheFire dadt:^(NSMutableArray * _Nullable modelArray, XMErrorModel * _Nullable error) {
 //        
 //    }];
+    
+//    NSMutableDictionary *params2 = [NSMutableDictionary dictionary];
+//    [params2 setObject:@2 forKey:@"category_id"];
+//    [params2 setObject:@0 forKey:@"type"];
+//    [[XMReqMgr sharedInstance] requestXMData:XMReqType_TagsList params:params2 withCompletionHander:^(id result, XMErrorModel *error) {
+//        
+//        NSLog(@"LTL%@",result);
+//    }];
+    
+    
+    
 }
 
 #pragma mark - 获取猜你喜欢
