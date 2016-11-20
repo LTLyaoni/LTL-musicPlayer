@@ -1,5 +1,5 @@
 //
-//  LTLAllTheSong.h
+//  LTLMusicTable.h
 //  音乐播放器
 //
 //  Created by LiTaiLiang on 16/11/18.
@@ -8,8 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
-@interface LTLAllTheSong : UICollectionView
+@interface LTLMusicTable : UICollectionView
 ///初始化
-+(LTLAllTheSong *)initLTLAllTheSong;
++(LTLMusicTable *)initLTLMusicTable;
 
 @end

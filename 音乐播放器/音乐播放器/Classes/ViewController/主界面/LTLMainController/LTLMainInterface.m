@@ -9,7 +9,7 @@
 #import "LTLMainInterface.h"
 #import "LTLAnimate.h"
 #import "LTLsongSheet.h"
-#import "LTLAllTheSong.h"
+#import "LTLMusicTable.h"
 
 @interface LTLMainInterface ()<UICollectionViewDelegate,UICollectionViewDataSource,UINavigationControllerDelegate,LTLsongSheetDelegate>
 @property (weak, nonatomic) IBOutlet UICollectionView *collectView;
@@ -38,7 +38,7 @@
 
     [self initUI];
     
-    LTLAllTheSong *TheSong = [LTLAllTheSong initLTLAllTheSong];
+    LTLMusicTable *TheSong = [LTLMusicTable initLTLMusicTable];
     [self addView:TheSong tag:0];
     
     LTLsongSheet *songSheet = [LTLsongSheet initSongSheet];

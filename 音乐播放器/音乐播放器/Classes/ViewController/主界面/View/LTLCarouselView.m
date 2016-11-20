@@ -85,11 +85,8 @@
 -(void)DataAcquisition
 {
     //取焦点图
-    [LTLNetworkRequest CategoryBanner:^(NSMutableArray * _Nullable modelArray, XMErrorModel * _Nullable error) {
-        if (modelArray.count != 0) {
-            self.arryr = modelArray;
-            //            [self.CollectionView reloadData];
-        }
+    [LTLNetworkRequest CategoryBanner:^(NSArray<XMBanner *> * _Nullable modelArray, XMErrorModel * _Nullable error) {
+        self.arryr = modelArray;
     }];
 }
 #pragma mark - 点击轮播图片

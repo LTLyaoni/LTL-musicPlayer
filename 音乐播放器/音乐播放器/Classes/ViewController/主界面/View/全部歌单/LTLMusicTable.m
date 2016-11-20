@@ -1,17 +1,17 @@
-//
-//  LTLAllTheSong.m
+
+//  LTLMusicTable.m
 //  音乐播放器
 //
 //  Created by LiTaiLiang on 16/11/18.
 //  Copyright © 2016年 LiTaiLiang. All rights reserved.
 //
 
-#import "LTLAllTheSong.h"
+#import "LTLMusicTable.h"
 #import "LTLsongSheetLayout.h"
 #import "LTLsongSheetCell.h"
 #import "LTLConditionalTag.h"
 
-@interface LTLAllTheSong ()<UICollectionViewDelegate,UICollectionViewDataSource>
+@interface LTLMusicTable ()<UICollectionViewDelegate,UICollectionViewDataSource>
 
 /**
  *  歌单数组
@@ -25,19 +25,31 @@ static NSString *cellID = @"colleCell";
 //重用标识符
 static NSString *HeaderID = @"SongHeaderView";
 
-@implementation LTLAllTheSong
+@implementation LTLMusicTable
+//懒加载
+-(NSMutableArray *)songSheetArray
+{
+    if (_songSheetArray == nil) {
+        _songSheetArray = [NSMutableArray array];
+    }
+    return _songSheetArray;
+}
+
 #pragma mark - 初始化
-+(LTLAllTheSong *)initLTLAllTheSong
++(LTLMusicTable *)initLTLMusicTable
 {
     LTLsongSheetLayout *Layout =[[LTLsongSheetLayout alloc]init];
     
-    Layout.headerReferenceSize = CGSizeMake(100, 100);
+//    Layout.headerReferenceSize = CGSizeMake(100, 100);
     
-    LTLAllTheSong *allTheSong = [[LTLAllTheSong alloc]initWithFrame:CGRectZero collectionViewLayout:Layout];
+    CGFloat w = (LTL_WindowW-30-2*10)/2;
+    Layout.itemSize = CGSizeMake( w, w+30);
     
-    allTheSong.backgroundColor = [UIColor whiteColor];
+    LTLMusicTable *musicTable = [[LTLMusicTable alloc]initWithFrame:CGRectZero collectionViewLayout:Layout];
     
-    return allTheSong;
+    musicTable.backgroundColor = [UIColor whiteColor];
+    
+    return musicTable;
 }
 //初始化
 -(instancetype)initWithFrame:(CGRect)frame collectionViewLayout:(UICollectionViewLayout *)layout
@@ -49,9 +61,9 @@ static NSString *HeaderID = @"SongHeaderView";
         self.dataSource = self;
         ///注册 cell
         [self registerNib:[UINib nibWithNibName:@"LTLsongSheetCell" bundle:nil] forCellWithReuseIdentifier:cellID];
-        ///注册 cell
-        [self registerNib:[UINib nibWithNibName:@"LTLConditionalTag" bundle:nil] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:HeaderID];
-        
+//        ///注册 cell
+//        [self registerNib:[UINib nibWithNibName:@"LTLConditionalTag" bundle:nil] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:HeaderID];
+        [self DataAcquisition];
     }
     return self;
 }
@@ -60,7 +72,7 @@ static NSString *HeaderID = @"SongHeaderView";
 -(NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
    
-    
+    NSLog(@"LTL%ld",self.songSheetArray.count);
     return self.songSheetArray.count;
     //    return 100;
 }
@@ -76,22 +88,24 @@ static NSString *HeaderID = @"SongHeaderView";
     ///从循环池从取出 cell
     LTLsongSheetCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:cellID forIndexPath:indexPath];
     //取出模型数据
-    LTLRecommendAlbums *Recommend = self.songSheetArray[indexPath.section];
-    XMAlbum *model = Recommend.albums[indexPath.row];
+//    LTLRecommendAlbums *Recommend = self.songSheetArray[indexPath.section];
+    XMAlbum *model = self.songSheetArray[indexPath.row];;
     //赋值模型数据
     cell.model = model;
     
     return cell;
 }
-//设置头视图
-- (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath
+#pragma mark - 数据
+///数据
+-(void)DataAcquisition
 {
-
-    ///从循环池从取出 cellheadView
-    LTLConditionalTag *headView = [collectionView dequeueReusableSupplementaryViewOfKind:kind withReuseIdentifier:HeaderID forIndexPath:indexPath];
-    headView.tag = indexPath.section;
-    return headView;
-
+    
+    [LTLNetworkRequest AlbumsListID:17 tag_name:@"音乐台" Page:1 dimension:LTLDimensionNewest dadt:^(NSArray<XMAlbum *> * _Nullable modelArray, XMErrorModel * _Nullable error) {
+        
+        [self.songSheetArray addObjectsFromArray:modelArray];
+        [self reloadData];
+    }];
+    
 }
 
 

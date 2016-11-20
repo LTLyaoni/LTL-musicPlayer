@@ -11,16 +11,19 @@
 #define jianXi  15
 
 @implementation LTLsongSheetLayout
--(void)prepareLayout
+//初始化
+-(instancetype)init
 {
-    ///设置 cell 大小
-    CGFloat w = (LTL_WindowW-30-2*jianXi)/3;
-    self.itemSize = CGSizeMake( w, w+30);
-    //边距
-    self.sectionInset = UIEdgeInsetsMake(10, 10, 9, 10);
-
-    [super prepareLayout];
-    
+    if (self = [super init]) {
+        
+        ///设置 cell 大小
+        CGFloat w = (LTL_WindowW-30-2*jianXi)/3;
+        self.itemSize = CGSizeMake( w, w+30);
+        //边距
+        self.sectionInset = UIEdgeInsetsMake(15, 15, 9, 15);
+        self.footerReferenceSize = CGSizeMake(1, 1);
+    }
+    return self;
 }
 
 

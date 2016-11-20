@@ -5,6 +5,7 @@
     </device>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11524"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
         <!--Main Interface-->
@@ -80,12 +81,12 @@
                                         <state key="normal" title="歌单推荐"/>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="87f-tN-D6g">
-                                        <rect key="frame" x="55" y="162" width="62" height="30"/>
-                                        <state key="normal" title="音乐电台"/>
+                                        <rect key="frame" x="71" y="162" width="46" height="30"/>
+                                        <state key="normal" title="音乐台"/>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SPG-mW-ep0">
-                                        <rect key="frame" x="259" y="162" width="46" height="30"/>
-                                        <state key="normal" title="新歌榜"/>
+                                        <rect key="frame" x="259" y="162" width="31" height="30"/>
+                                        <state key="normal" title="乐库"/>
                                     </button>
                                 </subviews>
                                 <color key="backgroundColor" red="0.90766793489456177" green="0.42869848012924194" blue="0.91001754999160767" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -143,16 +144,16 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="2VM-a0-t79" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="188" y="188"/>
+            <point key="canvasLocation" x="-25" y="188"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="3tU-mr-l5u">
             <objects>
                 <navigationController id="l2Q-qK-obL" customClass="LTLNavigationController" sceneMemberID="viewController">
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="L27-Nb-ucl">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="L27-Nb-ucl">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
-                        <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                     </navigationBar>
                     <connections>
                         <segue destination="q2Q-iD-6Mt" kind="relationship" relationship="rootViewController" id="dTn-T1-3Qj"/>

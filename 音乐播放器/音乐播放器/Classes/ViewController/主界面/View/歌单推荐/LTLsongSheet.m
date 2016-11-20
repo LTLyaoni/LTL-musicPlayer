@@ -26,6 +26,7 @@ static NSString *HeaderID = @"HeaderView";
 //cell重用标识符
 static NSString *cellID = @"colleCell";
 
+static NSString *FooterID = @"FooterView";
 
 @implementation LTLsongSheet
 
@@ -63,6 +64,8 @@ static NSString *cellID = @"colleCell";
         [self registerNib:[UINib nibWithNibName:@"LTLsongSheetCell" bundle:nil] forCellWithReuseIdentifier:cellID];
         [self registerNib:[UINib nibWithNibName:@"LTLGroupHeader" bundle:nil] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:HeaderID];
     
+        [self registerClass:[UICollectionReusableView class] forSupplementaryViewOfKind:UICollectionElementKindSectionFooter withReuseIdentifier:FooterID];
+        
         //获取数据
         [self DataAcquisition];
         
@@ -100,18 +103,29 @@ static NSString *cellID = @"colleCell";
 //设置头视图
 - (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath
 {
-    
-    ///从循环池从取出 cellheadView
-    LTLGroupHeader *headView = [collectionView dequeueReusableSupplementaryViewOfKind:kind withReuseIdentifier:HeaderID forIndexPath:indexPath];
-    headView.tag = indexPath.section;
-    
-    LTLRecommendAlbums *model = self.songSheetArray[indexPath.section];
-    
-    headView.GroupHeader.text = model.display_tag_name;
-    
-    headView.backgroundColor = [UIColor blueColor];
-    return headView;
-
+    if (kind == UICollectionElementKindSectionHeader) {
+        
+        ///从循环池从取出 cellheadView
+        LTLGroupHeader *headView = [collectionView dequeueReusableSupplementaryViewOfKind:kind withReuseIdentifier:HeaderID forIndexPath:indexPath];
+        headView.tag = indexPath.section;
+        
+        LTLRecommendAlbums *model = self.songSheetArray[indexPath.section];
+        
+        headView.GroupHeader.text = model.display_tag_name;
+        
+        headView.backgroundColor = [UIColor blueColor];
+        return headView;
+        
+    } else {
+        
+        UICollectionReusableView *FooterView = [collectionView dequeueReusableSupplementaryViewOfKind:kind withReuseIdentifier:FooterID forIndexPath:indexPath];
+        FooterView.backgroundColor = [UIColor yellowColor];
+        FooterView.highly = 0;
+        if (indexPath.section == self.songSheetArray.count-1) {
+             FooterView.highly = 36;
+        }
+        return FooterView;
+    }
  
 }
 

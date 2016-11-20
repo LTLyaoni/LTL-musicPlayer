@@ -34,7 +34,6 @@
 		1F00B3BE1DC4D8B800EDAE04 /* SDWebImageDecoder.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F00B3AC1DC4D8B800EDAE04 /* SDWebImageDecoder.m */; };
 		1F00B3BF1DC4D8B800EDAE04 /* SDWebImageManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F00B3AE1DC4D8B800EDAE04 /* SDWebImageManager.m */; };
 		1F00B3C01DC4D8B800EDAE04 /* SDWebImagePrefetcher.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F00B3B01DC4D8B800EDAE04 /* SDWebImagePrefetcher.m */; };
-		1F00B3C51DC4F2FC00EDAE04 /* LTLNetworkRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F00B3C41DC4F2FC00EDAE04 /* LTLNetworkRequest.m */; };
 		1F0396031DCDFAD2002C093E /* LTLuserInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F0396021DCDFAD2002C093E /* LTLuserInfo.m */; };
 		1F1CF7EA1DD81B730090C91D /* libXMOpenPlatform.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F1CF7E91DD81B730090C91D /* libXMOpenPlatform.a */; };
 		1F1CF7F71DD81CA20090C91D /* FMDatabase.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F1CF7ED1DD81CA20090C91D /* FMDatabase.m */; };
@@ -59,6 +58,7 @@
 		1F3C23041DD49AC800034715 /* SVProgressHUD.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 1F3C22FD1DD49AC800034715 /* SVProgressHUD.bundle */; };
 		1F3C23051DD49AC800034715 /* SVProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F3C22FF1DD49AC800034715 /* SVProgressHUD.m */; };
 		1F3C23061DD49AC800034715 /* SVRadialGradientLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F3C23011DD49AC800034715 /* SVRadialGradientLayer.m */; };
+		1F4CF6921DE1D81A0074EAE5 /* LTLNetworkRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F4CF6911DE1D81A0074EAE5 /* LTLNetworkRequest.m */; };
 		1F75C0D01DC227320061402B /* MMDrawerBarButtonItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F75C0C81DC227320061402B /* MMDrawerBarButtonItem.m */; };
 		1F75C0D11DC227320061402B /* MMDrawerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F75C0CB1DC227320061402B /* MMDrawerController.m */; };
 		1F75C0D21DC227320061402B /* MMDrawerVisualState.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F75C0CD1DC227320061402B /* MMDrawerVisualState.m */; };
@@ -73,7 +73,7 @@
 		1F7D09D01DC854A300D6C1B6 /* XMTrack+LTLXMTrack.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F7D09CF1DC854A300D6C1B6 /* XMTrack+LTLXMTrack.m */; };
 		1F7D09D31DC85F4100D6C1B6 /* NSDate+LTLNSDate.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F7D09D21DC85F4100D6C1B6 /* NSDate+LTLNSDate.m */; };
 		1F86F6691DDF0447008D6A3D /* LTLMainInterfaceFlowLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F86F6681DDF0447008D6A3D /* LTLMainInterfaceFlowLayout.m */; };
-		1F86F68F1DDF2DDC008D6A3D /* LTLAllTheSong.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F86F68E1DDF2DDC008D6A3D /* LTLAllTheSong.m */; };
+		1F86F68F1DDF2DDC008D6A3D /* LTLMusicTable.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F86F68E1DDF2DDC008D6A3D /* LTLMusicTable.m */; };
 		1F86F6931DDF336C008D6A3D /* LTLConditionalTag.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F86F6911DDF336C008D6A3D /* LTLConditionalTag.m */; };
 		1F86F6941DDF336C008D6A3D /* LTLConditionalTag.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1F86F6921DDF336C008D6A3D /* LTLConditionalTag.xib */; };
 		1F8A8E041DB1332A003EEB0C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1F8A8E031DB1332A003EEB0C /* Assets.xcassets */; };
@@ -172,8 +172,6 @@
 		1F00B3AE1DC4D8B800EDAE04 /* SDWebImageManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDWebImageManager.m; sourceTree = "<group>"; };
 		1F00B3AF1DC4D8B800EDAE04 /* SDWebImagePrefetcher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDWebImagePrefetcher.h; sourceTree = "<group>"; };
 		1F00B3B01DC4D8B800EDAE04 /* SDWebImagePrefetcher.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDWebImagePrefetcher.m; sourceTree = "<group>"; };
-		1F00B3C31DC4F2FC00EDAE04 /* LTLNetworkRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LTLNetworkRequest.h; sourceTree = "<group>"; };
-		1F00B3C41DC4F2FC00EDAE04 /* LTLNetworkRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LTLNetworkRequest.m; sourceTree = "<group>"; };
 		1F0396011DCDFAD2002C093E /* LTLuserInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LTLuserInfo.h; sourceTree = "<group>"; };
 		1F0396021DCDFAD2002C093E /* LTLuserInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LTLuserInfo.m; sourceTree = "<group>"; };
 		1F1CF7C01DD81B730090C91D /* XMSDKDownloadManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XMSDKDownloadManager.h; sourceTree = "<group>"; };
@@ -247,7 +245,6 @@
 		1F1CF8521DD89C250090C91D /* LTLPicView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LTLPicView.m; sourceTree = "<group>"; };
 		1F2239FC1DC5EAB700BA3BB3 /* XMAlbum+LTLXMAlbum.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "XMAlbum+LTLXMAlbum.h"; sourceTree = "<group>"; };
 		1F2239FD1DC5EAB700BA3BB3 /* XMAlbum+LTLXMAlbum.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "XMAlbum+LTLXMAlbum.m"; sourceTree = "<group>"; };
-		1F223A051DC621C400BA3BB3 /* LTLNetworkEnum.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LTLNetworkEnum.h; sourceTree = "<group>"; };
 		1F3C22F81DD49AC800034715 /* SVIndefiniteAnimatedView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVIndefiniteAnimatedView.h; sourceTree = "<group>"; };
 		1F3C22F91DD49AC800034715 /* SVIndefiniteAnimatedView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVIndefiniteAnimatedView.m; sourceTree = "<group>"; };
 		1F3C22FA1DD49AC800034715 /* SVProgressAnimatedView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVProgressAnimatedView.h; sourceTree = "<group>"; };
@@ -258,6 +255,9 @@
 		1F3C22FF1DD49AC800034715 /* SVProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVProgressHUD.m; sourceTree = "<group>"; };
 		1F3C23001DD49AC800034715 /* SVRadialGradientLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVRadialGradientLayer.h; sourceTree = "<group>"; };
 		1F3C23011DD49AC800034715 /* SVRadialGradientLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVRadialGradientLayer.m; sourceTree = "<group>"; };
+		1F4CF68F1DE1D81A0074EAE5 /* LTLNetworkEnum.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LTLNetworkEnum.h; sourceTree = "<group>"; };
+		1F4CF6901DE1D81A0074EAE5 /* LTLNetworkRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LTLNetworkRequest.h; sourceTree = "<group>"; };
+		1F4CF6911DE1D81A0074EAE5 /* LTLNetworkRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LTLNetworkRequest.m; sourceTree = "<group>"; };
 		1F75C0C71DC227320061402B /* MMDrawerBarButtonItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MMDrawerBarButtonItem.h; sourceTree = "<group>"; };
 		1F75C0C81DC227320061402B /* MMDrawerBarButtonItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MMDrawerBarButtonItem.m; sourceTree = "<group>"; };
 		1F75C0C91DC227320061402B /* MMDrawerController+Subclass.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MMDrawerController+Subclass.h"; sourceTree = "<group>"; };
@@ -282,8 +282,8 @@
 		1F7D09D21DC85F4100D6C1B6 /* NSDate+LTLNSDate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+LTLNSDate.m"; sourceTree = "<group>"; };
 		1F86F6671DDF0447008D6A3D /* LTLMainInterfaceFlowLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LTLMainInterfaceFlowLayout.h; sourceTree = "<group>"; };
 		1F86F6681DDF0447008D6A3D /* LTLMainInterfaceFlowLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LTLMainInterfaceFlowLayout.m; sourceTree = "<group>"; };
-		1F86F68D1DDF2DDC008D6A3D /* LTLAllTheSong.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LTLAllTheSong.h; sourceTree = "<group>"; };
-		1F86F68E1DDF2DDC008D6A3D /* LTLAllTheSong.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LTLAllTheSong.m; sourceTree = "<group>"; };
+		1F86F68D1DDF2DDC008D6A3D /* LTLMusicTable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LTLMusicTable.h; sourceTree = "<group>"; };
+		1F86F68E1DDF2DDC008D6A3D /* LTLMusicTable.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LTLMusicTable.m; sourceTree = "<group>"; };
 		1F86F6901DDF336C008D6A3D /* LTLConditionalTag.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LTLConditionalTag.h; sourceTree = "<group>"; };
 		1F86F6911DDF336C008D6A3D /* LTLConditionalTag.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LTLConditionalTag.m; sourceTree = "<group>"; };
 		1F86F6921DDF336C008D6A3D /* LTLConditionalTag.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LTLConditionalTag.xib; sourceTree = "<group>"; };
@@ -471,16 +471,6 @@
 				1F00B3B01DC4D8B800EDAE04 /* SDWebImagePrefetcher.m */,
 			);
 			path = Utils;
-			sourceTree = "<group>";
-		};
-		1F00B3C21DC4F2B000EDAE04 /* other */ = {
-			isa = PBXGroup;
-			children = (
-				1F223A051DC621C400BA3BB3 /* LTLNetworkEnum.h */,
-				1F00B3C31DC4F2FC00EDAE04 /* LTLNetworkRequest.h */,
-				1F00B3C41DC4F2FC00EDAE04 /* LTLNetworkRequest.m */,
-			);
-			path = other;
 			sourceTree = "<group>";
 		};
 		1F1CF7BE1DD81B730090C91D /* include */ = {
@@ -684,6 +674,16 @@
 			path = SVProgressHUD;
 			sourceTree = "<group>";
 		};
+		1F4CF68E1DE1D81A0074EAE5 /* NetworkEnum */ = {
+			isa = PBXGroup;
+			children = (
+				1F4CF68F1DE1D81A0074EAE5 /* LTLNetworkEnum.h */,
+				1F4CF6901DE1D81A0074EAE5 /* LTLNetworkRequest.h */,
+				1F4CF6911DE1D81A0074EAE5 /* LTLNetworkRequest.m */,
+			);
+			path = NetworkEnum;
+			sourceTree = "<group>";
+		};
 		1F75C0C51DC227270061402B /* Lib */ = {
 			isa = PBXGroup;
 			children = (
@@ -814,8 +814,8 @@
 		1FB141041DDECD8400139C68 /* 全部歌单 */ = {
 			isa = PBXGroup;
 			children = (
-				1F86F68D1DDF2DDC008D6A3D /* LTLAllTheSong.h */,
-				1F86F68E1DDF2DDC008D6A3D /* LTLAllTheSong.m */,
+				1F86F68D1DDF2DDC008D6A3D /* LTLMusicTable.h */,
+				1F86F68E1DDF2DDC008D6A3D /* LTLMusicTable.m */,
 				1F86F6901DDF336C008D6A3D /* LTLConditionalTag.h */,
 				1F86F6911DDF336C008D6A3D /* LTLConditionalTag.m */,
 				1F86F6921DDF336C008D6A3D /* LTLConditionalTag.xib */,
@@ -842,10 +842,10 @@
 		1FB67BCF1DC0B10000FCA42D /* Tool */ = {
 			isa = PBXGroup;
 			children = (
+				1F4CF68E1DE1D81A0074EAE5 /* NetworkEnum */,
 				1FE977D31DD73A9C00CE29F2 /* model */,
 				1FF875E91DCEFC0200354DE5 /* 播放器 */,
 				1F2239FB1DC5EA8300BA3BB3 /* SDKExtend */,
-				1F00B3C21DC4F2B000EDAE04 /* other */,
 				1F75C0C51DC227270061402B /* Lib */,
 				1FB67BD11DC0B12600FCA42D /* extend */,
 			);
@@ -1097,6 +1097,7 @@
 				1FD780631DD5FF2700A2B07A /* LTLAnimate.m in Sources */,
 				1FB141071DDECD8400139C68 /* LTLsongSheet.m in Sources */,
 				1F00B3BB1DC4D8B800EDAE04 /* SDWebImageDownloader.m in Sources */,
+				1F4CF6921DE1D81A0074EAE5 /* LTLNetworkRequest.m in Sources */,
 				1F75C0D21DC227320061402B /* MMDrawerVisualState.m in Sources */,
 				1F00B3451DC4AE0B00EDAE04 /* NSLayoutConstraint+MASDebugAdditions.m in Sources */,
 				C30A19311DC2EEA300894453 /* MJExtensionConst.m in Sources */,
@@ -1152,7 +1153,6 @@
 				1F00B3B41DC4D8B800EDAE04 /* UIButton+WebCache.m in Sources */,
 				1F1CF8421DD89BD30090C91D /* MusicSlider.m in Sources */,
 				1FB67BDA1DC0B12600FCA42D /* UIButton+LTLbutton.m in Sources */,
-				1F00B3C51DC4F2FC00EDAE04 /* LTLNetworkRequest.m in Sources */,
 				1F00B3B71DC4D8B800EDAE04 /* UIImage+WebP.m in Sources */,
 				1F00B3B61DC4D8B800EDAE04 /* UIImage+MultiFormat.m in Sources */,
 				1FB67BDB1DC0B12600FCA42D /* UILabel+LTLlabel.m in Sources */,
@@ -1163,7 +1163,7 @@
 				1F7D09D01DC854A300D6C1B6 /* XMTrack+LTLXMTrack.m in Sources */,
 				C30A19371DC2EEA300894453 /* NSObject+MJCoding.m in Sources */,
 				1FB141081DDECD8400139C68 /* LTLsongSheetCell.m in Sources */,
-				1F86F68F1DDF2DDC008D6A3D /* LTLAllTheSong.m in Sources */,
+				1F86F68F1DDF2DDC008D6A3D /* LTLMusicTable.m in Sources */,
 				1F75C0D31DC227320061402B /* UIViewController+MMDrawerController.m in Sources */,
 				C30A19341DC2EEA300894453 /* MJPropertyKey.m in Sources */,
 				1FB140F81DDEBA9000139C68 /* LTLMainInterface.m in Sources */,
