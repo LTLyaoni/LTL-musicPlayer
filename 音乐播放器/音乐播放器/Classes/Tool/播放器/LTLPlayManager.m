@@ -315,9 +315,9 @@
             NSTimeInterval timeInterval = startSeconds + durationSeconds;// 计算缓冲总进度
             CMTime duration = playerItem.duration;
             CGFloat totalDuration = CMTimeGetSeconds(duration);
-            _playBuffer = totalDuration;
+            _playBuffer = timeInterval / totalDuration;
             if ([self.delegate respondsToSelector:@selector(playBufferProcess:)]) {
-                [self.delegate playBufferProcess:totalDuration];
+                [self.delegate playBufferProcess:_playBuffer];
             }
             NSLog(@"下载进度：%.2f", timeInterval / totalDuration);
             

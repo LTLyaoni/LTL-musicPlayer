@@ -9,15 +9,16 @@
 #import "LTLMusicTable.h"
 #import "LTLsongSheetLayout.h"
 #import "LTLsongSheetCell.h"
-#import "LTLConditionalTag.h"
+
 
 @interface LTLMusicTable ()<UICollectionViewDelegate,UICollectionViewDataSource>
 
 /**
  *  歌单数组
  */
-@property(nonatomic,strong)NSMutableArray *songSheetArray;
+@property(nonatomic,strong)NSMutableArray <XMAlbum *> *songSheetArray;
 
+@property(nonatomic,assign)NSUInteger page;
 
 @end
 //cell重用标识符
@@ -47,6 +48,8 @@ static NSString *HeaderID = @"SongHeaderView";
     
     LTLMusicTable *musicTable = [[LTLMusicTable alloc]initWithFrame:CGRectZero collectionViewLayout:Layout];
     
+    
+    
     musicTable.backgroundColor = [UIColor whiteColor];
     
     return musicTable;
@@ -54,16 +57,29 @@ static NSString *HeaderID = @"SongHeaderView";
 //初始化
 -(instancetype)initWithFrame:(CGRect)frame collectionViewLayout:(UICollectionViewLayout *)layout
 {
-
-    if (self == [super initWithFrame:frame collectionViewLayout:layout]) {
+    if (self = [super initWithFrame:frame collectionViewLayout:layout]) {
+        
+        _page = 0;
         
         self.delegate = self;
         self.dataSource = self;
         ///注册 cell
         [self registerNib:[UINib nibWithNibName:@"LTLsongSheetCell" bundle:nil] forCellWithReuseIdentifier:cellID];
-//        ///注册 cell
-//        [self registerNib:[UINib nibWithNibName:@"LTLConditionalTag" bundle:nil] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:HeaderID];
+        
         [self DataAcquisition];
+        
+        self.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(DataAcquisition)];
+        
+        self.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
+           
+            [self.mj_footer resetNoMoreData];
+            _page = 0;
+            [self.songSheetArray removeAllObjects];
+            
+            [self DataAcquisition];
+        }];
+        
+        
     }
     return self;
 }
@@ -71,10 +87,7 @@ static NSString *HeaderID = @"SongHeaderView";
 //Items数
 -(NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
-   
-    NSLog(@"LTL%ld",self.songSheetArray.count);
     return self.songSheetArray.count;
-    //    return 100;
 }
 //组
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView
@@ -95,18 +108,50 @@ static NSString *HeaderID = @"SongHeaderView";
     
     return cell;
 }
+
+
+
 #pragma mark - 数据
 ///数据
 -(void)DataAcquisition
 {
+    self.page++;
     
-    [LTLNetworkRequest AlbumsListID:17 tag_name:@"音乐台" Page:1 dimension:LTLDimensionNewest dadt:^(NSArray<XMAlbum *> * _Nullable modelArray, XMErrorModel * _Nullable error) {
+    [LTLNetworkRequest AlbumsListID:17 tag_name:@"音乐台" Page: _page  dimension:LTLDimensionNewest dadt:^(NSArray<XMAlbum *> * _Nullable modelArray, XMErrorModel * _Nullable error)
+     {
+         if (modelArray.count)
+         {
+             [self.songSheetArray addObjectsFromArray:modelArray];
+             
+             [self reloadData];
+             //结束刷新状态
+             [self.mj_footer endRefreshing];
+             [self.mj_header endRefreshing];
+             
+         } else {
+             [self.mj_footer endRefreshingWithNoMoreData];
+             self.page--;
+         }
         
-        [self.songSheetArray addObjectsFromArray:modelArray];
-        [self reloadData];
     }];
     
 }
-
+#pragma mark - 点击歌单
+-(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    //    NSLog(@"%ld",indexPath.row);
+    LTLSongViewController *song = [[LTLSongViewController alloc]init];
+    
+    
+    song.XMAlbumModel = _songSheetArray[indexPath.item];
+    
+    /// 当前信息
+    NSMutableDictionary *dic = [NSMutableDictionary dictionary];
+    dic[@"pushView"] = song;
+    dic[@"toView"] = self;
+    dic[@"isAnimate"] = @(NO);
+    ///发送通知
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"pushView" object:nil userInfo:[dic copy]];
+}
 
 @end

@@ -120,6 +120,12 @@
         [self addPathAnimateWithView:toVC.view fromPoint:snapShotView.frame view:snapShotView  Transition:transitionContext];
         ///移除快照
         [snapShotView removeFromSuperview];
+        ///隐藏 cell 图片
+        cell.icon.hidden = NO;
+        
+        [UIView animateWithDuration:[self transitionDuration:transitionContext]+0.5 animations:^{
+            self.visualEffectView.alpha = 0;
+        }];
         
     }];
     
@@ -148,6 +154,7 @@
     
     //获取toVC中图片的位置
     LTLsongSheetCell *cell = (LTLsongSheetCell *)[toVC.CollectionView cellForItemAtIndexPath:fromVC.indexPath];
+    cell.icon.hidden = YES;
     ///关闭toVC中图片显示
     fromVC.infoView.picView.hidden = YES;
     //添加快照

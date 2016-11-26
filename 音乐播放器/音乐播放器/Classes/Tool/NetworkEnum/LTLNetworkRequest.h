@@ -13,6 +13,8 @@
 @class XMMetadata;
 @class XMBanner;
 @class XMAlbum;
+@class XMTag;
+@class XMTrack;
 /////数据返回函数块
 //typedef void (^LTL)(NSMutableArray * _Nullable modelArray , XMErrorModel   * _Nullable error);
 
@@ -51,5 +53,23 @@
  @param dimension 计算维度
  @param LTL 数据
  */
-+(void)AlbumsListID:(NSInteger)ID tag_name:( nonnull NSString *)tag_name Page:(NSInteger )page dimension: (LTLDimension)dimension dadt:( nullable void (^)(NSArray <XMAlbum *> * _Nullable modelArray , XMErrorModel * _Nullable error))LTL;
++(void)AlbumsListID:(NSInteger)ID tag_name:( nonnull NSString *)tag_name Page:(NSUInteger )page dimension: (LTLDimension)dimension dadt:( nullable void (^)(NSArray <XMAlbum *> * _Nullable modelArray , XMErrorModel * _Nullable error))LTL;
+#pragma mark -获取专辑或声音的标签
+/** 获取专辑或声音的标签 */
++(void)TagsList:( nullable void (^)(NSArray <XMTag*> * _Nullable modelArray , XMErrorModel * _Nullable error))LTL;
+
+/**
+ 猜你喜欢
+
+ @param LTL 数据
+ */
++(void)AlbumsGuessLikeDadt:( nullable void (^)(NSArray <XMAlbum *> * _Nullable modelArray , XMErrorModel * _Nullable error))LTL;
+/**
+ 专辑详情
+ 
+ @param ID 专辑 ID
+ @param page  页
+ @param LTL 数据
+ */
++(void)AlbumsBrowseID:(NSInteger)ID page:(NSUInteger)page Dadt:( nullable void (^)(NSArray <XMTrack *> * _Nullable modelArray , XMErrorModel * _Nullable error))LTL;
 @end

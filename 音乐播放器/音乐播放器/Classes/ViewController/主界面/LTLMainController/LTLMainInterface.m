@@ -10,13 +10,17 @@
 #import "LTLAnimate.h"
 #import "LTLsongSheet.h"
 #import "LTLMusicTable.h"
+#import "LTLMusicLibrary.h"
+#import "LTLCarouselView.h"
+#import "LTLMagnifier.h"
+#import "LTLSetMore.h"
 
-@interface LTLMainInterface ()<UICollectionViewDelegate,UICollectionViewDataSource,UINavigationControllerDelegate,LTLsongSheetDelegate>
+@interface LTLMainInterface ()<UICollectionViewDelegate,UICollectionViewDataSource,UINavigationControllerDelegate,UIScrollViewDelegate,LTLCarouselViewDelegate>
 @property (weak, nonatomic) IBOutlet UICollectionView *collectView;
 ///定时器
 @property(nonatomic,strong) NSTimer * timer;
 ///头视图
-@property (weak, nonatomic) IBOutlet UIView *headerView;
+@property (weak, nonatomic) IBOutlet LTLCarouselView *headerView;
 ///高度约束
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *headerViewHeight;
 ///离顶部距离约束
@@ -27,7 +31,12 @@
 @property (nonatomic, assign) CGFloat            pianyi;
 ///距离
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *Distance;
-
+//动画
+@property (nonatomic,assign,getter=isAnimate)BOOL animate;
+//左按钮
+@property (nonatomic,strong) UIButton * leftButton;
+//右按钮
+@property (nonatomic,strong) UIButton * rightButton;
 
 @end
 
@@ -35,18 +44,30 @@
 #pragma mark - 初始化
 - (void)viewDidLoad {
     [super viewDidLoad];
-
+    [self setNavigationButton];
+//    self.navigationController.fd_prefersNavigationBarHidden = YES;
+    
+    _headerView.LTLDelegate = self;
+    
+    [self receiveNotification];
     [self initUI];
     
     LTLMusicTable *TheSong = [LTLMusicTable initLTLMusicTable];
+//    TheSong.LTLDelegate = self;
     [self addView:TheSong tag:0];
     
     LTLsongSheet *songSheet = [LTLsongSheet initSongSheet];
-    songSheet.LTLDelegate = self;
+//    songSheet.LTLDelegate = self;
     [self addView:songSheet tag:1];
     
+    LTLMusicLibrary *MusicLibrary = [LTLMusicLibrary initLTLMusicLibrary];
+    [self addView:MusicLibrary tag:2];
+    
+    
+    [self didLTLCarouselView:nil tag:1];
     
 }
+#pragma mark - 设置控件
 -(void)initUI
 {
     //控件数组
@@ -60,7 +81,7 @@
     //弹簧
     _collectView.bounces = NO;
     //头视图高度
-    _headerViewHeight.constant = 230;
+    _headerViewHeight.constant = 220;
     //关闭自动调整滚动视图
     self.automaticallyAdjustsScrollViewInsets = NO;
 }
@@ -75,7 +96,7 @@
     [_contentViews insertObject:ScrollView atIndex:tag];
 
 }
-
+#pragma mark - CollectionViews设置
 //组
 -(NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView
 {
@@ -157,13 +178,15 @@
         [obj removeObserver:self forKeyPath:@"contentOffset"];
         
     }];
+    /// 关闭消息中心
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 #pragma mark - 自定义转场
 ///要实现下列方法来返回转场动画
 -(id<UIViewControllerAnimatedTransitioning>)navigationController:(UINavigationController *)navigationController animationControllerForOperation:(UINavigationControllerOperation)operation fromViewController:(UIViewController *)fromVC toViewController:(UIViewController *)toVC
 {
     ///判断转场类型
-    if (operation == UINavigationControllerOperationPush) {
+    if (operation == UINavigationControllerOperationPush && self.isAnimate  ) {
         ///初始化动画及动画类型
         LTLAnimate *animate = [LTLAnimate initWithAnimateType:LTLanimate_push andDuration:0.6F];
         ///返回动画
@@ -174,25 +197,92 @@
     }
     
 }
-#pragma mark - 点击歌单
--(void)LTLsongSheet:(LTLsongSheet *)song VC:(LTLSongViewController *)SongViewController
+#pragma mark - 懒加载按钮
+-(UIButton *)leftButton
 {
-    self.CollectionView = song;
-    [self.navigationController pushViewController:SongViewController animated:YES];
+    if (!_leftButton) {
+        _leftButton = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 30, 30)];
+       
+        UIImage *leftButtonImage = [LTLSetMore imageOfArtboardWithSize:CGSizeMake(30, 30) resizing:LTLSetMoreResizingBehaviorAspectFit];
+         [_leftButton setImage:leftButtonImage forState:UIControlStateNormal];
+    
+        self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc]initWithCustomView:_leftButton];
+    
+    }
+    return _leftButton;
 }
 
+-(UIButton *)rightButton
+{
+    if (!_rightButton) {
+        _rightButton = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 30, 30)];
+        self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]initWithCustomView:_rightButton];
+        UIImage *rightButtonImage = [LTLMagnifier imageOfArtboardWithSize:CGSizeMake(30, 30) resizing:LTLMagnifierResizingBehaviorAspectFit];
+        [_rightButton setImage:rightButtonImage forState:UIControlStateNormal];
+        
+    }
+    return _rightButton;
+}
+
+#pragma mark - 点击歌单
+///接受通知
+-(void)receiveNotification
+{
+    // 开启一个通知接受,开始播放
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(pushView:) name:@"pushView" object:nil];
+}
+-(void)pushView:(NSNotification *)notification
+{
+    
+    
+    self.animate = (BOOL) notification.userInfo[@"isAnimate"];
+    
+    if (self.isAnimate) {
+        self.CollectionView = notification.userInfo[@"toView"];
+    }
+    
+    [self.navigationController pushViewController:notification.userInfo[@"pushView"] animated:YES];
+    
+    
+}
 #pragma mark - 即将显示
 - (void)viewDidAppear:(BOOL)animated{
     [super viewDidAppear:animated];
     ///自定义转场需要遵守navigationController的代理协议
     self.navigationController.delegate = self;
+    
+}
+
+-(void)didLTLCarouselView:(LTLCarouselView *)CarouselView tag:(NSUInteger)tag
+{
+    NSIndexPath *indexPath = [NSIndexPath indexPathForItem:tag inSection:0];
+    
+    [_collectView scrollToItemAtIndexPath:indexPath
+                            atScrollPosition:UICollectionViewScrollPositionLeft
+                                    animated:YES];
+
+}
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView{
+    [self.headerView huangDong:scrollView.contentOffset.x];
 }
 #pragma mark - 导航栏左按钮点击事件
-- (IBAction)left:(UIButton *)sender
+-(void)setNavigationButton
+{
+    [self.leftButton addTarget:self action:@selector(left:) forControlEvents:UIControlEventTouchUpInside];
+    [self.rightButton addTarget:self action:@selector(right:) forControlEvents:UIControlEventTouchUpInside];
+
+}
+- (void)left:(UIButton *)btn
 {
     ///弹出菜单
     [self.mm_drawerController toggleDrawerSide:MMDrawerSideLeft animated:YES completion:nil];
 }
+- (void)right:(UIButton *)btn
+{
+    NSLog(@"搜索");
+}
+
 //设置navigationController
 -(void)navigation
 {
@@ -205,5 +295,4 @@
     //    }
     //    [self.navigationController.navigationBar setBackgroundImage:[[UIImage alloc] init] forBarMetrics:UIBarMetricsDefault];
 }
-
 @end

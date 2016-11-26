@@ -9,6 +9,7 @@
 #import "LTLPlayControl.h"
 #import "LTLMainPlayController.h"
 #import "LTLuserInfo.h"
+#import "LTLPlayControlIcon.h"
 
 
 @interface LTLPlayControl ()
@@ -28,8 +29,6 @@
 @property (weak, nonatomic) IBOutlet UIButton *musicToggleButton;
 ///NextHead
 @property (weak, nonatomic) IBOutlet UIButton *NextHead;
-///play
-@property (weak, nonatomic) IBOutlet UIButton *play;
 ///LastOne
 @property (weak, nonatomic) IBOutlet UIButton *LastOne;
 
@@ -44,14 +43,33 @@
     }
     return _player;
 }
+//-(instancetype)initWithCoder:(NSCoder *)aDecoder
+//{
+//    if (self = [super initWithCoder:aDecoder]) {
+//        
+//        [self setButtonIamge];
+//        
+//    }
+//    return self;
+//}
+-(void)setButtonIamge
+{
+    
+    CGSize size = CGSizeMake(28, 28);
+    
+    UIImage *NextHeadIamge = [LTLPlayControlIcon imageOfNextHead1WithSize:size resizing:LTLPlayControlIconResizingBehaviorAspectFit];
+    UIImage *LastOneIamge = [LTLPlayControlIcon imageOfLastOne1WithSize:size resizing:LTLPlayControlIconResizingBehaviorAspectFit];
+    
+    [_NextHead setImage:NextHeadIamge forState:UIControlStateNormal];
+    [_LastOne setImage:LastOneIamge forState:UIControlStateNormal];
+}
 
 #pragma mark - 初始化
 -(void)awakeFromNib
 {
     [super awakeFromNib];
 //    //初始化播放器
-//    self.player = [XMSDKPlayer sharedPlayer];
-//    self.player.trackPlayDelegate = self;
+    [self setButtonIamge];
     //设置图片圆形
     self.songImage.layer.cornerRadius = self.songImage.width/2;
     ///接受通知
@@ -61,12 +79,19 @@
 #pragma mark - 点击
 - (void)setMusicIsPlaying:(BOOL)musicIsPlaying {
     _musicIsPlaying = musicIsPlaying;
-    if (_musicIsPlaying) {
-        [_musicToggleButton setImage:[UIImage imageNamed:@"big_pause_button"] forState:UIControlStateNormal];
+    UIImage * iamge ;
+    if (_musicIsPlaying)
+    {
+       iamge = [LTLPlayControlIcon imageOfSuspendWithSize:_musicToggleButton.frame.size resizing:LTLPlayControlIconResizingBehaviorAspectFit];
         
     } else {
-        [_musicToggleButton setImage:[UIImage imageNamed:@"big_play_button"] forState:UIControlStateNormal];
+       
+        iamge = [LTLPlayControlIcon imageOfPlayWithSize:_musicToggleButton.frame.size resizing:LTLPlayControlIconResizingBehaviorAspectFit];
+        
     }
+    
+    
+    [_musicToggleButton setImage:iamge forState:UIControlStateNormal];
 }
 ///上一首
 - (IBAction)LastOne:(UIButton *)sender {
@@ -123,7 +148,7 @@
     
     self.musicIsPlaying = _player.isPlay;
     
-    _play.enabled = YES;
+    _musicToggleButton.enabled = YES;
     _NextHead.enabled = YES;
     _LastOne.enabled = YES;
 }
@@ -131,35 +156,31 @@
 
 -(void)LTL
 {
-    //初始圆形的范围
-    
-    UIBezierPath *bezierPath = [UIBezierPath bezierPathWithOvalInRect:self.songImage.frame];
-    
-    CGPoint extremePoint = CGPointMake(self.center.x, self.center.y);
-    //圆形半径
-    float radius = sqrtf(extremePoint.x * extremePoint.x + extremePoint.y * extremePoint.y);
-    //最终圆形的范围
-    UIBezierPath *finalPath = [UIBezierPath bezierPathWithOvalInRect:CGRectInset(self.songImage.frame, -radius, -radius)];
-    
-    CAShapeLayer *maskLayer = [CAShapeLayer layer];
-    maskLayer.path = finalPath.CGPath;
-    self.layer.mask = maskLayer;
-    
-    CABasicAnimation *animation = [CABasicAnimation animationWithKeyPath:@"path"];
-    
-    animation.fromValue = (__bridge id _Nullable)(bezierPath.CGPath);
-    animation.toValue = (__bridge id _Nullable)(finalPath.CGPath);
-    animation.duration = 2;
-    animation.delegate = self;
-    [maskLayer addAnimation:animation forKey:@"path"];
+//    //初始圆形的范围
+//    
+//    UIBezierPath *bezierPath = [UIBezierPath bezierPathWithOvalInRect:self.songImage.frame];
+//    
+//    CGPoint extremePoint = CGPointMake(self.center.x, self.center.y);
+//    //圆形半径
+//    float radius = sqrtf(extremePoint.x * extremePoint.x + extremePoint.y * extremePoint.y);
+//    //最终圆形的范围
+//    UIBezierPath *finalPath = [UIBezierPath bezierPathWithOvalInRect:CGRectInset(self.songImage.frame, -radius, -radius)];
+//    
+//    CAShapeLayer *maskLayer = [CAShapeLayer layer];
+//    maskLayer.path = finalPath.CGPath;
+//    self.layer.mask = maskLayer;
+//    
+//    CABasicAnimation *animation = [CABasicAnimation animationWithKeyPath:@"path"];
+//    
+//    animation.fromValue = (__bridge id _Nullable)(bezierPath.CGPath);
+//    animation.toValue = (__bridge id _Nullable)(finalPath.CGPath);
+//    animation.duration = 2;
+//    animation.delegate = self;
+//    [maskLayer addAnimation:animation forKey:@"path"];
 
 }
 ///点击视图
 - (IBAction)PlayControlClick:(UIButton *)sender {
-//    NSLog(@"点击播放控制条");
-//    if ([self.delegate respondsToSelector:@selector(disPlayController:)]) {
-//        [self.delegate disPlayController:self];
-//    }
     if (!_player.isPlay) {
         [SVProgressHUD setMinimumDismissTimeInterval:1.8];
         [SVProgressHUD showErrorWithStatus:@"当前没有播放音乐!!!"];

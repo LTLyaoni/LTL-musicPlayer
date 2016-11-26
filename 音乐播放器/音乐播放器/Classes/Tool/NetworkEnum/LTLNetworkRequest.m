@@ -44,19 +44,22 @@
 {
 //    NSLog(@"获取分类推荐的焦点图列表数据");
     NSMutableArray *array = [NSMutableArray array];
-    /** 获取分类推荐的焦点图列表 */
-    NSMutableDictionary *params = [NSMutableDictionary dictionary];
-    ///app的渠道号（对应渠道焦点图配置），默认值为“and-f5”
-//    [params setObject:@2 forKey:@"channel"];
-    ///app版本号，默认值为“4.3.2.2”
-    [params setObject:@2 forKey:@"app_version"];
-    ///控制焦点图图片大小参数，scale=2为iphone适配类型，scale=3为iphone6适配机型；机型为android时的一般设置scale=2。默认值为“2”
-//    [params setObject:@3 forKey:@"image_scale"];
-    ///分类ID
-    [params setObject:@2 forKey:@"category_id"];
-    ///内容类型：暂时仅专辑(album)
-    [params setObject:@"album" forKey:@"content_type"];
-    [[XMReqMgr sharedInstance] requestXMData:XMReqType_CategoryBanner params:params withCompletionHander:^(id result, XMErrorModel *error)
+//    /** 获取分类推荐的焦点图列表 */
+//    NSMutableDictionary *params = [NSMutableDictionary dictionary];
+//    ///app的渠道号（对应渠道焦点图配置），默认值为“and-f5”
+////    [params setObject:@2 forKey:@"channel"];
+//    ///app版本号，默认值为“4.3.2.2”
+//    [params setObject:@2 forKey:@"app_version"];
+//    ///控制焦点图图片大小参数，scale=2为iphone适配类型，scale=3为iphone6适配机型；机型为android时的一般设置scale=2。默认值为“2”
+////    [params setObject:@3 forKey:@"image_scale"];
+//    ///分类ID
+//    [params setObject:@2 forKey:@"category_id"];
+//    ///内容类型：暂时仅专辑(album)
+//    [params setObject:@"album" forKey:@"content_type"];
+    
+    NSDictionary *params2 = @{@"app_version" : @2 , @"category_id" : @2 ,@"content_type" : @"album"  };
+    
+    [[XMReqMgr sharedInstance] requestXMData:XMReqType_CategoryBanner params:params2 withCompletionHander:^(id result, XMErrorModel *error)
     {
 //        NSLog(@"LTL%@",result);
         ///数据转模型
@@ -80,10 +83,13 @@
 #pragma mark - 获取分类元数据
 +(void)CategoriesList:( void(^)(NSArray<XMMetadata *> *array))LTL
 {
-    //分类元数据
-    NSMutableDictionary *params = [NSMutableDictionary dictionary];
-    //分类id
-    [params setObject:@2 forKey:@"category_id"];
+//    //分类元数据
+//    NSMutableDictionary *params = [NSMutableDictionary dictionary];
+//    //分类id
+//    [params setObject:@2 forKey:@"category_id"];
+
+    NSDictionary *params = @{@"category_id" : @2 };
+    
     [[XMReqMgr sharedInstance] requestXMData:XMReqType_MetadataList params:params withCompletionHander:^(id result, XMErrorModel *error) {
         NSLog(@"LTL %@",result);
         if(!error)
@@ -112,10 +118,12 @@
 {
     ///获取分类推荐数组
     NSMutableArray *array = [NSMutableArray array];
-    //分类元数据
-    NSMutableDictionary *params = [NSMutableDictionary dictionary];
-    [params setObject:@2 forKey:@"category_id"];
-    [params setObject:@6 forKey:@"display_count"];
+//    //分类元数据
+//    NSMutableDictionary *params = [NSMutableDictionary dictionary];
+//    [params setObject:@2 forKey:@"category_id"];
+//    [params setObject:@6 forKey:@"display_count"];
+    NSDictionary *params =@{@"category_id" : @2 ,@"display_count" : @6 };
+    
     [[XMReqMgr sharedInstance] requestXMData:XMReqType_CategoryRecommendAlbums params:params withCompletionHander:^(id result, XMErrorModel *error) {
         if(!error)
         {
@@ -159,17 +167,20 @@
 }
 #pragma mark -获取专辑或声音的标签
 /** 获取专辑或声音的标签 */
-+(void)TagsList
++(void)TagsList:( nullable void (^)(NSArray <XMTag*> * _Nullable modelArray , XMErrorModel * _Nullable error))LTL
 {
     NSMutableArray <XMTag *>* lingShi = [NSMutableArray array];
     
-    NSMutableDictionary *params2 = [NSMutableDictionary dictionary];
-    ///分类
-    [params2 setObject:@2 forKey:@"category_id"];
-    //标签类型
-    [params2 setObject:@0 forKey:@"type"];
-    [[XMReqMgr sharedInstance] requestXMData:XMReqType_TagsList params:params2 withCompletionHander:^(id result, XMErrorModel *error) {
-        NSLog(@"LTL%@",result);
+//    NSMutableDictionary *params2 = [NSMutableDictionary dictionary];
+//    ///分类
+//    [params2 setObject:@2 forKey:@"category_id"];
+//    //标签类型
+//    [params2 setObject:@0 forKey:@"type"];
+    
+    NSDictionary *params = @{@"category_id": @2 ,@"type" : @0 };
+    
+    [[XMReqMgr sharedInstance] requestXMData:XMReqType_TagsList params:params withCompletionHander:^(id result, XMErrorModel *error) {
+//        NSLog(@"LTL%@",result);
         if (!error)
         {
             
@@ -178,7 +189,9 @@
                 [lingShi addObject:model];
             }];
         }
-        
+        if (LTL) {
+            LTL(lingShi,error);
+        }
     }];
 }
 #pragma mark -根据分类和标签获取某个分类某个标签下的热门专辑列表/最新专辑列表/最多播放专辑列表
@@ -192,8 +205,11 @@
  @param dimension 计算维度
  @param LTL 数据
  */
-+(void)AlbumsListID:(NSInteger)ID tag_name:(NSString *)tag_name Page:(NSInteger )page dimension: (LTLDimension)dimension dadt:( nullable void (^)(NSArray <XMAlbum *> * _Nullable modelArray , XMErrorModel * _Nullable error))LTL
++(void)AlbumsListID:(NSInteger)ID tag_name:(NSString *)tag_name Page:(NSUInteger )page dimension: (LTLDimension)dimension dadt:( nullable void (^)(NSArray <XMAlbum *> * _Nullable modelArray , XMErrorModel * _Nullable error))LTL
 {
+    if (page <= 0) {
+        page=1;
+    }
     NSMutableDictionary *params = [NSMutableDictionary dictionary];
     ///分类ID，指定分类，为0表示热门分类
     [params setObject:@(ID) forKey:@"category_id"];
@@ -209,7 +225,7 @@
      NSMutableArray *lingShi = [NSMutableArray array];
     
     [[XMReqMgr sharedInstance] requestXMData:XMReqType_AlbumsList params:params withCompletionHander:^(id result, XMErrorModel *error) {
-
+        
         if(!error)
         {
             [result[@"albums"] enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
@@ -218,6 +234,7 @@
                 [model LabelProcessing:model.albumTags];
                 [lingShi addObject:model];
             }];
+            
         }
         else
             NSLog(@"%@   %@",error.description,result);
@@ -232,18 +249,76 @@
 
 
 #pragma mark - 获取猜你喜欢
-+(void)AlbumsGuessLike
+/**
+ 猜你喜欢
+ 
+ @param LTL 数据
+ */
++(void)AlbumsGuessLikeDadt:( nullable void (^)(NSArray <XMAlbum *> * _Nullable modelArray , XMErrorModel * _Nullable error))LTL
 {
-    [[XMReqMgr sharedInstance] requestXMData:XMReqType_DiscoveryRecommendAlbums params:nil withCompletionHander:^(id result, XMErrorModel *error) {
+    NSMutableArray *lingShi = [NSMutableArray array];
+//    NSMutableDictionary *params = [NSMutableDictionary dictionary];
+//    [params setObject:@18 forKey:@"like_count"];
+    
+    NSDictionary *params = @{@"like_count" : @18 };
+    
+    [[XMReqMgr sharedInstance] requestXMData:XMReqType_AlbumsGuessLike params:params withCompletionHander:^(id result, XMErrorModel *error) {
+        
         if(!error)
-//            [sself showReceivedData:result className:@"XMCategoryHumanRecommend" valuePath:nil titleNeedShow:@"categoryName"];
-            NSLog(@"%@",result);
+        {
+            [result enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+                XMAlbum *model = [[XMAlbum alloc]initWithDictionary:obj];
+                model.PlayNumber = @"LTL";
+                [model LabelProcessing:model.albumTags];
+                [lingShi addObject:model];
+            }];
+        }
         else
-            NSLog(@"%@",error.description);
+            NSLog(@"%@   %@",error.description,result);
+        
+        if (LTL) {
+            
+            LTL([lingShi copy],error);
+        }
+
     }];
 
 }
 
+/**
+ 专辑详情
+
+ @param ID 专辑 ID
+ @param page  页
+ @param LTL 数据
+ */
++(void)AlbumsBrowseID:(NSInteger)ID page:(NSUInteger)page Dadt:( nullable void (^)(NSArray <XMTrack *> * _Nullable modelArray , XMErrorModel * _Nullable error))LTL
+{
+    
+    NSMutableArray <XMTrack *> *lingShi = [NSMutableArray array];
+    
+    NSMutableDictionary *params = [NSMutableDictionary dictionary];
+    [params setObject:@(ID) forKey:@"album_id"];
+    [params setObject:@20 forKey:@"count"];
+    [params setObject:@(page) forKey:@"page"];
+    
+    [[XMReqMgr sharedInstance] requestXMData:XMReqType_AlbumsBrowse params:params withCompletionHander:^(id result, XMErrorModel *error) {
+        if (!error)
+        {
+            [result[@"tracks"] enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+                XMTrack *model = [[XMTrack alloc]initWithDictionary:obj];
+                model.PlayNumber = @"LTL";
+                [model TimeProcessing:model.createdAt];
+                [lingShi addObject:model];
+            }];
+        }
+        if (LTL) {
+            LTL(lingShi,error);
+        }
+    }];
+
+
+}
 
 
 #pragma mark - 获取歌单
@@ -254,18 +329,21 @@
         page=1;
     }
     NSMutableArray <XMAlbum *>*lingShi = [NSMutableArray array];
-    NSMutableDictionary *params = [NSMutableDictionary dictionary];
-    ///分类ID，指定分类，为0表示热门分类
-    [params setObject:@2 forKey:@"category_id"];
-    //每页多少条，默认20，最多不超过200
-//    [params setObject:@20 forKey:@"count"];
-    [params setObject:@18 forKey:@"count"];
-    ///计算维度,现支持最火(1),最新(2), 经典或播放最多(3) 做成枚举
-    [params setObject:@(dimension) forKey:@"calc_dimension"];
-    ///返回第几页，必须大于等于1，不填默认为1
-    [params setObject:@(page) forKey:@"page"];
-    ///元数据组合   比如现在想取已完本的穿越类有声小说，我们先从XMReqType_MetadataList接口得到穿越对应的元数据的attr_key、attr_value分别为97、”穿越”，然后拿到已完本对应的元数据的attr_key、attr_value分别为131、”2”，最后就可以按照本接口参数要求构造请求拿到数据
-    [params setObject:@"8:歌单" forKey:@"metadata_attributes"];
+//    NSMutableDictionary *params = [NSMutableDictionary dictionary];
+//    ///分类ID，指定分类，为0表示热门分类
+//    [params setObject:@2 forKey:@"category_id"];
+//    //每页多少条，默认20，最多不超过200
+////    [params setObject:@20 forKey:@"count"];
+//    [params setObject:@18 forKey:@"count"];
+//    ///计算维度,现支持最火(1),最新(2), 经典或播放最多(3) 做成枚举
+//    [params setObject:@(dimension) forKey:@"calc_dimension"];
+//    ///返回第几页，必须大于等于1，不填默认为1
+//    [params setObject:@(page) forKey:@"page"];
+//    ///元数据组合   比如现在想取已完本的穿越类有声小说，我们先从XMReqType_MetadataList接口得到穿越对应的元数据的attr_key、attr_value分别为97、”穿越”，然后拿到已完本对应的元数据的attr_key、attr_value分别为131、”2”，最后就可以按照本接口参数要求构造请求拿到数据
+//    [params setObject:@"8:歌单" forKey:@"metadata_attributes"];
+    
+    
+    NSDictionary *params = @{@"category_id" : @2 ,@"count" : @18 ,@"calc_dimension" : @(dimension) ,@"page" : @(page) };
     
     [[XMReqMgr sharedInstance] requestXMData:XMReqType_MetadataAlbums params:params withCompletionHander:^(id result, XMErrorModel *error) {
         if(!error)

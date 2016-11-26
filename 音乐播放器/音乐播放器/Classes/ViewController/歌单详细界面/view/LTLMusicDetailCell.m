@@ -64,9 +64,10 @@
         _titleLb.font = [UIFont systemFontOfSize:14];
         [self.contentView addSubview:_titleLb];
         [_titleLb mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.left.mas_equalTo(self.coverIV.mas_right).mas_equalTo(10);
+            make.left.equalTo(self.mas_left).offset(76);
             make.top.mas_equalTo(10);
-            make.width.width.mas_equalTo(200);
+            make.width.mas_equalTo(200);
+            make.height.mas_equalTo(22);
         }];
         _titleLb.numberOfLines = 0;
     }
@@ -85,6 +86,7 @@
             make.top.equalTo(self.contentView.mas_top).offset(20);
             make.right.equalTo(self.mas_right).offset(-10);
             make.width.mas_equalTo(90);
+             make.height.mas_equalTo(22);
         }];
         //对其方式
         _updateTimeLb.textAlignment=NSTextAlignmentRight;
@@ -97,9 +99,9 @@
         _sourceLb = [[UILabel alloc] init];
         [self.contentView addSubview:_sourceLb];
         [_sourceLb mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.leftMargin.mas_equalTo(self.titleLb.mas_leftMargin);
-            make.top.mas_equalTo(self.titleLb.mas_bottom).mas_equalTo(4);
-            make.rightMargin.mas_equalTo(self.titleLb.mas_rightMargin);
+            make.left.equalTo(self.mas_left).offset(76);
+            make.top.equalTo(self.titleLb.mas_bottom).offset(4);
+            make.rightMargin.equalTo(self.titleLb.mas_rightMargin);
         }];
         //字体大小
         _sourceLb.font=[UIFont systemFontOfSize:12];
@@ -118,14 +120,14 @@
         ////位置
         [imageView mas_makeConstraints:^(MASConstraintMaker *make) {
             make.size.mas_equalTo(CGSizeMake(10, 10));
-            make.leftMargin.mas_equalTo(self.sourceLb.mas_leftMargin);
+            make.leftMargin.equalTo(self.sourceLb.mas_leftMargin);
             make.bottom.mas_equalTo(-10);
-            make.top.mas_equalTo(self.sourceLb.mas_bottom).mas_equalTo(8);
+            make.top.equalTo(self.sourceLb.mas_bottom).offset(8);
         }];
         //位置
         [_playCountLb mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.centerY.mas_equalTo(imageView);
-            make.left.mas_equalTo(imageView.mas_right).mas_equalTo(3);
+            make.centerY.equalTo(imageView.mas_centerY);
+            make.left.equalTo(imageView.mas_right).offset(3);
         }];
         //颜色
         _playCountLb.textColor=[UIColor lightGrayColor];
@@ -142,15 +144,15 @@
         UIImageView *imageView=[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"sound_likes_n"]];
         [self.contentView addSubview:imageView];
         [imageView mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.centerY.mas_equalTo(self.playCountLb);
-            make.left.mas_equalTo(self.playCountLb.mas_right).mas_equalTo(7);
+            make.centerY.equalTo(self.playCountLb.mas_centerY);
+            make.left.equalTo(self.playCountLb.mas_right).offset(7);
             make.size.mas_equalTo(CGSizeMake(10, 10));
         }];
         _favorCountLb.textColor=[UIColor lightGrayColor];
         _favorCountLb.font=[UIFont systemFontOfSize:10];
         [_favorCountLb mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.left.mas_equalTo(imageView.mas_right).mas_equalTo(3);
-            make.centerY.mas_equalTo(imageView);
+            make.left.equalTo(imageView.mas_right).offset(3);
+            make.centerY.equalTo(imageView.mas_centerY);
         }];
     }
     return _favorCountLb;
@@ -164,12 +166,12 @@
         [self.contentView addSubview:imageView];
         [imageView mas_makeConstraints:^(MASConstraintMaker *make) {
             make.size.mas_equalTo(CGSizeMake(10, 10));
-            make.left.mas_equalTo(self.favorCountLb.mas_right).mas_equalTo(7);
-            make.centerY.mas_equalTo(self.favorCountLb);
+            make.left.equalTo(self.favorCountLb.mas_right).offset(7);
+            make.centerY.equalTo(self.favorCountLb.mas_centerY);
         }];
         [_commentCountLb mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.centerY.mas_equalTo(imageView);
-            make.left.mas_equalTo(imageView.mas_right).mas_equalTo(3);
+            make.centerY.equalTo(imageView.mas_centerY);
+            make.left.equalTo(imageView.mas_right).offset(3);
         }];
         _commentCountLb.textColor=[UIColor lightGrayColor];
         _commentCountLb.font=[UIFont systemFontOfSize:10];
@@ -184,13 +186,13 @@
         UIImageView *imageView=[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"sound_duration"]];
         [self.contentView addSubview:imageView];
         [imageView mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.left.mas_equalTo(self.commentCountLb.mas_right).mas_equalTo(7);
-            make.centerY.mas_equalTo(self.commentCountLb);
+            make.left.equalTo(self.commentCountLb.mas_right).offset(7);
+            make.centerY.equalTo(self.commentCountLb.mas_centerY);
             make.size.mas_equalTo(CGSizeMake(10, 10));
         }];
         [_durationLb mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.left.mas_equalTo(imageView.mas_right).mas_equalTo(3);
-            make.centerY.mas_equalTo(imageView);
+            make.left.equalTo(imageView.mas_right).offset(3);
+            make.centerY.equalTo(imageView.mas_centerY);
         }];
         _durationLb.font=[UIFont systemFontOfSize:10];
         _durationLb.textColor=[UIColor lightGrayColor];
@@ -205,7 +207,8 @@
         [_downloadBtn setBackgroundImage:[UIImage imageNamed:@"cell_download"] forState:UIControlStateNormal];
         [self.contentView addSubview:_downloadBtn];
         [_downloadBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.bottom.right.mas_equalTo(-5);
+            make.bottom.equalTo(self.mas_bottom).offset(-15);
+            make.right.equalTo(self.mas_right).offset(-15);
             make.size.mas_equalTo(CGSizeMake(25, 25));
         }];
     }

@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 
 @interface LTLGroupHeader : UICollectionReusableView
-///组标题
-@property (weak, nonatomic) IBOutlet UILabel *GroupHeader;
+
+@property (nonatomic,weak) LTLRecommendAlbums *model;
 
 @end

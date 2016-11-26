@@ -1,0 +1,30 @@
+{
+  "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "574B319FA1756323BF5172B5D5D3E641DD5FF963",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyRepositoryLocationsKey" : {
+
+  },
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
+    "52D053A52D52978B8C89ABF8F3AD1D5AAC6DCFA3" : 9223372036854775807,
+    "574B319FA1756323BF5172B5D5D3E641DD5FF963" : 9223372036854775807
+  },
+  "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "D16E5FFA-C147-458A-BB7B-8E5979DE7709",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
+    "52D053A52D52978B8C89ABF8F3AD1D5AAC6DCFA3" : "LTLweibo\/",
+    "574B319FA1756323BF5172B5D5D3E641DD5FF963" : "LTL-musicPlayer\/"
+  },
+  "DVTSourceControlWorkspaceBlueprintNameKey" : "音乐播放器",
+  "DVTSourceControlWorkspaceBlueprintVersion" : 204,
+  "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "音乐播放器\/音乐播放器.xcodeproj",
+  "DVTSourceControlWorkspaceBlueprintRemoteRepositoriesKey" : [
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/git.oschina.net\/LiTaiLiang\/LTLweibo.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "52D053A52D52978B8C89ABF8F3AD1D5AAC6DCFA3"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/LTLyaoni\/LTL-musicPlayer.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "574B319FA1756323BF5172B5D5D3E641DD5FF963"
+    }
+  ]
+}

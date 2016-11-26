@@ -77,9 +77,18 @@
     ///window的layer层添加内容
     self.window.layer.contents = (id) image.CGImage;    // 如果需要背景透明加上下面这句
     self.window.layer.backgroundColor = [UIColor clearColor].CGColor;
+    //颜色
+    [self zhuTi];
+    
     return YES;
 }
-
+///设置主题色
+-(void)zhuTi
+{
+    [UINavigationBar appearance].tintColor       = [LTLThemeManager sharedManager].themeColor;
+    [UITabBar appearance].tintColor              = [LTLThemeManager sharedManager].themeColor;
+    [UINavigationBar appearance].backgroundColor = [UIColor clearColor];
+}
 -(void)RegisteredHimalaya
 {
 //    [[XMReqMgr sharedInstance]registerXMReqInfoWithKey:appkey appSecret:appsecret];

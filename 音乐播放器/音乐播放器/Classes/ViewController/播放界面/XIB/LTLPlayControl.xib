@@ -5,6 +5,7 @@
     </device>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11524"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
@@ -37,7 +38,6 @@
                     <constraints>
                         <constraint firstAttribute="width" constant="45" id="6Pp-7T-eL5"/>
                     </constraints>
-                    <state key="normal" image="next_song"/>
                     <connections>
                         <action selector="nextHead:" destination="iN0-l3-epB" eventType="touchUpInside" id="YmM-Zf-p82"/>
                     </connections>
@@ -45,15 +45,13 @@
                 <button opaque="NO" contentMode="scaleToFill" semanticContentAttribute="spatial" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ppl-SW-S64" userLabel="play">
                     <rect key="frame" x="267" y="0.0" width="45" height="45"/>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                    <state key="normal" image="big_pause_button"/>
                     <connections>
                         <action selector="play:" destination="iN0-l3-epB" eventType="touchUpInside" id="nsl-u6-Ag8"/>
                     </connections>
                 </button>
                 <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0xQ-sT-e4f" userLabel="LastOne">
-                    <rect key="frame" x="219" y="-0.5" width="45" height="45"/>
+                    <rect key="frame" x="219" y="0.0" width="45" height="45"/>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                    <state key="normal" image="prev_song"/>
                     <connections>
                         <action selector="LastOne:" destination="iN0-l3-epB" eventType="touchUpInside" id="TPK-Rv-rfQ"/>
                     </connections>
@@ -71,12 +69,12 @@
                     <nil key="highlightedColor"/>
                 </label>
                 <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" progressViewStyle="bar" translatesAutoresizingMaskIntoConstraints="NO" id="m8f-T4-gH0">
-                    <rect key="frame" x="0.0" y="43" width="375" height="2.5"/>
+                    <rect key="frame" x="0.0" y="43.5" width="375" height="2.5"/>
                     <color key="progressTintColor" red="0.40000000600000002" green="0.40000000600000002" blue="0.40000000600000002" alpha="0.85153556034482758" colorSpace="calibratedRGB"/>
                     <color key="trackTintColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                 </progressView>
                 <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" progressViewStyle="bar" translatesAutoresizingMaskIntoConstraints="NO" id="FXm-0L-uLN">
-                    <rect key="frame" x="3" y="43" width="372" height="2.5"/>
+                    <rect key="frame" x="0.0" y="43.5" width="375" height="2.5"/>
                     <color key="progressTintColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <color key="trackTintColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                 </progressView>
@@ -92,7 +90,7 @@
                 <constraint firstItem="fV7-kg-xsa" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="N2u-9n-2AL"/>
                 <constraint firstItem="Ppl-SW-S64" firstAttribute="height" secondItem="0xQ-sT-e4f" secondAttribute="height" id="PRw-fF-RG4"/>
                 <constraint firstAttribute="trailing" secondItem="FXm-0L-uLN" secondAttribute="trailing" id="T66-Lt-NJh"/>
-                <constraint firstItem="FXm-0L-uLN" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="3" id="TWf-Nz-AHW"/>
+                <constraint firstItem="FXm-0L-uLN" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="TWf-Nz-AHW"/>
                 <constraint firstItem="Ppl-SW-S64" firstAttribute="width" secondItem="0xQ-sT-e4f" secondAttribute="width" id="UpY-dw-4gf"/>
                 <constraint firstItem="cfu-LK-t8c" firstAttribute="leading" secondItem="Ppl-SW-S64" secondAttribute="trailing" constant="3" id="ZDY-v1-8bT"/>
                 <constraint firstItem="cfu-LK-t8c" firstAttribute="width" secondItem="Ppl-SW-S64" secondAttribute="width" id="a9C-WT-fy2"/>
@@ -122,18 +120,14 @@
                 <outlet property="SingerName" destination="PvW-xq-cvt" id="XUz-fG-Q4e"/>
                 <outlet property="jingDu" destination="m8f-T4-gH0" id="ej1-U7-ozl"/>
                 <outlet property="musicToggleButton" destination="Ppl-SW-S64" id="70x-B2-ZwE"/>
-                <outlet property="play" destination="Ppl-SW-S64" id="I4p-9P-LV3"/>
                 <outlet property="playProgress" destination="FXm-0L-uLN" id="FhO-iU-4bm"/>
                 <outlet property="songImage" destination="NTH-Jb-Efn" id="W3m-eR-SOJ"/>
                 <outlet property="songName" destination="zLZ-ZZ-DAn" id="6Fj-Bq-zfe"/>
             </connections>
-            <point key="canvasLocation" x="-172.5" y="-172.5"/>
+            <point key="canvasLocation" x="-176" y="-89"/>
         </view>
     </objects>
     <resources>
         <image name="9" width="256" height="256"/>
-        <image name="big_pause_button" width="60" height="60"/>
-        <image name="next_song" width="20" height="28"/>
-        <image name="prev_song" width="20" height="28"/>
     </resources>
 </document>

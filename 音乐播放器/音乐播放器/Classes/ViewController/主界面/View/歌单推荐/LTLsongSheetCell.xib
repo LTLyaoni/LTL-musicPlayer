@@ -23,14 +23,21 @@
                             <constraint firstAttribute="height" constant="266" id="cJb-9D-ZiB"/>
                         </constraints>
                     </imageView>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="findsubject_mask" translatesAutoresizingMaskIntoConstraints="NO" id="YE9-a3-uA7">
+                        <rect key="frame" x="0.0" y="0.0" width="283" height="30"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="30" id="MaR-79-HQG"/>
+                        </constraints>
+                    </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZLR-aw-6gp">
-                        <rect key="frame" x="256.5" y="5" width="21.5" height="10"/>
+                        <rect key="frame" x="256" y="5" width="22" height="10"/>
                         <fontDescription key="fontDescription" type="system" pointSize="8"/>
-                        <nil key="textColor"/>
+                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OF0-WF-czY">
-                        <rect key="frame" x="0.0" y="266" width="283" height="14.5"/>
+                        <rect key="frame" x="0.0" y="266" width="283" height="15"/>
                         <fontDescription key="fontDescription" type="system" pointSize="12"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
@@ -42,8 +49,11 @@
                 <constraint firstItem="ZLR-aw-6gp" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="5" id="9qd-ux-a0d"/>
                 <constraint firstItem="UQn-Zy-pyD" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="I7L-9p-cb2"/>
                 <constraint firstAttribute="trailing" secondItem="ZLR-aw-6gp" secondAttribute="trailing" constant="5" id="I7b-QG-md1"/>
+                <constraint firstItem="YE9-a3-uA7" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="cpQ-6F-iyX"/>
                 <constraint firstItem="OF0-WF-czY" firstAttribute="top" secondItem="UQn-Zy-pyD" secondAttribute="bottom" id="dh0-k7-S8W"/>
+                <constraint firstItem="YE9-a3-uA7" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="mTB-lu-ZJr"/>
                 <constraint firstItem="OF0-WF-czY" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="nbK-Rg-beY"/>
+                <constraint firstAttribute="trailing" secondItem="YE9-a3-uA7" secondAttribute="trailing" id="ohj-hl-cVW"/>
                 <constraint firstAttribute="trailing" secondItem="UQn-Zy-pyD" secondAttribute="trailing" id="u1Y-ax-xD0"/>
                 <constraint firstAttribute="trailing" secondItem="OF0-WF-czY" secondAttribute="trailing" id="w1h-e7-SFO"/>
             </constraints>
@@ -57,4 +67,7 @@
             <point key="canvasLocation" x="22.5" y="35.5"/>
         </collectionViewCell>
     </objects>
+    <resources>
+        <image name="findsubject_mask" width="372" height="50"/>
+    </resources>
 </document>

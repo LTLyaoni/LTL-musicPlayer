@@ -10,16 +10,7 @@
 #import "LTLSongViewController.h"
 @class LTLsongSheet;
 
-@protocol LTLsongSheetDelegate <NSObject>
-
--(void)LTLsongSheet:(LTLsongSheet *)song VC : (LTLSongViewController *)SongViewController;
-
-@end
-
 @interface LTLsongSheet : UICollectionView
-
-///代理
-@property (nonatomic,weak) id<LTLsongSheetDelegate>LTLDelegate;
 ///初始化函数
 +(LTLsongSheet *)initSongSheet;
 @end

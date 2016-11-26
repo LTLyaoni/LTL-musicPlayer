@@ -21,7 +21,7 @@
  */
 -(instancetype)initText : (NSString *)text  image : (NSString *)image colorText : (UIColor *)colorText
 {
-    if ((self      = [super init]) != nil) {
+    if (self = [super init]) {
 
         [self setTitle:text forState:UIControlStateNormal];
        // [self setImage:[UIImage imageNamed:image] forState:UIControlStateNormal];

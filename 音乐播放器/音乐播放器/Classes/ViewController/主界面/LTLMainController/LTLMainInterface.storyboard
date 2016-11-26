@@ -45,68 +45,46 @@
                                 </connections>
                             </collectionView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="v5Q-Gg-cFJ" customClass="LTLCarouselView">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="230"/>
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="220"/>
                                 <subviews>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jzG-fD-dxv">
+                                    <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" pagingEnabled="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tDV-at-4nH" customClass="LTLCarousel">
                                         <rect key="frame" x="0.0" y="0.0" width="375" height="150"/>
-                                        <subviews>
-                                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" pagingEnabled="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="56U-RM-Reo">
-                                                <rect key="frame" x="0.0" y="0.0" width="375" height="150"/>
-                                                <color key="backgroundColor" red="0.28259368270000002" green="0.98949086929999996" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                            </scrollView>
-                                            <pageControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" numberOfPages="3" translatesAutoresizingMaskIntoConstraints="NO" id="C8w-Gk-gIB">
-                                                <rect key="frame" x="87" y="113" width="200" height="37"/>
-                                                <constraints>
-                                                    <constraint firstAttribute="width" constant="200" id="Pp1-hA-kHA"/>
-                                                    <constraint firstAttribute="height" constant="37" id="Taz-dy-qWW"/>
-                                                </constraints>
-                                                <color key="pageIndicatorTintColor" red="0.66666666669999997" green="0.66666666669999997" blue="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                <color key="currentPageIndicatorTintColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                            </pageControl>
-                                        </subviews>
-                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <color key="backgroundColor" red="0.28259368270000002" green="0.98949086929999996" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <constraints>
-                                            <constraint firstAttribute="bottom" secondItem="C8w-Gk-gIB" secondAttribute="bottom" id="3nQ-rr-PKs"/>
-                                            <constraint firstItem="56U-RM-Reo" firstAttribute="top" secondItem="jzG-fD-dxv" secondAttribute="top" id="4QV-IT-CIz"/>
-                                            <constraint firstAttribute="bottom" secondItem="56U-RM-Reo" secondAttribute="bottom" id="8rx-Ky-OZV"/>
-                                            <constraint firstAttribute="height" constant="150" id="9Sk-iR-fPw"/>
-                                            <constraint firstItem="56U-RM-Reo" firstAttribute="leading" secondItem="jzG-fD-dxv" secondAttribute="leading" id="E1w-jD-HA1"/>
-                                            <constraint firstItem="56U-RM-Reo" firstAttribute="centerX" secondItem="jzG-fD-dxv" secondAttribute="centerX" id="Uzj-ET-FVe"/>
-                                            <constraint firstAttribute="trailing" secondItem="56U-RM-Reo" secondAttribute="trailing" id="VLf-0K-twG"/>
-                                            <constraint firstItem="C8w-Gk-gIB" firstAttribute="centerX" secondItem="jzG-fD-dxv" secondAttribute="centerX" id="er8-kQ-ty4"/>
+                                            <constraint firstAttribute="height" constant="150" id="Ze5-J9-WkO"/>
+                                        </constraints>
+                                    </scrollView>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cvK-Pb-TO4" customClass="LTLPageControl">
+                                        <rect key="frame" x="0.0" y="208" width="375" height="12"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="12" id="Yhr-0l-gcE"/>
                                         </constraints>
                                     </view>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Sct-wL-0Gf">
-                                        <rect key="frame" x="157" y="162" width="62" height="30"/>
-                                        <state key="normal" title="歌单推荐"/>
-                                    </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="87f-tN-D6g">
-                                        <rect key="frame" x="71" y="162" width="46" height="30"/>
-                                        <state key="normal" title="音乐台"/>
-                                    </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SPG-mW-ep0">
-                                        <rect key="frame" x="259" y="162" width="31" height="30"/>
-                                        <state key="normal" title="乐库"/>
-                                    </button>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fPb-s5-E9k">
+                                        <rect key="frame" x="0.0" y="150" width="375" height="58"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    </view>
                                 </subviews>
                                 <color key="backgroundColor" red="0.90766793489456177" green="0.42869848012924194" blue="0.91001754999160767" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
-                                    <constraint firstItem="jzG-fD-dxv" firstAttribute="leading" secondItem="v5Q-Gg-cFJ" secondAttribute="leading" id="0mq-eL-idi"/>
-                                    <constraint firstAttribute="trailing" secondItem="jzG-fD-dxv" secondAttribute="trailing" id="BCo-WF-w2Y"/>
-                                    <constraint firstItem="SPG-mW-ep0" firstAttribute="leading" secondItem="Sct-wL-0Gf" secondAttribute="trailing" constant="40" id="I0t-qF-egd"/>
-                                    <constraint firstItem="Sct-wL-0Gf" firstAttribute="leading" secondItem="87f-tN-D6g" secondAttribute="trailing" constant="40" id="Ol7-nV-kQE"/>
-                                    <constraint firstItem="Sct-wL-0Gf" firstAttribute="centerY" secondItem="87f-tN-D6g" secondAttribute="centerY" id="QJo-HH-XId"/>
-                                    <constraint firstItem="jzG-fD-dxv" firstAttribute="centerX" secondItem="v5Q-Gg-cFJ" secondAttribute="centerX" id="WyW-77-0nI"/>
-                                    <constraint firstAttribute="height" constant="230" id="dxO-da-wyr"/>
-                                    <constraint firstItem="SPG-mW-ep0" firstAttribute="centerY" secondItem="87f-tN-D6g" secondAttribute="centerY" id="few-Jb-cpW"/>
-                                    <constraint firstItem="jzG-fD-dxv" firstAttribute="top" secondItem="v5Q-Gg-cFJ" secondAttribute="top" id="oGo-td-V4M"/>
-                                    <constraint firstItem="Sct-wL-0Gf" firstAttribute="centerX" secondItem="v5Q-Gg-cFJ" secondAttribute="centerX" id="sJ2-Gx-ffH"/>
-                                    <constraint firstItem="Sct-wL-0Gf" firstAttribute="top" secondItem="jzG-fD-dxv" secondAttribute="bottom" constant="12" id="wBF-TW-D2s"/>
+                                    <constraint firstAttribute="trailing" secondItem="tDV-at-4nH" secondAttribute="trailing" id="8jf-4l-bm3"/>
+                                    <constraint firstAttribute="trailing" secondItem="cvK-Pb-TO4" secondAttribute="trailing" id="HGY-Be-zaP"/>
+                                    <constraint firstItem="tDV-at-4nH" firstAttribute="top" secondItem="v5Q-Gg-cFJ" secondAttribute="top" id="KUm-1g-JSl"/>
+                                    <constraint firstItem="fPb-s5-E9k" firstAttribute="leading" secondItem="v5Q-Gg-cFJ" secondAttribute="leading" id="PfR-bt-OL4"/>
+                                    <constraint firstAttribute="trailing" secondItem="fPb-s5-E9k" secondAttribute="trailing" id="QhV-qI-bKw"/>
+                                    <constraint firstItem="tDV-at-4nH" firstAttribute="leading" secondItem="v5Q-Gg-cFJ" secondAttribute="leading" id="cgU-xQ-OGu"/>
+                                    <constraint firstAttribute="height" constant="220" id="dxO-da-wyr"/>
+                                    <constraint firstAttribute="bottom" secondItem="cvK-Pb-TO4" secondAttribute="bottom" id="hcM-aY-W9N"/>
+                                    <constraint firstItem="cvK-Pb-TO4" firstAttribute="leading" secondItem="v5Q-Gg-cFJ" secondAttribute="leading" id="qf0-4s-Y8u"/>
+                                    <constraint firstItem="cvK-Pb-TO4" firstAttribute="top" secondItem="fPb-s5-E9k" secondAttribute="bottom" id="sHu-gK-hXE"/>
+                                    <constraint firstItem="fPb-s5-E9k" firstAttribute="top" secondItem="tDV-at-4nH" secondAttribute="bottom" id="ubz-a1-y7L"/>
                                 </constraints>
                                 <connections>
-                                    <outlet property="gao" destination="9Sk-iR-fPw" id="qPR-of-q6N"/>
-                                    <outlet property="pageControl" destination="C8w-Gk-gIB" id="Pc9-KT-QmB"/>
-                                    <outlet property="scrollView" destination="56U-RM-Reo" id="AiT-7S-lhi"/>
+                                    <outlet property="Carousel" destination="tDV-at-4nH" id="b90-xM-7Gn"/>
+                                    <outlet property="Page" destination="cvK-Pb-TO4" id="Kma-Tl-qbK"/>
+                                    <outlet property="View" destination="fPb-s5-E9k" id="DCO-Az-qYt"/>
+                                    <outlet property="gao" destination="Ze5-J9-WkO" id="2nm-H3-cqm"/>
                                 </connections>
                             </view>
                         </subviews>
@@ -122,20 +100,9 @@
                         </constraints>
                     </view>
                     <extendedEdge key="edgesForExtendedLayout" bottom="YES"/>
-                    <navigationItem key="navigationItem" id="8EB-sR-aIQ">
-                        <barButtonItem key="leftBarButtonItem" title="Item" style="done" id="clX-YY-Yde">
-                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="FD5-sF-qOm">
-                                <rect key="frame" x="16" y="11" width="25" height="22"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" image="menu"/>
-                                <connections>
-                                    <action selector="left:" destination="q2Q-iD-6Mt" eventType="touchUpInside" id="nRX-7B-jVJ"/>
-                                </connections>
-                            </button>
-                        </barButtonItem>
-                    </navigationItem>
+                    <navigationItem key="navigationItem" id="8EB-sR-aIQ"/>
                     <connections>
-                        <outlet property="Distance" destination="9Sk-iR-fPw" id="iTr-CZ-KdJ"/>
+                        <outlet property="Distance" destination="Ze5-J9-WkO" id="SuS-oB-sOe"/>
                         <outlet property="TopDistance" destination="Qu9-nj-1Jn" id="1sm-yx-guJ"/>
                         <outlet property="collectView" destination="4Pq-HK-4wa" id="aSC-iR-9cb"/>
                         <outlet property="headerView" destination="v5Q-Gg-cFJ" id="vNi-pc-Zwb"/>
@@ -144,16 +111,16 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="2VM-a0-t79" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-25" y="188"/>
+            <point key="canvasLocation" x="-66" y="188"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="3tU-mr-l5u">
             <objects>
                 <navigationController id="l2Q-qK-obL" customClass="LTLNavigationController" sceneMemberID="viewController">
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="L27-Nb-ucl">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="L27-Nb-ucl">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
-                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     </navigationBar>
                     <connections>
                         <segue destination="q2Q-iD-6Mt" kind="relationship" relationship="rootViewController" id="dTn-T1-3Qj"/>
@@ -161,10 +128,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="BRj-Ye-NNC" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-551" y="188"/>
+            <point key="canvasLocation" x="-751" y="188"/>
         </scene>
     </scenes>
-    <resources>
-        <image name="menu" width="25" height="17"/>
-    </resources>
 </document>

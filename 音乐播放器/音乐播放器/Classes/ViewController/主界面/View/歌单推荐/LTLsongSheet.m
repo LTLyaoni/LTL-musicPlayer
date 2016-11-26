@@ -58,6 +58,8 @@ static NSString *FooterID = @"FooterView";
 {
     if (self = [super initWithFrame:frame collectionViewLayout:layout]) {
         
+        self.bounces = NO;
+        
         self.delegate = self;
         self.dataSource = self;
         ///注册 cell
@@ -111,7 +113,7 @@ static NSString *FooterID = @"FooterView";
         
         LTLRecommendAlbums *model = self.songSheetArray[indexPath.section];
         
-        headView.GroupHeader.text = model.display_tag_name;
+        headView.model = model;
         
         headView.backgroundColor = [UIColor blueColor];
         return headView;
@@ -139,10 +141,16 @@ static NSString *FooterID = @"FooterView";
     
     song.XMAlbumModel = model.albums[indexPath.row];
     
-    if ([self.LTLDelegate respondsToSelector:@selector(LTLsongSheet:VC:)]) {
-        [self.LTLDelegate LTLsongSheet:self VC:song];
-    }
-    
+//    if ([self.LTLDelegate respondsToSelector:@selector(LTLsongSheet:VC:)]) {
+//        [self.LTLDelegate LTLsongSheet:self VC:song];
+//    }
+    /// 当前信息
+    NSMutableDictionary *dic = [NSMutableDictionary dictionary];
+    dic[@"pushView"] = song;
+    dic[@"toView"] = self;
+    dic[@"isAnimate"] = @(YES);
+    ///发送通知
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"pushView" object:nil userInfo:[dic copy]];
 }
 #pragma mark - 数据
 ///数据

@@ -6,25 +6,24 @@
 //  Copyright © 2016年 LiTaiLiang. All rights reserved.
 //
 #import "LTLHeaderView.h"
-
-
 #import "LTLDescView.h"
-
+#import "LTLButtonBorder.h"
 #import "LTLIconNameView.h"
 @interface LTLHeaderView ()
 
 
 /// 头像旁边标题(与头部视图text相等)
 @property (nonatomic,strong) UILabel *smallTitle;
-
-
 /// 自定义描述按钮
 @property (nonatomic,strong) DescView *descView;
 /// 自定义头像按钮
 @property (nonatomic,strong) LTLIconNameView *nameView;
-//@property (nonatomic,strong) UIButton *topLeftBtn;
-//@property (nonatomic,strong) UIButton *topRightBtn;
+
 @property (strong, nonatomic) UIVisualEffectView *visualEffectView;
+//播放全部
+@property (nonatomic,strong) UIButton *playAll;
+//播放全部
+@property (nonatomic,strong) UIButton *downloadAll;
 
 @end
 
@@ -34,6 +33,8 @@
     if (self = [super initWithFrame:frame]) {
         // 打开用户交互
         self.userInteractionEnabled = YES;
+        self.contentMode=UIViewContentModeScaleAspectFill;
+        self.clipsToBounds = YES;
 //        self.image = [UIImage imageNamed:@"bg_albumView_header"];
         //毛玻璃效果
         //(isDescendantOfView的作用)返回一个布尔值指出接收者是否是给定视图的子视图或者指向那个视图
@@ -41,23 +42,38 @@
             UIVisualEffect *blurEffect = [UIBlurEffect effectWithStyle:UIBlurEffectStyleLight];
             //毛玻璃
             _visualEffectView = [[UIVisualEffectView alloc] initWithEffect:blurEffect];
-            _visualEffectView.frame = CGRectMake(0, 0, LTL_WindowW, frame.size.height+20);
             [self addSubview:_visualEffectView];
         }
         //打开详情图
         self.descView.hidden = NO;
+        
+        [self.playAll addTarget:self action:@selector(playAllSong:) forControlEvents:UIControlEventTouchUpInside];
+        [self.downloadAll addTarget:self action:@selector(downloadAllSong:) forControlEvents:UIControlEventTouchUpInside];
     }
     return self;
+}
+///播放全部歌曲
+-(void)playAllSong:(UIButton *)btn
+{
+    //全部播放
+    NSLog(@"播放全部歌曲");
+}
+///下载全部歌曲
+-(void)downloadAllSong:(UIButton *)btn
+{
+    //下载全部歌曲
+    NSLog(@"下载全部歌曲");
 }
 #pragma mark - 设置数据
 -(void)setXMAlbumModel:(XMAlbum *)XMAlbumModel
 {
     _XMAlbumModel = XMAlbumModel;
     //图片
-    NSURL *url = [NSURL URLWithString:_XMAlbumModel.coverUrlMiddle];
-    //设置歌单图片
-    [self sd_setImageWithURL:url placeholderImage:[UIImage imageNamed:@"LTL"]];
+    NSURL *url = [NSURL URLWithString:_XMAlbumModel.coverUrlLarge];
+   
     //模糊背景
+    [self sd_setImageWithURL:url placeholderImage:[UIImage imageNamed:@"LTL"]];
+    //设置歌单图片
     [self.picView.coverView sd_setImageWithURL:url placeholderImage:[UIImage imageNamed:@"LTL"]];
     ///播放次数
     [self.picView.playCountBtn setTitle:_XMAlbumModel.PlayNumber forState:UIControlStateNormal];
@@ -69,23 +85,66 @@
     [self setupTagsBtnWithTagNames:_XMAlbumModel.MusicLabel];
 }
 
-- (void)setVisualEffectFrame:(CGRect)visualEffectFrame{
+-(void)layoutSubviews
+{
+    [super layoutSubviews];
+    
+    _visualEffectView.frame = self.bounds;
 
-    CGFloat height = visualEffectFrame.size.height;
-    _visualEffectView.frame = CGRectMake(0, 0, LTL_WindowW, height);
 }
-
 #pragma mark - 各个控件的懒加载
+//播放全部按钮
+-(UIButton *)playAll
+{
+    if (!_playAll) {
+        _playAll = [[UIButton alloc]init];
+        UIImage *PlayAllImage = [LTLButtonBorder imageOfArtboard];
+        
+        [_playAll setBackgroundImage:PlayAllImage forState:UIControlStateNormal];
+        
+        [_playAll setTitle:@"播放全部" forState:UIControlStateNormal];
+        
+        [_playAll setTitleColor:[LTLThemeManager sharedManager].themeColor forState:UIControlStateNormal];
+        _playAll.titleLabel.font = [UIFont systemFontOfSize:14];
+        [self addSubview:_playAll];
+        
+        [_playAll mas_makeConstraints:^(MASConstraintMaker *make) {
+           
+            make.top.equalTo(self.picView.mas_bottom).offset(5);
+            make.left.equalTo(self.picView.mas_left).offset(5);
+            make.size.mas_equalTo(CGSizeMake(150, 36));
+        }];
+    }
+    return _playAll;
+}
+-(UIButton *)downloadAll
+{
+    if (!_downloadAll) {
+        _downloadAll = [[UIButton alloc]init];
+        UIImage *PlayAllImage = [LTLButtonBorder imageOfArtboard];
+        
+        [_downloadAll setBackgroundImage:PlayAllImage forState:UIControlStateNormal];
+        
+        [_downloadAll setTitle:@"下载全部" forState:UIControlStateNormal];
+        
+        [_downloadAll setTitleColor:[LTLThemeManager sharedManager].themeColor forState:UIControlStateNormal];
+         _downloadAll.titleLabel.font = [UIFont systemFontOfSize:14];
+        [self addSubview:_downloadAll];
+        
+        [_downloadAll mas_makeConstraints:^(MASConstraintMaker *make) {
+            
+            make.top.equalTo(self.picView.mas_bottom).offset(5);
+            make.right.equalTo(self.mas_right).offset(-25);
+            make.size.mas_equalTo(CGSizeMake(150, 36));
+        }];
+    }
+    return _downloadAll;
+}
 //歌单图片
 - (PicView *)picView {
     if (!_picView) {
-        _picView = [[PicView alloc]initWithFrame:CGRectMake(20, 88, 100, 100)];
+        _picView = [[PicView alloc]initWithFrame:CGRectMake(20, 75, 100, 100)];
         [self addSubview:_picView];
-//        [_picView mas_makeConstraints:^(MASConstraintMaker *make) {
-//            make.size.mas_equalTo(CGSizeMake(100, 100));
-//            make.left.mas_equalTo(20);
-//            make.top.mas_equalTo(self.mas_top).mas_equalTo(88);
-//        }];
     }
     return _picView;
 }

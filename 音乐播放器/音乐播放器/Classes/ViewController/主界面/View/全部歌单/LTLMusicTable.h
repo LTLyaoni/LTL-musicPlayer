@@ -7,9 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "LTLSongViewController.h"
+@class LTLMusicTable;
+
 
 @interface LTLMusicTable : UICollectionView
 ///初始化
 +(LTLMusicTable *)initLTLMusicTable;
+
 
 @end

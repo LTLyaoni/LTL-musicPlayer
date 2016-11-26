@@ -5,6 +5,7 @@
     </device>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11524"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
@@ -28,19 +29,36 @@
                         <action selector="More:" destination="4rT-ef-E28" eventType="touchUpInside" id="Vuz-Q8-2k9"/>
                     </connections>
                 </button>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="MTN-Tm-vqo">
+                    <rect key="frame" x="0.0" y="0.0" width="35" height="30"/>
+                    <color key="backgroundColor" red="0.28259368270000002" green="0.98949086929999996" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                </imageView>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="xqz-pw-eMP">
+                    <rect key="frame" x="341" y="0.0" width="34" height="30"/>
+                    <color key="backgroundColor" red="0.35755661129951477" green="0.97314256429672241" blue="0.054591916501522064" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                </imageView>
             </subviews>
             <color key="backgroundColor" red="1" green="0.080904397680000004" blue="0.1011615506" alpha="1" colorSpace="calibratedRGB"/>
             <constraints>
                 <constraint firstAttribute="bottom" secondItem="PYa-1k-cCW" secondAttribute="bottom" id="5Oi-r4-Jh5"/>
                 <constraint firstAttribute="bottom" secondItem="a8N-cq-BIm" secondAttribute="bottom" id="8if-eH-THa"/>
+                <constraint firstAttribute="trailing" secondItem="xqz-pw-eMP" secondAttribute="trailing" id="DQH-aH-PaE"/>
+                <constraint firstItem="xqz-pw-eMP" firstAttribute="top" secondItem="4rT-ef-E28" secondAttribute="top" id="LIc-bF-o1N"/>
+                <constraint firstAttribute="bottom" secondItem="MTN-Tm-vqo" secondAttribute="bottom" id="MXE-G2-LAt"/>
+                <constraint firstItem="xqz-pw-eMP" firstAttribute="leading" secondItem="PYa-1k-cCW" secondAttribute="trailing" id="Wvv-Nw-red"/>
+                <constraint firstItem="a8N-cq-BIm" firstAttribute="leading" secondItem="MTN-Tm-vqo" secondAttribute="trailing" id="bwi-X9-hfy"/>
+                <constraint firstItem="MTN-Tm-vqo" firstAttribute="top" secondItem="4rT-ef-E28" secondAttribute="top" id="e0e-qR-2N4"/>
+                <constraint firstItem="MTN-Tm-vqo" firstAttribute="leading" secondItem="4rT-ef-E28" secondAttribute="leading" id="gpp-sM-9C5"/>
                 <constraint firstAttribute="trailing" secondItem="PYa-1k-cCW" secondAttribute="trailing" constant="34" id="i1r-Gb-1ir"/>
                 <constraint firstItem="PYa-1k-cCW" firstAttribute="top" secondItem="4rT-ef-E28" secondAttribute="top" id="oZv-eg-7Gf"/>
                 <constraint firstItem="a8N-cq-BIm" firstAttribute="leading" secondItem="4rT-ef-E28" secondAttribute="leading" constant="35" id="pe2-Fp-s5g"/>
+                <constraint firstAttribute="bottom" secondItem="xqz-pw-eMP" secondAttribute="bottom" id="y1G-Pq-hiz"/>
                 <constraint firstItem="a8N-cq-BIm" firstAttribute="top" secondItem="4rT-ef-E28" secondAttribute="top" id="ytX-1B-4Aq"/>
             </constraints>
             <connections>
                 <outlet property="GroupHeader" destination="a8N-cq-BIm" id="cCH-JD-rMA"/>
             </connections>
+            <point key="canvasLocation" x="24.5" y="52"/>
         </collectionReusableView>
     </objects>
 </document>

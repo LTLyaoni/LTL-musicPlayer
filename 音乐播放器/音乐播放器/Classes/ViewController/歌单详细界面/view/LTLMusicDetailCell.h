@@ -10,8 +10,6 @@
 
 @interface LTLMusicDetailCell : UITableViewCell
 
-/** 原则上 .h文件中只存放需要被调用get或者set方法的属性 */
-
 ///歌数据
 @property (nonatomic,weak) XMTrack *TrackData;
 
