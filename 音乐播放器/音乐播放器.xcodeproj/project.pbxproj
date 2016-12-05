@@ -132,7 +132,6 @@
 		1FB141091DDECD8400139C68 /* LTLsongSheetCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1FB141031DDECD8400139C68 /* LTLsongSheetCell.xib */; };
 		1FB1410F1DDECEC800139C68 /* LTLGroupHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1FB1410E1DDECEC800139C68 /* LTLGroupHeader.xib */; };
 		1FB141141DDEDC4000139C68 /* LTLsongSheetLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FB141131DDEDC4000139C68 /* LTLsongSheetLayout.m */; };
-		1FB67BDA1DC0B12600FCA42D /* UIButton+LTLbutton.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FB67BD31DC0B12600FCA42D /* UIButton+LTLbutton.m */; };
 		1FB67BDB1DC0B12600FCA42D /* UILabel+LTLlabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FB67BD51DC0B12600FCA42D /* UILabel+LTLlabel.m */; };
 		1FB67BDC1DC0B12600FCA42D /* UIView+LTLView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FB67BD71DC0B12600FCA42D /* UIView+LTLView.m */; };
 		1FB67BDD1DC0B12600FCA42D /* UIWindow+LTLWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FB67BD91DC0B12600FCA42D /* UIWindow+LTLWindow.m */; };
@@ -143,8 +142,8 @@
 		1FD2D6531DE855C2009D375A /* UINavigationController+FDFullscreenPopGesture.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FD2D6521DE855C2009D375A /* UINavigationController+FDFullscreenPopGesture.m */; };
 		1FD780631DD5FF2700A2B07A /* LTLAnimate.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FD780621DD5FF2700A2B07A /* LTLAnimate.m */; };
 		1FDDF9351DF5BFFB00E7617F /* LTLLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FDDF9321DF5BFFB00E7617F /* LTLLabel.m */; };
-		1FDDF9361DF5BFFB00E7617F /* UIButton+LTLButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FDDF9341DF5BFFB00E7617F /* UIButton+LTLButton.m */; };
 		1FDDF9391DF5C00D00E7617F /* UIColor+Separate.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FDDF9381DF5C00D00E7617F /* UIColor+Separate.m */; };
+		1FDDF93C1DF5C67100E7617F /* UIButton+LTLButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FDDF93B1DF5C67100E7617F /* UIButton+LTLButton.m */; };
 		1FE977D61DD73B1100CE29F2 /* LTLRecommendAlbums.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FE977D51DD73B1100CE29F2 /* LTLRecommendAlbums.m */; };
 		1FF875E81DCECBA300354DE5 /* LTLNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FF875E71DCECBA300354DE5 /* LTLNavigationController.m */; };
 		1FF875EC1DCEFC0200354DE5 /* LTLPlayManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FF875EB1DCEFC0200354DE5 /* LTLPlayManager.m */; };
@@ -448,8 +447,6 @@
 		1FB1410E1DDECEC800139C68 /* LTLGroupHeader.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LTLGroupHeader.xib; sourceTree = "<group>"; };
 		1FB141121DDEDC4000139C68 /* LTLsongSheetLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LTLsongSheetLayout.h; sourceTree = "<group>"; };
 		1FB141131DDEDC4000139C68 /* LTLsongSheetLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LTLsongSheetLayout.m; sourceTree = "<group>"; };
-		1FB67BD21DC0B12600FCA42D /* UIButton+LTLbutton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIButton+LTLbutton.h"; sourceTree = "<group>"; };
-		1FB67BD31DC0B12600FCA42D /* UIButton+LTLbutton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIButton+LTLbutton.m"; sourceTree = "<group>"; };
 		1FB67BD41DC0B12600FCA42D /* UILabel+LTLlabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UILabel+LTLlabel.h"; sourceTree = "<group>"; };
 		1FB67BD51DC0B12600FCA42D /* UILabel+LTLlabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UILabel+LTLlabel.m"; sourceTree = "<group>"; };
 		1FB67BD61DC0B12600FCA42D /* UIView+LTLView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+LTLView.h"; sourceTree = "<group>"; };
@@ -472,10 +469,10 @@
 		1FD780621DD5FF2700A2B07A /* LTLAnimate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LTLAnimate.m; sourceTree = "<group>"; };
 		1FDDF9311DF5BFFB00E7617F /* LTLLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LTLLabel.h; sourceTree = "<group>"; };
 		1FDDF9321DF5BFFB00E7617F /* LTLLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LTLLabel.m; sourceTree = "<group>"; };
-		1FDDF9331DF5BFFB00E7617F /* UIButton+LTLButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIButton+LTLButton.h"; sourceTree = "<group>"; };
-		1FDDF9341DF5BFFB00E7617F /* UIButton+LTLButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIButton+LTLButton.m"; sourceTree = "<group>"; };
 		1FDDF9371DF5C00D00E7617F /* UIColor+Separate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+Separate.h"; sourceTree = "<group>"; };
 		1FDDF9381DF5C00D00E7617F /* UIColor+Separate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+Separate.m"; sourceTree = "<group>"; };
+		1FDDF93A1DF5C67100E7617F /* UIButton+LTLButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIButton+LTLButton.h"; sourceTree = "<group>"; };
+		1FDDF93B1DF5C67100E7617F /* UIButton+LTLButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIButton+LTLButton.m"; sourceTree = "<group>"; };
 		1FE977D41DD73B1100CE29F2 /* LTLRecommendAlbums.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LTLRecommendAlbums.h; sourceTree = "<group>"; };
 		1FE977D51DD73B1100CE29F2 /* LTLRecommendAlbums.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LTLRecommendAlbums.m; sourceTree = "<group>"; };
 		1FF875E61DCECBA300354DE5 /* LTLNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LTLNavigationController.h; sourceTree = "<group>"; };
@@ -1157,16 +1154,14 @@
 		1FB67BD11DC0B12600FCA42D /* extend */ = {
 			isa = PBXGroup;
 			children = (
+				1FDDF93A1DF5C67100E7617F /* UIButton+LTLButton.h */,
+				1FDDF93B1DF5C67100E7617F /* UIButton+LTLButton.m */,
 				1FDDF9371DF5C00D00E7617F /* UIColor+Separate.h */,
 				1FDDF9381DF5C00D00E7617F /* UIColor+Separate.m */,
 				1FDDF9311DF5BFFB00E7617F /* LTLLabel.h */,
 				1FDDF9321DF5BFFB00E7617F /* LTLLabel.m */,
-				1FDDF9331DF5BFFB00E7617F /* UIButton+LTLButton.h */,
-				1FDDF9341DF5BFFB00E7617F /* UIButton+LTLButton.m */,
 				1FCFBC9C1DCB78CA0031572D /* UIView+LTLAnimations.h */,
 				1FCFBC9D1DCB78CA0031572D /* UIView+LTLAnimations.m */,
-				1FB67BD21DC0B12600FCA42D /* UIButton+LTLbutton.h */,
-				1FB67BD31DC0B12600FCA42D /* UIButton+LTLbutton.m */,
 				1FB67BD41DC0B12600FCA42D /* UILabel+LTLlabel.h */,
 				1FB67BD51DC0B12600FCA42D /* UILabel+LTLlabel.m */,
 				1FB67BD61DC0B12600FCA42D /* UIView+LTLView.h */,
@@ -1468,7 +1463,7 @@
 				1FB67BDD1DC0B12600FCA42D /* UIWindow+LTLWindow.m in Sources */,
 				1F00B3BE1DC4D8B800EDAE04 /* SDWebImageDecoder.m in Sources */,
 				1F00B3BC1DC4D8B800EDAE04 /* SDWebImageDownloaderOperation.m in Sources */,
-				1FDDF9361DF5BFFB00E7617F /* UIButton+LTLButton.m in Sources */,
+				1FDDF93C1DF5C67100E7617F /* UIButton+LTLButton.m in Sources */,
 				1F3C23031DD49AC800034715 /* SVProgressAnimatedView.m in Sources */,
 				1F1CF8411DD89BD30090C91D /* LTLPlayControl.m in Sources */,
 				1F598D161DE6FAE500E3A4C3 /* MJRefreshComponent.m in Sources */,
@@ -1537,7 +1532,6 @@
 				1F2239FE1DC5EAB700BA3BB3 /* XMAlbum+LTLXMAlbum.m in Sources */,
 				1F00B3B41DC4D8B800EDAE04 /* UIButton+WebCache.m in Sources */,
 				1F1CF8421DD89BD30090C91D /* MusicSlider.m in Sources */,
-				1FB67BDA1DC0B12600FCA42D /* UIButton+LTLbutton.m in Sources */,
 				1F00B3B71DC4D8B800EDAE04 /* UIImage+WebP.m in Sources */,
 				1F6AEFB91DE9BF1700059AE3 /* LTLPlayControlIcon.m in Sources */,
 				1F598D141DE6FAE500E3A4C3 /* MJRefreshAutoFooter.m in Sources */,

@@ -12,7 +12,13 @@
 
 //@interface UIButton ()
 //
+//@property(nonatomic,strong) LTLLabel* LTLlabel;
+//
 //@end
+
+//static  double gradientDegreeKey ;
+//static void *gradientDegreeKey = &gradientDegreeKey;
+
 
 @implementation UIButton (LTLButton)
 
@@ -54,20 +60,10 @@ static const char gradientFontKey = '\0';
         self.LTLlabel.userInteractionEnabled  =  NO;
         
         [self addSubview:self.LTLlabel];
-
-//        [self addObserver:self forKeyPath:@"bounds" options:NSKeyValueObservingOptionNew context:nil];
-        
-        
+//        [self setValue:self.LTLlabel forKey:@"UIButtonLabel"];
     }
     
 }
-
-//-(void)dealloc
-//{
-//    //移除
-//    [self removeObserver:self forKeyPath:@"bounds"];
-//}
-
 -(BOOL)isGradient
 {
     return objc_getAssociatedObject(self, @selector(isGradient));
@@ -131,7 +127,6 @@ static const char gradientFontKey = '\0';
 //    [super layoutSubviews];
 //
 //    [self.LTLlabel sizeToFit];
-//    
 //    self.LTLlabel.center = CGPointMake(self.bounds.size.width / 2, self.bounds.size.height / 2);
 //    
 //    [self.titleLabel sizeToFit];
