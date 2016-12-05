@@ -144,7 +144,6 @@ static NSString *HeaderID = @"SongHeaderView";
     
     
     song.XMAlbumModel = _songSheetArray[indexPath.item];
-    
     /// 当前信息
     NSMutableDictionary *dic = [NSMutableDictionary dictionary];
     dic[@"pushView"] = song;

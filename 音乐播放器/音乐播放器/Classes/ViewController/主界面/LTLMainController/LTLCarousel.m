@@ -15,6 +15,10 @@
 ///定时器
 @property(nonatomic,strong) NSTimer * timer;
 
+@property(nonatomic,assign)CGFloat h;
+
+@property(nonatomic,assign)CGFloat w;
+
 @end
 ///记录中间图片的下标,开始总是为1
 static NSUInteger currentImage = 1;
@@ -51,6 +55,8 @@ static NSUInteger currentImage = 1;
 //控件
 -(void)setUI
 {
+    self.w = self.bounds.size.width;
+    self.h = self.bounds.size.height;
     //可滑动
     self.scrollEnabled = YES;
     //分页
@@ -74,7 +80,7 @@ static NSUInteger currentImage = 1;
     //代理
     self.delegate = self;
     //定时
-    [self addTimer:nil];
+//    [self addTimer:nil];
 }
 //代理方法
 -(void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
@@ -116,6 +122,9 @@ static NSUInteger currentImage = 1;
                 break;
         }
         
+//        LTLLog(@"Image %ld",Image);
+//        LTLLog(@"_dadtArryr %ld",_dadtArryr.count);
+        
         XMBanner *model = _dadtArryr[Image];
         NSURL *url = [NSURL URLWithString:model.bannerUrl] ;
         [button sd_setImageWithURL:url forState:UIControlStateNormal];
@@ -151,7 +160,7 @@ static NSUInteger currentImage = 1;
    //偏移
     [self setContentOffset:CGPointMake(LTLCarouselWidth * 2 , 0) animated:YES];
     
-    [NSTimer scheduledTimerWithTimeInterval:0.35f target:self selector:@selector(scrollViewDidEndDecelerating:) userInfo:nil repeats:NO];
+    [NSTimer scheduledTimerWithTimeInterval:0.32f target:self selector:@selector(scrollViewDidEndDecelerating:) userInfo:nil repeats:NO];
 }
 //用手滑动时移除定时器
 -(void)scrollViewWillBeginDragging:(UIScrollView *)scrollView
@@ -167,10 +176,24 @@ static NSUInteger currentImage = 1;
 -(void)layoutSubviews
 {
     [super layoutSubviews];
-    //调整高度
-    [self.subviews enumerateObjectsUsingBlock:^(__kindof UIView * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-        obj.highly = LTLCarouselHeight;
-    }];
+    
+    if (self.w != self.width || self.h != self.highly) {
+        
+        self.w = self.width;
+        self.h = self.highly;
+        //偏离
+        self.contentOffset = CGPointMake( 0, 0);
+        //调整高度
+        [self.subviews enumerateObjectsUsingBlock:^(__kindof UIView * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            obj.frame = CGRectOffset(self.bounds, LTLCarouselWidth * idx, 0);
+        }];
+        
+        //滑动距离
+        self.contentSize = CGSizeMake(LTLCarouselWidth * 3, 0);
+        //偏离
+        self.contentOffset = CGPointMake( LTLCarouselWidth, 0);
+    }
+    
     
 }
 
@@ -195,6 +218,7 @@ static NSUInteger currentImage = 1;
     }
     else if (_dadtArryr.count > 1)
     {
+        [self addTimer:nil];
         //设置图片
         [self.subviews enumerateObjectsUsingBlock:^(__kindof UIView * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
             UIButton *button = obj;

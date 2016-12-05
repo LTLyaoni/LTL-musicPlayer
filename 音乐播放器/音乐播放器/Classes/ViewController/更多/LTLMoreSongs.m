@@ -60,7 +60,7 @@ static NSString *ID = @"MoreSongsCell";
     
     XMAlbum *model = self.dadtArray[indexPath.row];
     
-    cell.model = model;
+    cell.album = model;
     
     return cell;
 }

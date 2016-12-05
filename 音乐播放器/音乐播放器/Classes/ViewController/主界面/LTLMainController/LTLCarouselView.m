@@ -21,7 +21,8 @@
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *gao;
 ///按钮
 @property(nonatomic, weak)  IBOutlet  UIView * View;
-
+///高度约束
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *headerViewHeight;
 @end
 
 @implementation LTLCarouselView
@@ -31,6 +32,8 @@
 {
     [super awakeFromNib];
     self.gao.constant = LTL_WindowW *300.0/640.0;
+
+    self.headerViewHeight.constant = self.gao.constant * 1.262933;
     
     [self setButtom];
     [self DataAcquisition];

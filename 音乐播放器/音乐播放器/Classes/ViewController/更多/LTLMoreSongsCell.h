@@ -10,6 +10,6 @@
 
 @interface LTLMoreSongsCell : UITableViewCell
 ///数据
-@property (nonatomic,weak) XMAlbum *model;
+@property (nonatomic,weak) XMAlbum *album;
 
 @end

@@ -19,12 +19,18 @@
 #import "UIView+LTLAnimations.h"
 #import "NSDate+LTLNSDate.h"
 #import "UINavigationController+FDFullscreenPopGesture.h"
+#import "NSString+LTLHighlightKey.h"
+#import "UIButton+LTLButton.h"
 //喜马拉雅 SDK
 #import "XMSDK.h"
 //为喜马拉雅 SDK 的模型数据添加分类 因为 SDK.M 文件不开放
 #import "XMAlbum+LTLXMAlbum.h"
 #import "XMTrack+LTLXMTrack.h"
 #import "LTLRecommendAlbums.h"
+/////////////////////////////
+#import "LTLSearchSuggestWords.h"
+
+
 ///手势抽屉效果控件
 #import "MMDrawerController.h"
 #import "MMExampleDrawerVisualStateManager.h"

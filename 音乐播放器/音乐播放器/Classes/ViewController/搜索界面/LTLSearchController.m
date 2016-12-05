@@ -2,93 +2,83 @@
 //  LTLSearchController.m
 //  音乐播放器
 //
-//  Created by Apple_Lzzy46 on 16/10/28.
+//  Created by LiTaiLiang on 16/11/27.
 //  Copyright © 2016年 LiTaiLiang. All rights reserved.
 //
 
 #import "LTLSearchController.h"
+#import "LTLsearchResultController.h"
 
-@interface LTLSearchController ()
+@interface LTLSearchController ()<PYSearchViewControllerDelegate>
+
+@property(nonatomic,strong) LTLsearchResultController *searchResult;
 
 @end
 
 @implementation LTLSearchController
+///懒加载
+-(LTLsearchResultController *)searchResult
+{
+    if (!_searchResult) {
+        
+        _searchResult = [[LTLsearchResultController alloc]init];;
+        
+        
+    }
+    return _searchResult;
+}
+
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    //设置导航栏
-    [self setNav];
+    /** 显示搜索结果模式（默认为自定义：PYSearchResultShowModeDefault） */
+    self.searchResultShowMode = PYSearchResultShowModeEmbed;
+    ///** 搜索结果控制器 */
+    ///转弱指针
+    self.searchResultController = self.searchResult;
+    //代理
+    self.delegate = self;
     
-    
+    [self DataAcquisition];
 }
-#pragma mark - 获取数据
--(void)shuJu
-{
-//    __weak typeof(self) sself = self;
-    
-    NSMutableDictionary *params = [NSMutableDictionary dictionary];
-    [params setObject:@10 forKey:@"top"];
-
-    [[XMReqMgr sharedInstance] requestXMData:XMReqType_SearchHotWords params:params withCompletionHander:^(id result, XMErrorModel *error) {
-        
-        [result enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-            
-            XMHotword *model = [[XMHotword alloc]initWithDictionary:obj] ;
-            
-            NSLog(@"%@",model.searchWord);
-        }];
-    }];
-}
-
+///即将显示
 -(void)viewWillAppear:(BOOL)animated
 {
+    self.searchResultShowMode = PYSearchResultShowModeEmbed;
+    self.searchBar.placeholder = @"搜索音乐及电台和声音...";
     [super viewWillAppear:animated];
-    [self shuJu];
 }
+#pragma mark - 数据
+///数据
+-(void)DataAcquisition
+{
 
--(void)viewWillLayoutSubviews
+    [LTLNetworkRequest SearchHotWordsdadt:^(NSArray<NSString *> * _Nullable modelArray, XMErrorModel * _Nullable error) {
+        //        search.borderColor = [LTLThemeManager sharedManager].themeColor;
+        self.hotSearches = modelArray;
+        self.hotSearchStyle = PYHotSearchStyleARCBorderTag;
+    }];
+
+}
+/** 搜索框文本变化时，显示的搜索建议通过searchViewController的searchSuggestions赋值即可 */
+- (void)searchViewController:(PYSearchViewController *)searchViewController  searchTextDidChange:(UISearchBar *)seachBar searchText:(NSString *)searchText
 {
     
-
+    [LTLNetworkRequest SearchSuggestWords:searchText dadt:^(XMErrorModel * _Nullable error) {
+        
+    }];
 }
-
-#pragma mark - 设置导航栏
--(void)setNav
+///** 点击取消时调用 */
+//- (void)didClickCancel:(PYSearchViewController *)searchViewController
+//{
+//
+//    LTLLog(@"点击取消");
+//}
+/** 点击(开始)搜索时调用 */
+- (void)searchViewController:(PYSearchViewController *)searchViewController didSearchWithsearchBar:(UISearchBar *)searchBar searchText:(NSString *)searchText
 {
-    //返回按钮
-    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"navigationbar_back"] style:UIBarButtonItemStylePlain target:self action:@selector(back)];
-    
-    UITextField * txet = [[UITextField alloc]initWithFrame:CGRectMake(0, 0, 450, 35)];
-    //    UITextField * txet = [[UITextField alloc]init];
-    
-    txet.background = [UIImage imageNamed:@"common_button_white_disable"];
-    
-    txet.placeholder = @"请输入搜索关键字";
-    
-    self.navigationItem.titleView = txet;
-    
-    UIImageView *imager = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"tabbar_discover"]];
-    
-    txet.leftView = imager;
-    txet.leftViewMode = UITextFieldViewModeAlways;
-    
+    //赋值
+    self.searchResult.searchText = searchText;
 }
-
--(void)back
-{
-    //返回主界面
-    [self.mm_drawerController toggleDrawerSide:MMDrawerSideRight animated:YES completion:nil];
-
-}
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end

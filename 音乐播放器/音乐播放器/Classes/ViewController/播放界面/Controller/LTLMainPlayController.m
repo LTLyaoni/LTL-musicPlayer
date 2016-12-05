@@ -8,6 +8,7 @@
 
 #import "LTLMainPlayController.h"
 #import "MusicSlider.h"
+#import "LTLPlayControlIcon.h"
 
 @interface LTLMainPlayController ()<UIGestureRecognizerDelegate,LTLPlayManagerDelegate>
 /*背景*/
@@ -44,7 +45,7 @@
 /*最下行按钮*/
 ///播放模式
 @property (weak, nonatomic) IBOutlet UIButton *musicCycleButton;
-///下一首
+///上一首
 @property (weak, nonatomic) IBOutlet UIButton *previousMusicButton;
 ///播放
 @property (weak, nonatomic) IBOutlet UIButton *musicToggleButton;
@@ -92,6 +93,18 @@
     _tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(actionTapGesture:)];
     _tapGesture.delegate = self;
     [_musicSlider addGestureRecognizer:_tapGesture];
+    [self setButtonIamge];
+}
+-(void)setButtonIamge
+{
+    
+    CGSize size = CGSizeMake(40, 40);
+    
+    UIImage *NextHeadIamge = [LTLPlayControlIcon imageOfNextHeadWithSize:size resizing:LTLPlayControlIconResizingBehaviorAspectFit];
+    UIImage *LastOneIamge = [LTLPlayControlIcon imageOfLastOneWithSize:size resizing:LTLPlayControlIconResizingBehaviorAspectFit];
+    
+    [_nextMusicButton setImage:NextHeadIamge forState:UIControlStateNormal];
+    [_previousMusicButton setImage:LastOneIamge forState:UIControlStateNormal];
 }
 #pragma mark - FYPlayManagerDelegate
 ///每次下一首的时候将会调用
@@ -117,7 +130,7 @@
 -(void)setData
 {
     XMTrack *Track = self.player.tracksVM;
-    NSURL *url = [NSURL URLWithString:Track.coverUrlMiddle];
+    NSURL *url = [NSURL URLWithString:Track.coverUrlLarge];
     [self.albumImageView sd_setImageWithURL:url placeholderImage:[UIImage imageNamed:@"9"]];
     [self.backgroudImageView sd_setImageWithURL:url];
     self.musicNameLabel.text = Track.trackTitle;
@@ -127,12 +140,19 @@
 #pragma mark - 点击事件
 - (void)setMusicIsPlaying:(BOOL)musicIsPlaying {
     _musicIsPlaying = musicIsPlaying;
-    if (_musicIsPlaying) {
-        [_musicToggleButton setImage:[UIImage imageNamed:@"big_pause_button"] forState:UIControlStateNormal];
+    UIImage * iamge ;
+    if (_musicIsPlaying)
+    {
+        iamge = [LTLPlayControlIcon imageOfSuspendWithSize:_musicToggleButton.frame.size resizing:LTLPlayControlIconResizingBehaviorAspectFit];
         
     } else {
-        [_musicToggleButton setImage:[UIImage imageNamed:@"big_play_button"] forState:UIControlStateNormal];
+        
+        iamge = [LTLPlayControlIcon imageOfPlayWithSize:_musicToggleButton.frame.size resizing:LTLPlayControlIconResizingBehaviorAspectFit];
+        
     }
+    
+    
+    [_musicToggleButton setImage:iamge forState:UIControlStateNormal];
 }
 /** 播放按钮 */
 - (IBAction)didTouchMusicToggleButton:(UIButton *)sender {

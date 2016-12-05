@@ -46,9 +46,6 @@
     //
     self.drawerController.maximumLeftDrawerWidth = LTL_WindowW*4/5;
     self.drawerController.maximumRightDrawerWidth = LTL_WindowW;
-    //4、设置打开/关闭抽屉的手势
-    self.drawerController.openDrawerGestureModeMask = MMOpenDrawerGestureModeAll;
-    self.drawerController.closeDrawerGestureModeMask =MMCloseDrawerGestureModeAll;
     //////设置抽屉的视觉状态
     [self.drawerController
      setDrawerVisualStateBlock:^(MMDrawerController *drawerController, MMDrawerSide drawerSide, CGFloat percentVisible) {
@@ -109,7 +106,8 @@
 {
     NSLog(@"注册成功 %d" , result);
     if (result) {
-//        [self.mainVC DataAcquisition];
+        ///设置根控制器
+        self.window.rootViewController = self.drawerController;
     }
 }
 // 接收到内存警告就会调用
@@ -119,7 +117,6 @@
     
     // 1.停止当前下载
     [[SDWebImageManager sharedManager] cancelAll];
-    
     // 2.清空内存缓存
     [[SDWebImageManager sharedManager].imageCache clearMemory];
 }

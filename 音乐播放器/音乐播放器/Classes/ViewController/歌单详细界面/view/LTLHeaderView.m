@@ -76,13 +76,13 @@
     //设置歌单图片
     [self.picView.coverView sd_setImageWithURL:url placeholderImage:[UIImage imageNamed:@"LTL"]];
     ///播放次数
-    [self.picView.playCountBtn setTitle:_XMAlbumModel.PlayNumber forState:UIControlStateNormal];
+    [self.picView.playCountBtn setTitle:_XMAlbumModel.playNumber forState:UIControlStateNormal];
     ///简介
     self.descView.descLb.text = _XMAlbumModel.albumIntro;
     //名字
     self.nameView.name.text = _XMAlbumModel.announcer.nickname;
     //标签
-    [self setupTagsBtnWithTagNames:_XMAlbumModel.MusicLabel];
+    [self setupTagsBtnWithTagNames:_XMAlbumModel.musicLabel];
 }
 
 -(void)layoutSubviews

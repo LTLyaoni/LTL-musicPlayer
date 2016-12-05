@@ -6,6 +6,7 @@
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11524"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="LTLMainPlayController">
@@ -43,21 +44,25 @@
                         <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="mRH-td-jer">
                             <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         </imageView>
-                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xgw-kg-D4x">
+                        <visualEffectView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="IUk-sr-ekk">
                             <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                            <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.29999999999999999" colorSpace="custom" customColorSpace="sRGB"/>
-                        </view>
+                            <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="f3b-BY-ywE">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                            </view>
+                            <blurEffect style="dark"/>
+                        </visualEffectView>
                     </subviews>
                     <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <constraints>
-                        <constraint firstItem="xgw-kg-D4x" firstAttribute="leading" secondItem="H4D-T9-WxU" secondAttribute="leading" id="BiA-D9-bAx"/>
+                        <constraint firstAttribute="bottom" secondItem="IUk-sr-ekk" secondAttribute="bottom" id="4YP-dB-Gjh"/>
+                        <constraint firstAttribute="trailing" secondItem="IUk-sr-ekk" secondAttribute="trailing" id="Cld-HT-v4u"/>
+                        <constraint firstItem="IUk-sr-ekk" firstAttribute="top" secondItem="H4D-T9-WxU" secondAttribute="top" id="DT0-QG-eci"/>
+                        <constraint firstItem="IUk-sr-ekk" firstAttribute="leading" secondItem="H4D-T9-WxU" secondAttribute="leading" id="JHI-Lu-OEw"/>
                         <constraint firstItem="mRH-td-jer" firstAttribute="leading" secondItem="H4D-T9-WxU" secondAttribute="leading" id="OUb-Xk-Asa"/>
                         <constraint firstAttribute="trailing" secondItem="mRH-td-jer" secondAttribute="trailing" id="ZpA-3s-kq6"/>
                         <constraint firstAttribute="bottom" secondItem="mRH-td-jer" secondAttribute="bottom" id="mZ3-hc-Km7"/>
-                        <constraint firstAttribute="bottom" secondItem="xgw-kg-D4x" secondAttribute="bottom" id="nMq-b3-KXh"/>
                         <constraint firstItem="mRH-td-jer" firstAttribute="top" secondItem="H4D-T9-WxU" secondAttribute="top" id="nwW-d1-8Xh"/>
-                        <constraint firstAttribute="trailing" secondItem="xgw-kg-D4x" secondAttribute="trailing" id="syl-qL-GoX"/>
-                        <constraint firstItem="xgw-kg-D4x" firstAttribute="top" secondItem="H4D-T9-WxU" secondAttribute="top" id="tbP-Ok-0Xm"/>
                     </constraints>
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="HUs-aA-CzP">
@@ -323,7 +328,7 @@
                 <constraint firstAttribute="trailing" secondItem="H4D-T9-WxU" secondAttribute="trailing" id="rb2-ut-4Vf"/>
                 <constraint firstItem="H4D-T9-WxU" firstAttribute="leading" secondItem="rt1-21-ipX" secondAttribute="leading" id="tCm-YK-tyb"/>
             </constraints>
-            <point key="canvasLocation" x="241" y="851"/>
+            <point key="canvasLocation" x="240.5" y="850.5"/>
         </view>
     </objects>
     <resources>

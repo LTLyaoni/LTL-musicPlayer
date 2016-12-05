@@ -230,7 +230,7 @@
         {
             [result[@"albums"] enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
                 XMAlbum *model = [[XMAlbum alloc]initWithDictionary:obj];
-                model.PlayNumber = @"LTL";
+                model.playNumber = @"LTL";
                 [model LabelProcessing:model.albumTags];
                 [lingShi addObject:model];
             }];
@@ -268,7 +268,7 @@
         {
             [result enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
                 XMAlbum *model = [[XMAlbum alloc]initWithDictionary:obj];
-                model.PlayNumber = @"LTL";
+                model.playNumber = @"LTL";
                 [model LabelProcessing:model.albumTags];
                 [lingShi addObject:model];
             }];
@@ -306,8 +306,9 @@
         if (!error)
         {
             [result[@"tracks"] enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+                
                 XMTrack *model = [[XMTrack alloc]initWithDictionary:obj];
-                model.PlayNumber = @"LTL";
+                model.playNumber = @"LTL";
                 [model TimeProcessing:model.createdAt];
                 [lingShi addObject:model];
             }];
@@ -365,5 +366,127 @@
         
     }];
 }
+
+/**
+ 搜索热词
+
+ @param LTL 数据
+ */
++(void)SearchHotWordsdadt:( nullable void (^)(NSArray <NSString *> * _Nullable modelArray , XMErrorModel * _Nullable error))LTL
+{
+    NSDictionary *params = @{@"top" :@10 };
+    NSMutableArray<NSString *> *lingshi = [NSMutableArray array];
+    [[XMReqMgr sharedInstance] requestXMData:XMReqType_SearchHotWords params:params withCompletionHander:^(id result, XMErrorModel *error) {
+//        [sself showReceivedData:result className:@"XMHotword" valuePath:@"" titleNeedShow:@"searchWord"];
+        if (!error) {
+            [result enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+               
+                XMHotword *model = [[XMHotword alloc]initWithDictionary:obj];
+                [lingshi addObject:model.searchWord];
+            }];
+        }
+        if (LTL) {
+            LTL([lingshi copy],error);
+        }
+        
+    }];
+}
+
+/**
+ 搜索关键词
+
+ @param searchText 关键词
+ @param LTL 数据
+ */
++(void)SearchSuggestWords:(NSString *)searchText dadt:( nullable void (^)( XMErrorModel * _Nullable error))LTL
+{
+    NSDictionary *params = @{@"q":searchText};
+    
+    [[XMReqMgr sharedInstance] requestXMData:XMReqType_SearchSuggestWords params:params withCompletionHander:^(id result, XMErrorModel *error) {
+        
+        if (!error) {
+            
+            LTLSearchSuggestWords *model = [[LTLSearchSuggestWords alloc]initWithDictionary:result];
+            
+            NSMutableDictionary *dic = [NSMutableDictionary dictionary];
+            
+            dic[@"SearchSuggestWords"] = model;
+            
+            ///发送通知
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"SearchSuggestWords" object:nil userInfo:[dic copy]];
+        }
+        
+        if (LTL) {
+            LTL(error);
+        }
+    }];
+}
++(void)searchtype:(NSUInteger)type keyWord : (NSString *)keyWord page:(NSUInteger)page dimension: (NSUInteger )dimension dadt:( nullable void (^)( NSArray <XMAlbum*>* albumArray , NSArray <XMTrack*>* trackArray , XMErrorModel *error ))LTL
+{
+
+    NSMutableArray *lingShi = [NSMutableArray array];
+    
+    NSDictionary *params = @{@"category_id" : @2 ,@"count" : @20 ,@"q" : keyWord , @"calc_dimension" : @(dimension) };
+    
+    if (!type) {
+        
+        [[XMReqMgr sharedInstance] requestXMData:XMReqType_SearchAlbums params:params withCompletionHander:^(id result, XMErrorModel *error) {
+            
+            if (!error)
+            {
+                
+                [result[@"albums"] enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+                    
+                    XMAlbum *model = [[XMAlbum alloc]initWithDictionary:obj];
+                    model.playNumber = @"LTL";
+                    [model LabelProcessing:model.albumTags];
+
+                    [lingShi addObject:model];
+                    
+                }];
+
+                if (LTL) {
+                    
+                    LTL([lingShi copy] ,nil,error);
+                }
+                
+            }
+        }];
+        
+    } else {
+        
+        [[XMReqMgr sharedInstance] requestXMData:XMReqType_SearchTracks params:params withCompletionHander:^(id result, XMErrorModel *error)
+         {
+
+             if (!error) {
+                 
+//                 LTLLog(@"%@",result[@"tracks"]);
+                 
+                 [result[@"tracks"] enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+                     
+                     XMTrack *model = [[XMTrack alloc]initWithDictionary:obj];
+                     
+                     model.playNumber = @"LTL";
+                     
+                     [model TimeProcessing:model.createdAt];
+                     
+//                     LTLLog(@"%@",model.PlayNumber);
+  
+                     [lingShi addObject:model];
+                 }];
+                 
+             }
+             if (LTL) {
+                 LTL(nil ,[lingShi copy],error);
+             }
+             
+        }];
+        
+        
+    }
+    
+
+}
+
 
 @end

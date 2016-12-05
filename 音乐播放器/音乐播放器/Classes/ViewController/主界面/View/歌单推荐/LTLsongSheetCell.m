@@ -39,7 +39,7 @@
     //歌单标题
     self.titer.text = _model.albumTitle;
     //歌单播放量
-    self.playCont.text = _model.PlayNumber;
+    self.playCont.text = _model.playNumber;
 }
 -(void)layoutSubviews
 {

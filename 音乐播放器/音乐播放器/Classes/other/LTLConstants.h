@@ -8,6 +8,9 @@
 
 #ifndef Constants_h
 #define Constants_h
+
+
+
 //喜马拉雅请求数据使用的appkey 与appsecret
 #define appkey @"5415528c4b30960349a59e3284f5dec5"
 #define appsecret @"60b7510c6c55926ef1fde37a5d1473a0"
@@ -79,6 +82,14 @@ cell.separatorInset = UIEdgeInsetsZero;\
 cell.layoutMargins = UIEdgeInsetsZero; \
 cell.preservesSuperviewLayoutMargins = NO; \
 }\
+// 日志输出
+#ifdef DEBUG
+#define LTLLog(...) NSLog(__VA_ARGS__)
+#else
+#define LTLLog(...)
+#endif
+// 弱引用
+#define LTLWeakSelf __weak typeof(self) weakSelf = self;
 
 // Docment文件夹目录
 #pragma mark - Docment文件夹目录

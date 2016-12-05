@@ -35,17 +35,16 @@
     self.separatorInset=UIEdgeInsetsMake(0, 76, 0, 0);
 }
 
--(void)setModel:(XMAlbum *)model
+-(void)setAlbum:(XMAlbum *)album
 {
-    _model = model;
+    _album = album;
 
-    NSURL *url = [NSURL URLWithString:_model.coverUrlLarge];
+    NSURL *url = [NSURL URLWithString:_album.coverUrlLarge];
     [_icon sd_setImageWithURL:url placeholderImage:[UIImage imageNamed:@"LTL"]];
-    
-    _name.text = _model.albumTitle;
-    _xiaingqing.text = _model.albumIntro;
-    _playCountLb.text = _model.PlayNumber;
-    _songNum.text = [NSString stringWithFormat:@"%ld集",_model.includeTrackCount];
+    _name.text = _album.albumTitle;
+    _xiaingqing.text = _album.albumIntro;
+    _playCountLb.text = _album.playNumber;
+    _songNum.text = [NSString stringWithFormat:@"%ld集",_album.includeTrackCount];
 }
 
 @end

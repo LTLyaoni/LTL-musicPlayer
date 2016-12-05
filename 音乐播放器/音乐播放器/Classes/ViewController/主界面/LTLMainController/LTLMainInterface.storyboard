@@ -4,6 +4,7 @@
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
+        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11524"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -20,21 +21,21 @@
                         <rect key="frame" x="0.0" y="64" width="375" height="603"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="4Pq-HK-4wa">
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" bouncesZoom="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="4Pq-HK-4wa">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="603"/>
                                 <color key="backgroundColor" red="0.35755661129951477" green="0.97314256429672241" blue="0.054591916501522064" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="0.0" minimumInteritemSpacing="0.0" id="25W-JR-2jE" customClass="LTLMainInterfaceFlowLayout">
-                                    <size key="itemSize" width="378" height="595"/>
+                                    <size key="itemSize" width="374" height="598"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
                                     <size key="footerReferenceSize" width="0.0" height="0.0"/>
                                     <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 </collectionViewFlowLayout>
                                 <cells>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="MainItem" id="vhN-7d-K6z">
-                                        <rect key="frame" x="0.0" y="4" width="378" height="595"/>
+                                        <rect key="frame" x="0.0" y="3" width="374" height="598"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                            <rect key="frame" x="0.0" y="0.0" width="378" height="595"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="374" height="598"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                         </view>
                                     </collectionViewCell>
@@ -55,14 +56,14 @@
                                         </constraints>
                                     </scrollView>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cvK-Pb-TO4" customClass="LTLPageControl">
-                                        <rect key="frame" x="0.0" y="208" width="375" height="12"/>
+                                        <rect key="frame" x="0.0" y="212" width="375" height="8"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="12" id="Yhr-0l-gcE"/>
+                                            <constraint firstAttribute="height" constant="8" id="Yhr-0l-gcE"/>
                                         </constraints>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fPb-s5-E9k">
-                                        <rect key="frame" x="0.0" y="150" width="375" height="58"/>
+                                        <rect key="frame" x="0.0" y="150" width="375" height="62"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     </view>
                                 </subviews>
@@ -85,18 +86,20 @@
                                     <outlet property="Page" destination="cvK-Pb-TO4" id="Kma-Tl-qbK"/>
                                     <outlet property="View" destination="fPb-s5-E9k" id="DCO-Az-qYt"/>
                                     <outlet property="gao" destination="Ze5-J9-WkO" id="2nm-H3-cqm"/>
+                                    <outlet property="headerViewHeight" destination="dxO-da-wyr" id="cUc-cb-LJP"/>
                                 </connections>
                             </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="v5Q-Gg-cFJ" firstAttribute="leading" secondItem="XRp-TI-u4E" secondAttribute="leading" id="1u0-LR-SwH"/>
-                            <constraint firstItem="4Pq-HK-4wa" firstAttribute="leading" secondItem="XRp-TI-u4E" secondAttribute="leading" id="C1Q-iT-h8d"/>
+                            <constraint firstItem="oNZ-tz-MDP" firstAttribute="top" secondItem="4Pq-HK-4wa" secondAttribute="bottom" id="2gV-qc-gnA"/>
                             <constraint firstAttribute="trailing" secondItem="4Pq-HK-4wa" secondAttribute="trailing" id="DnP-ow-U8s"/>
-                            <constraint firstItem="oNZ-tz-MDP" firstAttribute="top" secondItem="4Pq-HK-4wa" secondAttribute="bottom" id="Nhr-Oo-zw6"/>
                             <constraint firstItem="4Pq-HK-4wa" firstAttribute="top" secondItem="1g4-hw-ggC" secondAttribute="bottom" id="Q88-v8-NUa"/>
                             <constraint firstItem="v5Q-Gg-cFJ" firstAttribute="top" secondItem="1g4-hw-ggC" secondAttribute="bottom" id="Qu9-nj-1Jn"/>
                             <constraint firstAttribute="trailing" secondItem="v5Q-Gg-cFJ" secondAttribute="trailing" id="Xsl-Hi-m9c"/>
+                            <constraint firstAttribute="trailing" secondItem="4Pq-HK-4wa" secondAttribute="trailing" id="gjb-DW-h1G"/>
+                            <constraint firstItem="4Pq-HK-4wa" firstAttribute="leading" secondItem="XRp-TI-u4E" secondAttribute="leading" id="pbH-e1-dTU"/>
                         </constraints>
                     </view>
                     <extendedEdge key="edgesForExtendedLayout" bottom="YES"/>
@@ -111,7 +114,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="2VM-a0-t79" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-66" y="188"/>
+            <point key="canvasLocation" x="-66.400000000000006" y="187.55622188905548"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="3tU-mr-l5u">

@@ -14,6 +14,7 @@
 #import "LTLCarouselView.h"
 #import "LTLMagnifier.h"
 #import "LTLSetMore.h"
+#import "LTLSearchController.h"
 
 @interface LTLMainInterface ()<UICollectionViewDelegate,UICollectionViewDataSource,UINavigationControllerDelegate,UIScrollViewDelegate,LTLCarouselViewDelegate>
 @property (weak, nonatomic) IBOutlet UICollectionView *collectView;
@@ -31,12 +32,14 @@
 @property (nonatomic, assign) CGFloat            pianyi;
 ///距离
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *Distance;
-//动画
+//是否需要转场动画
 @property (nonatomic,assign,getter=isAnimate)BOOL animate;
 //左按钮
 @property (nonatomic,strong) UIButton * leftButton;
 //右按钮
 @property (nonatomic,strong) UIButton * rightButton;
+
+
 
 @end
 
@@ -46,7 +49,7 @@
     [super viewDidLoad];
     [self setNavigationButton];
 //    self.navigationController.fd_prefersNavigationBarHidden = YES;
-    
+
     _headerView.LTLDelegate = self;
     
     [self receiveNotification];
@@ -80,8 +83,8 @@
     _collectView.scrollsToTop                   = NO;
     //弹簧
     _collectView.bounces = NO;
-    //头视图高度
-    _headerViewHeight.constant = 220;
+//    //头视图高度
+//    _headerViewHeight.constant = 220;
     //关闭自动调整滚动视图
     self.automaticallyAdjustsScrollViewInsets = NO;
 }
@@ -115,7 +118,7 @@
     /// 删除cell的contentView的所有子控件
     [cell.contentView.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];
     
-    cell.backgroundColor = [UIColor redColor];
+    cell.backgroundColor = [UIColor blueColor];
     ///取出相应视图设置frame并添加到cell的contentView上
     UIScrollView *v = _contentViews[indexPath.row];
     v.frame = cell.bounds;
@@ -251,6 +254,19 @@
     ///自定义转场需要遵守navigationController的代理协议
     self.navigationController.delegate = self;
     
+    //4、设置打开/关闭抽屉的手势
+    self.mm_drawerController.openDrawerGestureModeMask = MMOpenDrawerGestureModeAll;
+    self.mm_drawerController.closeDrawerGestureModeMask =MMCloseDrawerGestureModeAll;
+    
+}
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    //4、设置打开/关闭抽屉的手势
+    self.mm_drawerController.openDrawerGestureModeMask = MMOpenDrawerGestureModeNone;
+    self.mm_drawerController.closeDrawerGestureModeMask =MMOpenDrawerGestureModeNone;
+    
 }
 
 -(void)didLTLCarouselView:(LTLCarouselView *)CarouselView tag:(NSUInteger)tag
@@ -280,8 +296,13 @@
 }
 - (void)right:(UIButton *)btn
 {
-    NSLog(@"搜索");
+    NSLog(@"search搜索");
+    
+    LTLSearchController *search = [[LTLSearchController alloc]init];
+    self.animate = NO;
+    [self.navigationController pushViewController:search animated:YES];
 }
+
 
 //设置navigationController
 -(void)navigation

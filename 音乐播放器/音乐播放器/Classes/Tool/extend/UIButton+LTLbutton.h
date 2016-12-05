@@ -1,26 +1,24 @@
 //
-//  UIButton+LTLbutton.h
-//  WeiBo
+//  UIButton+LTLButton.h
+//  代码修改
 //
-//  Created by LiTaiLiang on 16/9/15.
-//  Copyright © 2016年 LTL. All rights reserved.
+//  Created by LiTaiLiang on 16/12/4.
+//  Copyright © 2016年 LiTaiLiang. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
+#import "LTLLabel.h"
+@interface UIButton (LTLButton)
+///渐变程度  0~1 之间
+@property (nonatomic,assign) CGFloat gradientDegree;
+///渐变文本
+@property(nonatomic,strong) LTLLabel* LTLlabel;
+///是否进行渐变文本
+@property (nonatomic,assign , getter=isGradient) BOOL gradient;
 
-@interface UIButton (LTLbutton)
+@property (nonatomic,weak) UIFont *gradientFont;
 
-//@property(nonatomic,assign) BOOL Tick;
-
-/**
- 设置按钮
- 
- @param text      欢迎文字
- @param image     按钮背景
- @param colorText 文字颜色
- 
- @return 按钮
- */
--(instancetype)initText : (NSString *)text  image : (NSString *)image colorText : (UIColor *)colorText;
+///是否进行高亮渐变文本
+@property (nonatomic,assign , getter=isHighlightedText) BOOL highlightedText;
 
 @end

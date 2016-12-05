@@ -72,4 +72,20 @@
  @param LTL 数据
  */
 +(void)AlbumsBrowseID:(NSInteger)ID page:(NSUInteger)page Dadt:( nullable void (^)(NSArray <XMTrack *> * _Nullable modelArray , XMErrorModel * _Nullable error))LTL;
+/**
+ 搜索热词
+ 
+ @param LTL 数据
+ */
++(void)SearchHotWordsdadt:( nullable void (^)(NSArray <NSString *> * _Nullable modelArray , XMErrorModel * _Nullable error))LTL;
+/**
+ 搜索关键词
+ 
+ @param searchText 关键词
+ @param LTL 数据
+ */
++(void)SearchSuggestWords:(nonnull NSString *)searchText dadt:( nullable void (^)( XMErrorModel * _Nullable error))LTL;
+
++(void)searchtype:(NSUInteger)type keyWord : (nonnull NSString *)keyWord page:(NSUInteger)page dimension: (NSUInteger )dimension dadt:( nullable void (^)(  NSArray <XMAlbum*>* _Nullable  albumArray , NSArray <XMTrack*>* _Nullable trackArray , XMErrorModel * _Nullable error ))LTL;
+
 @end

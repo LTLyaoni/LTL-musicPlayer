@@ -18,37 +18,44 @@ static char AddplayTimeKey;
     // 创建歌曲时间戳
     NSTimeInterval createTime = time/1000;
     NSDate *timeDate= [NSDate dateWithTimeIntervalSince1970:createTime];
-    self.AddTime = [timeDate dateTime];
+    self.addTime = [timeDate dateTime];
     
     self.playTime = @"LTL";
 }
 
 #pragma mark - 时间处理
--(void)setAddTime:(NSString *)AddTime
+-(void)setAddTime:(NSString *)addTime
 {
-    objc_setAssociatedObject(self, &AddTimeKey, AddTime, OBJC_ASSOCIATION_COPY_NONATOMIC);
+    if (addTime != self.addTime) {
+        
+        objc_setAssociatedObject(self, &AddTimeKey, addTime, OBJC_ASSOCIATION_COPY_NONATOMIC);
+    }
 }
--(NSString *)AddTime
+-(NSString *)addTime
 {
     return objc_getAssociatedObject(self, &AddTimeKey);
 }
 #pragma mark - 播放次数处理
--(void)setPlayNumber:(NSString *)PlayNumber
+-(void)setPlayNumber:(NSString *)playNumber
 {
     if (self.playCount >= 10000.0) {
         
         CGFloat constPlay = self.playCount/10000.0;
         
-        PlayNumber = [NSString stringWithFormat:@"%.1f万次",constPlay];
+        playNumber = [NSString stringWithFormat:@"%.1f万次",constPlay];
         
     } else {
         
-        PlayNumber = [NSString stringWithFormat:@"%ld次",self.playCount];
+        playNumber = [NSString stringWithFormat:@"%ld次",self.playCount];
     }
     
-    objc_setAssociatedObject(self, &AddStringKey, PlayNumber, OBJC_ASSOCIATION_COPY_NONATOMIC);
+    if (playNumber != self.playNumber) {
+        
+        objc_setAssociatedObject(self, &AddStringKey, playNumber, OBJC_ASSOCIATION_COPY_NONATOMIC);
+    }
+    
 }
--(NSString *)PlayNumber
+-(NSString *)playNumber
 {
     return objc_getAssociatedObject(self, &AddStringKey);
 }
@@ -62,7 +69,11 @@ static char AddplayTimeKey;
     NSInteger seconds = (NSInteger)duration%60;
     playTime = [NSString stringWithFormat:@"%02ld:%02ld",(long)minutes,(long)seconds];
     
-    objc_setAssociatedObject(self, &AddplayTimeKey, playTime, OBJC_ASSOCIATION_COPY_NONATOMIC);
+    if (playTime != self.playTime) {
+        
+        objc_setAssociatedObject(self, &AddplayTimeKey, playTime, OBJC_ASSOCIATION_COPY_NONATOMIC);
+    }
+    
 }
 -(NSString *)playTime
 {

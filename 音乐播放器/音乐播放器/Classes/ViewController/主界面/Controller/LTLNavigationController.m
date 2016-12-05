@@ -20,6 +20,7 @@
 {
     if (_PlayControl == nil ) {
         _PlayControl = [LTLPlayControl viewFromXib];
+        _PlayControl.width = LTL_WindowW;
         //        _PlayControl.delegate = self;
         _PlayControl.y = LTL_WindowH - _PlayControl.highly;
     }
@@ -30,6 +31,7 @@
     //添加播放控制条
     [self.view addSubview:self.PlayControl];
 //    [self PlayControl];
+   
 
 }
 #pragma mark - 视图出入设置

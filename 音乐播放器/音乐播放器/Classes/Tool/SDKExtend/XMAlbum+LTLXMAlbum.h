@@ -10,9 +10,9 @@
 
 @interface XMAlbum (LTLXMAlbum)
 ///播放次数
-@property(nonatomic,strong)NSString *PlayNumber;
+@property(nonatomic,strong)NSString *playNumber;
 ///标签数组
-@property(nonatomic,strong)NSArray *MusicLabel;
+@property(nonatomic,strong)NSArray *musicLabel;
 ///处理标签
 -(void)LabelProcessing:(NSString *)albumTags;
 @end

@@ -239,8 +239,8 @@
     [self.coverIV sd_setImageWithURL:url placeholderImage:[UIImage imageNamed:@"LTL"]];
     self.titleLb.text = _TrackData.trackTitle;
     self.sourceLb.text = _TrackData.announcer.nickname;
-    self.playCountLb.text = _TrackData.PlayNumber;
-    self.updateTimeLb.text = _TrackData.AddTime;
+    self.playCountLb.text = _TrackData.playNumber;
+    self.updateTimeLb.text = _TrackData.addTime;
     self.favorCountLb.text = [NSString stringWithFormat:@"%ld",_TrackData.favoriteCount];
     self.commentCountLb.text = [NSString stringWithFormat:@"%ld",_TrackData.commentCount];
     self.durationLb.text = _TrackData.playTime;

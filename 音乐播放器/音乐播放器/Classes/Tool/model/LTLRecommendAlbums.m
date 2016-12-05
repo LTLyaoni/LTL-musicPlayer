@@ -21,7 +21,7 @@
         [self.albums enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
             
             XMAlbum *model = [[XMAlbum alloc]initWithDictionary:obj];
-            model.PlayNumber = @"LTL";
+            model.playNumber = @"LTL";
             [model LabelProcessing:model.albumTags];
             [linagShi addObject:model];
             

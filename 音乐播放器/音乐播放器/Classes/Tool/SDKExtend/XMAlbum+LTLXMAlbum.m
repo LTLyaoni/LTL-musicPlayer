@@ -19,38 +19,44 @@ static char AddArrayKey;
 -(void)LabelProcessing:(NSString *)albumTags
 {   ///将标签转化为标签数组
     NSArray *arrya = [albumTags componentsSeparatedByString:@","];
-    self.MusicLabel = arrya;
+    self.musicLabel = arrya;
 }
 
 #pragma mark - 标签处理
--(void)setMusicLabel:(NSArray *)MusicLabel
+-(void)setMusicLabel:(NSArray *)musicLabel
 {
+    if (musicLabel != self.musicLabel) {
+        objc_setAssociatedObject(self, &AddArrayKey, musicLabel, OBJC_ASSOCIATION_COPY_NONATOMIC);
+    }
 
-    objc_setAssociatedObject(self, &AddArrayKey, MusicLabel, OBJC_ASSOCIATION_COPY_NONATOMIC);
 }
--(NSArray *)MusicLabel
+-(NSArray *)musicLabel
 {
 
     return objc_getAssociatedObject(self, &AddArrayKey);
 
 }
 #pragma mark - 播放次数处理
--(void)setPlayNumber:(NSString *)PlayNumber
+-(void)setPlayNumber:(NSString *)playNumber
 {
     if (self.playCount >= 10000.0) {
         
         CGFloat constPlay = self.playCount/10000.0;
         
-        PlayNumber = [NSString stringWithFormat:@"%.1f万次",constPlay];
+        playNumber = [NSString stringWithFormat:@"%.1f万次",constPlay];
         
     } else {
         
-        PlayNumber = [NSString stringWithFormat:@"%ld次",self.playCount];
+        playNumber = [NSString stringWithFormat:@"%ld次",self.playCount];
     }
     
-    objc_setAssociatedObject(self, &AddStringKey, PlayNumber, OBJC_ASSOCIATION_COPY_NONATOMIC);
+    if (playNumber != self.playNumber) {
+        
+        objc_setAssociatedObject(self, &AddStringKey, playNumber, OBJC_ASSOCIATION_COPY_NONATOMIC);
+    }
+    
 }
--(NSString *)PlayNumber
+-(NSString *)playNumber
 {
     return objc_getAssociatedObject(self, &AddStringKey);
 }

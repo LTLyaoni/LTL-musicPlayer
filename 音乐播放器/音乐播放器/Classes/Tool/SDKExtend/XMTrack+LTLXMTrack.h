@@ -10,9 +10,9 @@
 
 @interface XMTrack (LTLXMTrack)
 ///播放次数
-@property(nonatomic,strong)NSString *PlayNumber;
+@property(nonatomic,strong)NSString *playNumber;
 ///添加时间
-@property (nonatomic,strong) NSString *AddTime;
+@property (nonatomic,strong) NSString *addTime;
 ///添加播放时长
 @property (nonatomic,strong) NSString *playTime;
 ///时间处理方法
