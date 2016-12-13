@@ -24,7 +24,7 @@
 {
     if (!_themeColor)
     {
-        _themeColor = [UIColor purpleColor];
+        _themeColor = [UIColor blueColor];
     }
     return _themeColor;
 }

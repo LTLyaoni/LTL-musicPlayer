@@ -90,6 +90,7 @@
     ///把视图控制器添加到处理跳转视图上!!!!!!!!!添加顺序很重要
     [containView addSubview:fromVC.view];
     [containView addSubview:_visualEffectView];
+    
     [containView addSubview:toVC.view];
     
 //    对点击的Cell上的 imageView 截图，同时将这个 imageView 本身隐藏

@@ -9,7 +9,13 @@
 #ifndef Constants_h
 #define Constants_h
 
+#import <UIKit/UIKit.h>
 
+UIKIT_EXTERN NSString *const LTLRefreshKey;
+
+UIKIT_EXTERN NSString *const LTLPlay;
+
+UIKIT_EXTERN NSString *const LTLPushViewKey;
 
 //喜马拉雅请求数据使用的appkey 与appsecret
 #define appkey @"5415528c4b30960349a59e3284f5dec5"
@@ -94,5 +100,7 @@ cell.preservesSuperviewLayoutMargins = NO; \
 // Docment文件夹目录
 #pragma mark - Docment文件夹目录
 #define LTL_DocumentPath NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES).firstObject
+
+
 
 #endif /* Constants_h */

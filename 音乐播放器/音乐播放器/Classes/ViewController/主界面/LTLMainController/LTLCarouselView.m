@@ -32,13 +32,25 @@
 {
     [super awakeFromNib];
     self.gao.constant = LTL_WindowW *300.0/640.0;
-
+    
+    self.Page.pageControlSelectColor = [LTLThemeManager sharedManager].themeColor;
+//    self.Page.pageControlNormalColor = [LTLThemeManager sharedManager].themeColor;
+    
     self.headerViewHeight.constant = self.gao.constant * 1.262933;
     
     [self setButtom];
     [self DataAcquisition];
     
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(DataAcquisition) name:LTLRefreshKey object:nil];
+    
 }
+
+-(void)dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+
+}
+
 ///获取数据
 -(void)DataAcquisition
 {

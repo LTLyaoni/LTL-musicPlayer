@@ -4,6 +4,7 @@
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
+        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11524"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -19,6 +20,7 @@
                 <outlet property="beginTimeLabel" destination="tjv-1k-jZC" id="QkN-iN-G9U"/>
                 <outlet property="endTimeLabel" destination="4XV-pa-gyL" id="HhD-qv-Dkf"/>
                 <outlet property="favoriteButton" destination="Ice-i9-GLj" id="gYn-JP-CSV"/>
+                <outlet property="listView" destination="2Ri-np-eSY" id="Buq-Cy-uRp"/>
                 <outlet property="menuButton" destination="K9g-0q-axU" id="oiO-vs-pv5"/>
                 <outlet property="musicCycleButton" destination="OYK-FV-haB" id="9qc-jR-IeA"/>
                 <outlet property="musicNameLabel" destination="JYG-w1-fDl" id="DWt-Ki-INE"/>
@@ -68,13 +70,13 @@
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="HUs-aA-CzP">
                     <rect key="frame" x="0.0" y="20" width="375" height="45"/>
                     <subviews>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="K9g-0q-axU">
-                            <rect key="frame" x="10" y="8" width="46" height="30"/>
+                        <button hidden="YES" opaque="NO" contentMode="scaleAspectFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="K9g-0q-axU">
+                            <rect key="frame" x="10" y="7.5" width="46" height="30"/>
                             <constraints>
                                 <constraint firstAttribute="width" constant="46" id="Q4I-03-g4P"/>
                                 <constraint firstAttribute="height" constant="30" id="zgW-CS-hT8"/>
                             </constraints>
-                            <state key="normal" image="menu"/>
+                            <state key="normal" image="shareWhite"/>
                         </button>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4T8-pB-sWn">
                             <rect key="frame" x="66" y="12" width="243" height="21"/>
@@ -112,6 +114,10 @@
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dUW-Hv-ynw">
                     <rect key="frame" x="0.0" y="65" width="375" height="394"/>
                     <subviews>
+                        <tableView clipsSubviews="YES" alpha="0.0" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="2Ri-np-eSY" customClass="LTLlistView">
+                            <rect key="frame" x="0.0" y="0.0" width="375" height="394"/>
+                            <color key="backgroundColor" white="0.39393701062639819" alpha="0.70342133620689651" colorSpace="calibratedWhite"/>
+                        </tableView>
                         <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="music_placeholder" translatesAutoresizingMaskIntoConstraints="NO" id="OIZ-WX-y4m">
                             <rect key="frame" x="35" y="45" width="305" height="305"/>
                             <constraints>
@@ -121,8 +127,12 @@
                     </subviews>
                     <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                     <constraints>
+                        <constraint firstAttribute="bottom" secondItem="2Ri-np-eSY" secondAttribute="bottom" id="LIN-M2-lA9"/>
                         <constraint firstItem="OIZ-WX-y4m" firstAttribute="centerY" secondItem="dUW-Hv-ynw" secondAttribute="centerY" id="QEd-P8-cba"/>
                         <constraint firstItem="OIZ-WX-y4m" firstAttribute="leading" secondItem="dUW-Hv-ynw" secondAttribute="leading" constant="35" id="bfF-ev-Jyh"/>
+                        <constraint firstItem="2Ri-np-eSY" firstAttribute="top" secondItem="dUW-Hv-ynw" secondAttribute="top" id="f3w-uY-O27"/>
+                        <constraint firstItem="2Ri-np-eSY" firstAttribute="leading" secondItem="dUW-Hv-ynw" secondAttribute="leading" id="kbY-DC-PDq"/>
+                        <constraint firstAttribute="trailing" secondItem="2Ri-np-eSY" secondAttribute="trailing" id="q55-xy-BUN"/>
                         <constraint firstAttribute="trailing" secondItem="OIZ-WX-y4m" secondAttribute="trailing" constant="35" id="rWW-Vf-13B"/>
                     </constraints>
                 </view>
@@ -335,11 +345,11 @@
         <image name="arrow_down" width="22" height="13"/>
         <image name="big_play_button" width="60" height="60"/>
         <image name="empty_heart" width="23" height="21"/>
-        <image name="menu" width="25" height="17"/>
         <image name="more_icon" width="25" height="23"/>
         <image name="music_placeholder" width="311" height="313"/>
         <image name="next_song" width="20" height="28"/>
         <image name="prev_song" width="20" height="28"/>
+        <image name="shareWhite" width="51" height="49"/>
         <image name="shuffle_icon" width="17" height="14"/>
     </resources>
 </document>

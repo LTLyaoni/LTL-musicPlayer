@@ -16,6 +16,9 @@
 @property (nonatomic, assign) CGFloat smallCircleR;
 @property (nonatomic, assign) CGFloat distance;
 
+@property (nonatomic, assign) CGFloat H;
+@property (nonatomic, assign) CGFloat W;
+
 @property(nonatomic,assign)NSUInteger count;
 
 @end
@@ -27,6 +30,8 @@
     self = [super initWithFrame:frame];
     if (self) {
         self.count = count;
+        self.H = frame.size.height;
+        self.W = frame.size.width;
         [self setUI];
     }
     return self;
@@ -35,7 +40,33 @@
 {
     [super awakeFromNib];
     self.count = 3;
+    
+    self.W = self.bounds.size.width;
+    self.H = self.bounds.size.height;
+    
     [self setUI];
+}
+
+
+
+-(void)layoutSubviews
+{
+    [super layoutSubviews];
+
+    if (self.W != self.bounds.size.width || self.H != self.bounds.size.height) {
+        self.W = self.bounds.size.width;
+        self.H = self.bounds.size.height;
+        
+        [self.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];
+        [self setUI];
+    }
+    
+}
+
+-(void)setPageControlSelectColor:(UIColor *)pageControlSelectColor
+{
+    _pageControlSelectColor = pageControlSelectColor;
+    self.selectCircle.backgroundColor =_pageControlSelectColor;
 }
 
 -(void)setUI
@@ -43,7 +74,7 @@
 //    ///页面控件正常颜色
 //    self.pageControlNormalColor = [UIColor colorWithWhite:0.816 alpha:1.000];
     ///页面控件选择颜色
-    self.pageControlSelectColor = [UIColor redColor];
+//    self.pageControlSelectColor = [UIColor redColor];
     ///宽度
     CGFloat w = self.frame.size.width / (2 * _count);
     self.distance = w;

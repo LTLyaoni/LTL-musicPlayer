@@ -41,9 +41,18 @@ static NSString *ID = @"MusicLibraryCell";
         self.rowHeight = LTL_WindowW *2/5 ;
         
         [self DataAcquisition];
+        
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(DataAcquisition) name:LTLRefreshKey object:nil];
+        
     }
     return self;
 }
+
+-(void)dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
 //底部高度
 -(CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
 {
@@ -82,7 +91,7 @@ static NSString *ID = @"MusicLibraryCell";
     dic[@"toView"] = self;
     dic[@"isAnimate"] = 0;
     ///发送播放通知
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"pushView" object:nil userInfo:[dic copy]];
+    [[NSNotificationCenter defaultCenter] postNotificationName:LTLPushViewKey object:nil userInfo:[dic copy]];
 
 
 }

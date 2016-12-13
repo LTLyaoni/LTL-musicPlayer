@@ -26,6 +26,5 @@
 #import "XMBanner.h"
 #import "XMCategoryHumanRecommend.h"
 #import "XMLiveCity.h"
-#import "XMMetadata.h"
 
 #endif

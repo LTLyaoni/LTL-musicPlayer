@@ -63,7 +63,7 @@
 
  @param LTL 数据
  */
-+(void)AlbumsGuessLikeDadt:( nullable void (^)(NSArray <XMAlbum *> * _Nullable modelArray , XMErrorModel * _Nullable error))LTL;
++(void)AlbumsGuessLikePage:(NSUInteger)page  Dadt:( nullable void (^)(NSArray <XMAlbum *> * _Nullable modelArray , XMErrorModel * _Nullable error))LTL;
 /**
  专辑详情
  

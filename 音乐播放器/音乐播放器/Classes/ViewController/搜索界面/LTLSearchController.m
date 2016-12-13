@@ -79,6 +79,8 @@
 {
     //赋值
     self.searchResult.searchText = searchText;
+    
+    
 }
 
 @end

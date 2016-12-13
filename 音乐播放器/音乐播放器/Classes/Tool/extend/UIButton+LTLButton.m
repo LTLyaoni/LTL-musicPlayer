@@ -10,11 +10,11 @@
 //#import "LTLLabel.h"
 #import <objc/runtime.h>
 
-//@interface UIButton ()
-//
-//@property(nonatomic,strong) LTLLabel* LTLlabel;
-//
-//@end
+@interface UIButton ()
+
+@property(nonatomic,assign) BOOL monitor;
+
+@end
 
 //static  double gradientDegreeKey ;
 //static void *gradientDegreeKey = &gradientDegreeKey;
@@ -30,6 +30,19 @@
 
 static const char LTLlabelKey = '\0';
 static const char gradientFontKey = '\0';
+
+
+-(void)setMonitor:(BOOL)monitor
+{
+    if (monitor != self.monitor) {
+        NSNumber *monitorNumber = @(monitor);
+        objc_setAssociatedObject(self, @selector(monitor), monitorNumber, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    }
+}
+-(BOOL)monitor
+{
+    return objc_getAssociatedObject(self, @selector(monitor));
+}
 
 -(void)setGradient:(BOOL)gradient
 {
@@ -50,6 +63,9 @@ static const char gradientFontKey = '\0';
         UIColor *normalColor = [self titleColorForState:UIControlStateNormal];
         UIColor *highlightedColor = [self titleColorForState:UIControlStateHighlighted];
         
+        UIFont *font =self.titleLabel.font ;
+        
+        self.LTLlabel.font = font;
         self.LTLlabel.textColor = normalColor;
         self.LTLlabel.highlightedTextColor = highlightedColor;
         
@@ -59,11 +75,30 @@ static const char gradientFontKey = '\0';
         
         self.LTLlabel.userInteractionEnabled  =  NO;
         
+        
+        [self.LTLlabel sizeToFit];
+        
+        self.LTLlabel.center = CGPointMake(self.bounds.size.width/2, self.bounds.size.height/2);
+        
         [self addSubview:self.LTLlabel];
 //        [self setValue:self.LTLlabel forKey:@"UIButtonLabel"];
+        
+        [self addObserver:self forKeyPath:@"bounds" options:NSKeyValueObservingOptionNew context:nil];
+        
+        self.monitor = YES;
+        
     }
+}
+////bounds监听到变化
+-(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSKeyValueChangeKey,id> *)change context:(void *)context
+{
+    LTLLog(@"keyPath %@",keyPath);
+    
+    LTLLog(@"object %@",object);
     
 }
+
+
 -(BOOL)isGradient
 {
     return objc_getAssociatedObject(self, @selector(isGradient));
@@ -118,21 +153,19 @@ static const char gradientFontKey = '\0';
         objc_setAssociatedObject(self, @selector(gradientDegree), gradientDegreeFloatNumber, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
     }
 
+    LTLLog(@"ooo%f",gradientDegree);
     self.LTLlabel.gradientDegree = gradientDegree;
     
 }
 
-//-(void)layoutSubviews
-//{
-//    [super layoutSubviews];
-//
-//    [self.LTLlabel sizeToFit];
-//    self.LTLlabel.center = CGPointMake(self.bounds.size.width / 2, self.bounds.size.height / 2);
-//    
-//    [self.titleLabel sizeToFit];
-//    self.titleLabel.center = CGPointMake(self.bounds.size.width / 2, self.bounds.size.height / 2);
-//   
-//};
+-(void)dealloc
+{
+    if (self.monitor) {
+        [self removeObserver:self forKeyPath:@"bounds"];
+    }
+
+}
+
 
 
 

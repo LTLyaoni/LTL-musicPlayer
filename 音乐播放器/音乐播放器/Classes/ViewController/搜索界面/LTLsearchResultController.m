@@ -11,13 +11,11 @@
 #import "LTLResult.h"
 #import "PYSearch.h"
 
-#define typeHeight 25
+#define typeHeight 36
 
 @interface LTLsearchResultController ()<UICollectionViewDelegate,UICollectionViewDataSource>
 ///视图
 @property(nonatomic,strong) UICollectionView *collectionView;
-///初始位置
-@property(nonatomic,assign) CGFloat startPosition;
 ///搜索类型
 @property(nonatomic,assign) BOOL  searchType;
 ///正处于的搜索类型按钮
@@ -176,6 +174,7 @@ static NSString * const tableViewCell = @"tableViewCell";
 -(void)collectionView:(UICollectionView *)collectionView willDisplayCell:(UICollectionViewCell *)cell forItemAtIndexPath:(NSIndexPath *)indexPath
 {
     LTLResult *resultcell =(LTLResult *)cell;
+    [resultcell removeData];
     resultcell.indexPath = indexPath;
     resultcell.searchText = self.searchText;
 }
@@ -185,13 +184,7 @@ static NSString * const tableViewCell = @"tableViewCell";
 ////滑动
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
-    
-    CGFloat offsetX = ABS(scrollView.contentOffset.x - self.startPosition) ;
-    
-    CGFloat offset = offsetX / LTL_WindowW;
-    
-//    LTLLog(@"xxx %f",offset);
-//    LTLLog(@"xxx %f",1-offset);
+
     ///中心点
     CGPoint center = scrollView.center;
     center.x += scrollView.contentOffset.x;
@@ -245,14 +238,18 @@ static NSString * const tableViewCell = @"tableViewCell";
     
 }
 
-
--(void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
+-(void)viewWillAppear:(BOOL)animated
 {
-    self.startPosition = scrollView.contentOffset.x;
-//    LTLLog(@"结束 %f",scrollView.contentOffset.x);
+    [super viewWillAppear:animated];
+//    [self.collectionView reloadData];
 }
 
-#pragma mark - 处理搜索数据
+-(void)setSearchText:(NSString *)searchText
+{
+    _searchText = searchText;
+    
+    [self.collectionView reloadData];
+}
 
 -(void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
 {

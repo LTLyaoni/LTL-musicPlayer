@@ -46,9 +46,10 @@
         }
         //打开详情图
         self.descView.hidden = NO;
+        ///因为下载全部功能有缺陷而屏蔽
+//        [self.playAll addTarget:self action:@selector(playAllSong:) forControlEvents:UIControlEventTouchUpInside];
+//        [self.downloadAll addTarget:self action:@selector(downloadAllSong:) forControlEvents:UIControlEventTouchUpInside];
         
-        [self.playAll addTarget:self action:@selector(playAllSong:) forControlEvents:UIControlEventTouchUpInside];
-        [self.downloadAll addTarget:self action:@selector(downloadAllSong:) forControlEvents:UIControlEventTouchUpInside];
     }
     return self;
 }
@@ -56,13 +57,20 @@
 -(void)playAllSong:(UIButton *)btn
 {
     //全部播放
-    NSLog(@"播放全部歌曲");
+    LTLLog(@"播放全部歌曲");
+    if ([self.delegate respondsToSelector:@selector(playAllSongHeaderView:)]) {
+        [self.delegate playAllSongHeaderView:self];
+    }
 }
 ///下载全部歌曲
 -(void)downloadAllSong:(UIButton *)btn
 {
     //下载全部歌曲
-    NSLog(@"下载全部歌曲");
+    LTLLog(@"下载全部歌曲");
+    if ([self.delegate respondsToSelector:@selector(downloadAllSongHeaderView:)]) {
+        [self.delegate downloadAllSongHeaderView:self];
+    }
+    
 }
 #pragma mark - 设置数据
 -(void)setXMAlbumModel:(XMAlbum *)XMAlbumModel
@@ -84,6 +92,29 @@
     //标签
     [self setupTagsBtnWithTagNames:_XMAlbumModel.musicLabel];
 }
+
+-(void)setBanner:(XMBanner *)banner
+{
+    _banner = banner;
+    
+    //图片
+    NSURL *url = [NSURL URLWithString:_banner.bannerUrl];
+    
+    //模糊背景
+    [self sd_setImageWithURL:url placeholderImage:[UIImage imageNamed:@"LTL"]];
+    //设置歌单图片
+    [self.picView.coverView sd_setImageWithURL:url placeholderImage:[UIImage imageNamed:@"LTL"]];
+    ///播放次数
+//    [self.picView.playCountBtn setTitle:_XMAlbumModel.playNumber forState:UIControlStateNormal];
+    ///简介
+//    self.descView.descLb.text = _XMAlbumModel.albumIntro;
+    //名字
+    self.nameView.name.text = _banner.bannerShortTitle;
+    //标签
+//    [self setupTagsBtnWithTagNames:_XMAlbumModel.musicLabel];
+    
+}
+
 
 -(void)layoutSubviews
 {
@@ -112,7 +143,7 @@
            
             make.top.equalTo(self.picView.mas_bottom).offset(5);
             make.left.equalTo(self.picView.mas_left).offset(5);
-            make.size.mas_equalTo(CGSizeMake(150, 36));
+            make.size.mas_equalTo(CGSizeMake(LTL_WindowW*2/5, LTL_WindowW /10));
         }];
     }
     return _playAll;
@@ -135,7 +166,7 @@
             
             make.top.equalTo(self.picView.mas_bottom).offset(5);
             make.right.equalTo(self.mas_right).offset(-25);
-            make.size.mas_equalTo(CGSizeMake(150, 36));
+            make.size.mas_equalTo(CGSizeMake(LTL_WindowW*2/5, LTL_WindowW /10));
         }];
     }
     return _downloadAll;

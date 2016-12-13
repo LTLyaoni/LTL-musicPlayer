@@ -11,7 +11,7 @@
 @interface LTLMusicDetailCell : UITableViewCell
 
 ///歌数据
-@property (nonatomic,weak) XMTrack *TrackData;
+@property (nonatomic,strong) XMTrack *trackData;
 
 
 @end

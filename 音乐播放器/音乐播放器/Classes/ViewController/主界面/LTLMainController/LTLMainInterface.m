@@ -232,7 +232,7 @@
 -(void)receiveNotification
 {
     // 开启一个通知接受,开始播放
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(pushView:) name:@"pushView" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(pushView:) name:LTLPushViewKey object:nil];
 }
 -(void)pushView:(NSNotification *)notification
 {
@@ -249,8 +249,14 @@
     
 }
 #pragma mark - 即将显示
-- (void)viewDidAppear:(BOOL)animated{
-    [super viewDidAppear:animated];
+//- (void)viewDidAppear:(BOOL)animated{
+//    [super viewDidAppear:animated];
+//    
+//    
+//}
+
+-(void)viewWillAppear:(BOOL)animated
+{
     ///自定义转场需要遵守navigationController的代理协议
     self.navigationController.delegate = self;
     
@@ -258,7 +264,11 @@
     self.mm_drawerController.openDrawerGestureModeMask = MMOpenDrawerGestureModeAll;
     self.mm_drawerController.closeDrawerGestureModeMask =MMCloseDrawerGestureModeAll;
     
+    self.navigationItem.title = @"L音";
+    [super viewWillAppear:animated];
+    
 }
+
 
 - (void)viewWillDisappear:(BOOL)animated
 {
@@ -266,7 +276,7 @@
     //4、设置打开/关闭抽屉的手势
     self.mm_drawerController.openDrawerGestureModeMask = MMOpenDrawerGestureModeNone;
     self.mm_drawerController.closeDrawerGestureModeMask =MMOpenDrawerGestureModeNone;
-    
+    self.title = nil;
 }
 
 -(void)didLTLCarouselView:(LTLCarouselView *)CarouselView tag:(NSUInteger)tag

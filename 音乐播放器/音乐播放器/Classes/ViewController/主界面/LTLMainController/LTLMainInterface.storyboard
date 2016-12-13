@@ -32,7 +32,7 @@
                                 </collectionViewFlowLayout>
                                 <cells>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="MainItem" id="vhN-7d-K6z">
-                                        <rect key="frame" x="0.0" y="3" width="374" height="598"/>
+                                        <rect key="frame" x="0.0" y="2.5" width="374" height="598"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                             <rect key="frame" x="0.0" y="0.0" width="374" height="598"/>
@@ -67,7 +67,7 @@
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     </view>
                                 </subviews>
-                                <color key="backgroundColor" red="0.90766793489456177" green="0.42869848012924194" blue="0.91001754999160767" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="trailing" secondItem="tDV-at-4nH" secondAttribute="trailing" id="8jf-4l-bm3"/>
                                     <constraint firstAttribute="trailing" secondItem="cvK-Pb-TO4" secondAttribute="trailing" id="HGY-Be-zaP"/>
@@ -123,7 +123,7 @@
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="L27-Nb-ucl">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
-                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </navigationBar>
                     <connections>
                         <segue destination="q2Q-iD-6Mt" kind="relationship" relationship="rootViewController" id="dTn-T1-3Qj"/>

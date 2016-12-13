@@ -7,6 +7,9 @@
 //
 
 #import "LTLCarousel.h"
+#import "LTLSongViewController.h"
+
+
 #define LTLCarouselWidth self.bounds.size.width   //轮播器的宽度
 #define LTLCarouselHeight  self.bounds.size.height//轮播器的高度
 @interface LTLCarousel ()<UIScrollViewDelegate>
@@ -34,6 +37,7 @@ static NSUInteger currentImage = 1;
         [_pageControl mas_makeConstraints:^(MASConstraintMaker *make) {
             make.bottom.equalTo(self.mas_bottom);
             make.centerX.equalTo(self.mas_centerX);
+            make.height.mas_equalTo(22);
         }];
     }
     return _pageControl;
@@ -90,13 +94,14 @@ static NSUInteger currentImage = 1;
     }
     if (self.contentOffset.x == 0)
     {
-        //当等currentImage-1 就等于0;否则还是currentImage-1
-        currentImage = (currentImage-1)%_dadtArryr.count;
+        //当等currentImage-1<_dadtArryr.count 就等于0;否则还是currentImage-1
+//        currentImage = (currentImage-1)%_dadtArryr.count;
+        currentImage = ((currentImage-1)==-1) ? (_dadtArryr.count - 1) : (currentImage - 1);
         
     }
     else if(self.contentOffset.x == LTLCarouselWidth * 2)
     {
-        //当等currentImage+1 就等于0;否则还是currentImage+1
+        //当等currentImage+1>_dadtArryr.count 就等于0;否则还是currentImage+1
         currentImage = (currentImage+1)%_dadtArryr.count;
     }
     else
@@ -112,7 +117,7 @@ static NSUInteger currentImage = 1;
         
         switch (idx) {
             case 0:
-                Image = (currentImage-1)%_dadtArryr.count;
+                Image = ((currentImage-1)==-1) ? (_dadtArryr.count - 1) : (currentImage - 1);;
                 break;
             case 1:
                 Image = currentImage;
@@ -121,10 +126,7 @@ static NSUInteger currentImage = 1;
                 Image = (currentImage+1)%_dadtArryr.count;
                 break;
         }
-        
-//        LTLLog(@"Image %ld",Image);
-//        LTLLog(@"_dadtArryr %ld",_dadtArryr.count);
-        
+    
         XMBanner *model = _dadtArryr[Image];
         NSURL *url = [NSURL URLWithString:model.bannerUrl] ;
         [button sd_setImageWithURL:url forState:UIControlStateNormal];
@@ -136,6 +138,19 @@ static NSUInteger currentImage = 1;
 -(void)didButton:(UIButton *)btn
 {
     XMBanner *model = _dadtArryr[currentImage];
+
+    LTLLog(@"%@",[model mj_keyValues]);
+    
+//    /// 当前播放信息
+//    NSMutableDictionary *dic = [NSMutableDictionary dictionary];
+//    LTLuserInfo *userInfo = [[LTLuserInfo alloc]init];
+//    userInfo.serialNumber = serialNumber;
+//    userInfo.songArray = [arrya copy];
+//    dic[@"Play"] = userInfo;
+//    ///发送播放通知
+//    [[NSNotificationCenter defaultCenter] postNotificationName:@"LTLPlay" object:nil userInfo:[dic copy]];
+    
+    
     if ([self.LTLdelegate respondsToSelector:@selector(didLTLCarousel:Banner:)]) {
         [self.LTLdelegate didLTLCarousel:self Banner:model];
     }
@@ -160,7 +175,7 @@ static NSUInteger currentImage = 1;
    //偏移
     [self setContentOffset:CGPointMake(LTLCarouselWidth * 2 , 0) animated:YES];
     
-    [NSTimer scheduledTimerWithTimeInterval:0.32f target:self selector:@selector(scrollViewDidEndDecelerating:) userInfo:nil repeats:NO];
+    [NSTimer scheduledTimerWithTimeInterval:0.4f target:self selector:@selector(scrollViewDidEndDecelerating:) userInfo:nil repeats:NO];
 }
 //用手滑动时移除定时器
 -(void)scrollViewWillBeginDragging:(UIScrollView *)scrollView

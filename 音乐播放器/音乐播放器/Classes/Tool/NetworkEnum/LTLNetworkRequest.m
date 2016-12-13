@@ -42,7 +42,7 @@
 #pragma mark - 获取分类推荐的焦点图列表数据
 +(void)CategoryBanner:( nullable void (^)(NSArray <XMBanner*> * _Nullable modelArray , XMErrorModel * _Nullable error))LTL
 {
-//    NSLog(@"获取分类推荐的焦点图列表数据");
+//    LTLLog(@"获取分类推荐的焦点图列表数据");
     NSMutableArray *array = [NSMutableArray array];
 //    /** 获取分类推荐的焦点图列表 */
 //    NSMutableDictionary *params = [NSMutableDictionary dictionary];
@@ -61,7 +61,7 @@
     
     [[XMReqMgr sharedInstance] requestXMData:XMReqType_CategoryBanner params:params2 withCompletionHander:^(id result, XMErrorModel *error)
     {
-//        NSLog(@"LTL%@",result);
+//        LTLLog(@"LTL%@",result);
         ///数据转模型
         if(!error)
         { [result enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
@@ -71,7 +71,7 @@
         }
         else
         {
-            NSLog(@"获取分类推荐的焦点图列表数据Error: error_no:%ld, error_code:%@, error_desc:%@",(long)error.error_no, error.error_code, error.error_desc);
+            LTLLog(@"获取分类推荐的焦点图列表数据Error: error_no:%ld, error_code:%@, error_desc:%@",(long)error.error_no, error.error_code, error.error_desc);
         }
         if (LTL) {
             
@@ -91,7 +91,7 @@
     NSDictionary *params = @{@"category_id" : @2 };
     
     [[XMReqMgr sharedInstance] requestXMData:XMReqType_MetadataList params:params withCompletionHander:^(id result, XMErrorModel *error) {
-        NSLog(@"LTL %@",result);
+        LTLLog(@"LTL %@",result);
         if(!error)
         {
             NSMutableArray *lingShi = [NSMutableArray array];
@@ -110,7 +110,7 @@
             
         }
         else
-            NSLog(@"Error: error_no:%ld, error_code:%@, error_desc:%@",(long)error.error_no, error.error_code, error.error_desc);
+            LTLLog(@"Error: error_no:%ld, error_code:%@, error_desc:%@",(long)error.error_no, error.error_code, error.error_desc);
     }];
 }
 #pragma mark - 获取分类推荐
@@ -129,7 +129,7 @@
         {
             [result enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
             LTLRecommendAlbums * model = [[LTLRecommendAlbums alloc]initWithDictionary:obj];
-//                NSLog(@"%@",model.display_tag_name );
+//                LTLLog(@"%@",model.display_tag_name );
             [array addObject:model];
             
             }];
@@ -139,7 +139,7 @@
             }
         }
         else
-            NSLog(@"获取分类推荐数据Error: error_no:%ld, error_code:%@, error_desc:%@",(long)error.error_no, error.error_code, error.error_desc);
+            LTLLog(@"获取分类推荐数据Error: error_no:%ld, error_code:%@, error_desc:%@",(long)error.error_no, error.error_code, error.error_desc);
         ;
     }];
 //    [self CategoriesList:nil];
@@ -158,9 +158,9 @@
     [[XMReqMgr sharedInstance] requestXMData:XMReqType_CategoriesList params:nil withCompletionHander:^(id result, XMErrorModel *error) {
         if(!error)
 //            [sself showReceivedData:result className:@"XMCategory" valuePath:nil titleNeedShow:@"categoryName"];
-            NSLog(@"%@",result);
+            LTLLog(@"%@",result);
         else
-            NSLog(@"%@",error.description);
+            LTLLog(@"%@",error.description);
         
     }];
 
@@ -180,7 +180,7 @@
     NSDictionary *params = @{@"category_id": @2 ,@"type" : @0 };
     
     [[XMReqMgr sharedInstance] requestXMData:XMReqType_TagsList params:params withCompletionHander:^(id result, XMErrorModel *error) {
-//        NSLog(@"LTL%@",result);
+//        LTLLog(@"LTL%@",result);
         if (!error)
         {
             
@@ -237,7 +237,7 @@
             
         }
         else
-            NSLog(@"%@   %@",error.description,result);
+            LTLLog(@"%@   %@",error.description,result);
         
         if (LTL) {
             
@@ -254,13 +254,13 @@
  
  @param LTL 数据
  */
-+(void)AlbumsGuessLikeDadt:( nullable void (^)(NSArray <XMAlbum *> * _Nullable modelArray , XMErrorModel * _Nullable error))LTL
++(void)AlbumsGuessLikePage:(NSUInteger)page  Dadt:( nullable void (^)(NSArray <XMAlbum *> * _Nullable modelArray , XMErrorModel * _Nullable error))LTL
 {
     NSMutableArray *lingShi = [NSMutableArray array];
 //    NSMutableDictionary *params = [NSMutableDictionary dictionary];
 //    [params setObject:@18 forKey:@"like_count"];
     
-    NSDictionary *params = @{@"like_count" : @18 };
+    NSDictionary *params = @{@"like_count" : @18 , @"page" : @(page)};
     
     [[XMReqMgr sharedInstance] requestXMData:XMReqType_AlbumsGuessLike params:params withCompletionHander:^(id result, XMErrorModel *error) {
         
@@ -274,13 +274,31 @@
             }];
         }
         else
-            NSLog(@"%@   %@",error.description,result);
+            LTLLog(@"%@   %@",error.description,result);
         
         if (LTL) {
             
             LTL([lingShi copy],error);
         }
 
+    }];
+    
+    
+    
+    
+    NSMutableDictionary *params2 = [NSMutableDictionary dictionary];
+    [[XMReqMgr sharedInstance] requestXMData:XMReqType_ColdbootGenRes params:params2 withCompletionHander:^(id result, XMErrorModel *error) {
+        if(!error)
+        {
+            
+            LTLLog(@"%@",result);
+            
+//            GerneralTableViewController *vc = [[GerneralTableViewController alloc] init];
+//            vc.array = result;
+//            [self.navigationController pushViewController:vc animated:YES];
+        }
+        else
+            NSLog(@"%@   %@",error.description,result);
     }];
 
 }
@@ -325,7 +343,7 @@
 #pragma mark - 获取歌单
 +(void)MetadataAlbumsPage:(NSInteger )page dimension: (LTLDimension)dimension dadt:( nullable void (^)(NSArray <XMAlbum *> * _Nullable modelArray , XMErrorModel * _Nullable error))LTL
 {
-//    NSLog(@"获取歌单");
+//    LTLLog(@"获取歌单");
     if (page <= 0) {
         page=1;
     }
@@ -349,7 +367,7 @@
     [[XMReqMgr sharedInstance] requestXMData:XMReqType_MetadataAlbums params:params withCompletionHander:^(id result, XMErrorModel *error) {
         if(!error)
         {
-            NSLog(@"%@",result[@"albums"]);
+            LTLLog(@"%@",result[@"albums"]);
             [result[@"albums"] enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
                 XMAlbum *model = [[XMAlbum alloc]initWithDictionary:obj];
                 [lingShi addObject:model];
@@ -357,7 +375,7 @@
         }
         else
         {
-            NSLog(@" 获取歌单Error: error_no:%ld, error_code:%@, error_desc:%@",(long)error.error_no, error.error_code, error.error_desc);
+            LTLLog(@" 获取歌单Error: error_no:%ld, error_code:%@, error_desc:%@",(long)error.error_no, error.error_code, error.error_desc);
         }
         if (LTL) {
             
@@ -426,7 +444,7 @@
 
     NSMutableArray *lingShi = [NSMutableArray array];
     
-    NSDictionary *params = @{@"category_id" : @2 ,@"count" : @20 ,@"q" : keyWord , @"calc_dimension" : @(dimension) };
+    NSDictionary *params = @{@"category_id" : @2 ,@"count" : @20 ,@"q" : keyWord , @"calc_dimension" : @(dimension) ,@"page" :@(page) };
     
     if (!type) {
         

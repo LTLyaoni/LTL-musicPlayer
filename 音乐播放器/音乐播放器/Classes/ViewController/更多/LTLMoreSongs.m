@@ -15,6 +15,8 @@
 //数据数组
 @property(nonatomic,strong)NSMutableArray <XMAlbum *>*dadtArray;
 
+@property(nonatomic,assign) NSUInteger page;
+
 @end
 //重用
 static NSString *ID = @"MoreSongsCell";
@@ -31,7 +33,7 @@ static NSString *ID = @"MoreSongsCell";
 #pragma mark - 初始化
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
+    self.page = 0;
     self.title = _model.display_tag_name;
     
     [self.tableView registerNib:[UINib nibWithNibName:@"LTLMoreSongsCell" bundle:nil] forCellReuseIdentifier:ID];
@@ -39,9 +41,22 @@ static NSString *ID = @"MoreSongsCell";
     self.tableView.rowHeight = UITableViewAutomaticDimension;
     self.tableView.estimatedRowHeight = 66;
     
-    [self DataAcquisition];
+//    [self dataAcquisition];
     
     self.tableView.contentInset = UIEdgeInsetsMake(0, 0, 50, 0);
+    
+    self.tableView.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(dataAcquisition)];
+    
+    self.tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
+        
+        [self.tableView.mj_footer resetNoMoreData];
+        _page = 0;
+        [self dataAcquisition];
+        
+    }];
+    
+    [self.tableView.mj_header beginRefreshing];
+    
 }
 
 
@@ -77,13 +92,21 @@ static NSString *ID = @"MoreSongsCell";
 
 #pragma mark - 数据
 ///数据
--(void)DataAcquisition
+-(void)dataAcquisition
 {
+    _page++;
+    LTLLog(@"%lu",(unsigned long)_page);
     if ( !_model.tag_name && _data == nil ) {
         
-        [LTLNetworkRequest AlbumsGuessLikeDadt:^(NSArray<XMAlbum *> * _Nullable modelArray, XMErrorModel * _Nullable error) {
+        [LTLNetworkRequest AlbumsGuessLikePage:_page Dadt:^(NSArray<XMAlbum *> * _Nullable modelArray, XMErrorModel * _Nullable error) {
             [self.dadtArray addObjectsFromArray:modelArray];
             [self.tableView reloadData];
+            [self.tableView.mj_footer endRefreshing];
+            [self.tableView.mj_header endRefreshing];
+            
+            self.tableView.mj_footer = nil;
+            self.tableView.mj_header = nil;
+            
         }];
         
     }
@@ -91,12 +114,14 @@ static NSString *ID = @"MoreSongsCell";
     {
         NSString *name = _data.tagName ?  _data.tagName : _model.tag_name;
         
-        NSLog(@"LTL%@",name);
+        LTLLog(@"LTL%@",name);
         
-        [LTLNetworkRequest AlbumsListID:2 tag_name:name   Page:1 dimension:LTLDimensionClassicOrPlayUp dadt:^(NSArray<XMAlbum *> * _Nullable modelArray, XMErrorModel * _Nullable error) {
+        [LTLNetworkRequest AlbumsListID:2 tag_name:name   Page:_page dimension:LTLDimensionClassicOrPlayUp dadt:^(NSArray<XMAlbum *> * _Nullable modelArray, XMErrorModel * _Nullable error) {
             
             [self.dadtArray addObjectsFromArray:modelArray];
             [self.tableView reloadData];
+            [self.tableView.mj_footer endRefreshing];
+            [self.tableView.mj_header endRefreshing];
         }];
     }
 }

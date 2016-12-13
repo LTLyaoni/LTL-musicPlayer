@@ -149,7 +149,15 @@ typedef NS_ENUM(NSInteger, XMReqType){
     XMReqType_CustomizedCategory,
     //获取为合作方定制化的声音列表
     XMReqType_CustomizedTrack,
-
+    
+    //获取合作方自定制的专辑类听单
+    XMReqType_CustomizedAlbumColumns,
+    //获取合作方自定制的专辑类听单
+    XMReqType_CustomizedTrackColumns,
+    //获取自定义专辑听单内容详情
+    XMReqType_CustomizedAlbumColumnDetail,
+    //获取自定义声音听单内容详情
+    XMReqType_CustomizedTrackColumnDetail,
 };
 
 #endif

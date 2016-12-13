@@ -71,8 +71,14 @@ static NSString *FooterID = @"FooterView";
         //获取数据
         [self DataAcquisition];
         
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(DataAcquisition) name:LTLRefreshKey object:nil];
     }
     return self;
+}
+
+-(void)dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 //Items数
@@ -115,7 +121,7 @@ static NSString *FooterID = @"FooterView";
         
         headView.model = model;
         
-        headView.backgroundColor = [UIColor blueColor];
+//        headView.backgroundColor = [UIColor blueColor];
         return headView;
         
     } else {
@@ -150,7 +156,7 @@ static NSString *FooterID = @"FooterView";
     dic[@"toView"] = self;
     dic[@"isAnimate"] = @(YES);
     ///发送通知
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"pushView" object:nil userInfo:[dic copy]];
+    [[NSNotificationCenter defaultCenter] postNotificationName:LTLPushViewKey object:nil userInfo:[dic copy]];
 }
 #pragma mark - 数据
 ///数据

@@ -17,8 +17,10 @@
 - (void)changeMusic;
 ///播放时被调用，频率为1s，告知当前播放进度和播放时间
 - (void)playNotifyProcess:(CGFloat)percent currentSecond:(NSString *)currentSecond;
-
+///缓冲
 -(void)playBufferProcess:(CGFloat)percent;
+/////播放发生变化时调用
+//-(void)playChange;
 
 @end
 
@@ -47,12 +49,15 @@ typedef NS_ENUM(NSInteger, itemModel) {
 ///历史列表
 @property (nonatomic, strong,readonly) NSMutableArray *historyMusic;
 ///正在播放列表
-@property (nonatomic, strong,readonly)  NSArray *Playlist;
+@property (nonatomic, strong,readonly)  NSMutableArray *playlist;
+///当前播放下标
+@property (nonatomic,assign,readonly) NSInteger indexPathRow;
 ///播放进度
 @property (nonatomic,assign,readonly) CGFloat playPercent;
 ///缓冲进度
 @property (nonatomic,assign,readonly) CGFloat playBuffer;
 
+@property (nonatomic,assign,readonly,getter=isLocalVideo) BOOL localVideo; //是否播放本地文件
 /**AVPlayerStatusUnknown,     ////影音播放器状态未知
 	AVPlayerStatusReadyToPlay,////影音播放器状态准备
 	AVPlayerStatusFailed      ////影音播放器状态失败
@@ -79,14 +84,31 @@ typedef NS_ENUM(NSInteger, itemModel) {
  * 设置播放器从特定的时间播放
  */
 - (void)seekToTime:(CGFloat)percent;
-
-
+///播放第几首
+- (void)setNumberOfPlay:(NSUInteger)number;
+///删除某一首
+- (void)removeSong:(NSUInteger)number;
+///删除历史列表
 - (void)delAllHistoryMusic;
+///删除喜欢列表
 - (void)delAllFavoriteMusic;
+///是否收藏
+- (BOOL)hasBeenFavoriteMusic;
+///收藏
+- (void)delFavoriteMusic;
+///取消收藏
+- (void)setFavoriteMusic;
+
 - (void)stopMusic;
 
+///交换歌曲位置
+- (void)songExchangeAtIndex:(NSUInteger)idx1 withObjectAtIndex:(NSUInteger)idx2;
 /** 数据查询 */
 - (UIImage *)playCoverImage;
+
+
+
+-(void)iPhoneSysctlbyname;
 /** 保存 */
 //- (BOOL)saveChanges;
 

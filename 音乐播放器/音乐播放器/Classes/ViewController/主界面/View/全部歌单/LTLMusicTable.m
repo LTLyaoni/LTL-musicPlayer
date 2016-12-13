@@ -74,14 +74,18 @@ static NSString *HeaderID = @"SongHeaderView";
            
             [self.mj_footer resetNoMoreData];
             _page = 0;
-            [self.songSheetArray removeAllObjects];
             
             [self DataAcquisition];
         }];
         
-        
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(DataAcquisition) name:LTLRefreshKey object:nil];
     }
     return self;
+}
+
+-(void)dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 //Items数
@@ -121,6 +125,10 @@ static NSString *HeaderID = @"SongHeaderView";
      {
          if (modelArray.count)
          {
+             if (self.page == 1) {
+                 [self.songSheetArray removeAllObjects];
+             }
+             
              [self.songSheetArray addObjectsFromArray:modelArray];
              
              [self reloadData];
@@ -150,7 +158,7 @@ static NSString *HeaderID = @"SongHeaderView";
     dic[@"toView"] = self;
     dic[@"isAnimate"] = @(NO);
     ///发送通知
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"pushView" object:nil userInfo:[dic copy]];
+    [[NSNotificationCenter defaultCenter] postNotificationName:LTLPushViewKey object:nil userInfo:[dic copy]];
 }
 
 @end

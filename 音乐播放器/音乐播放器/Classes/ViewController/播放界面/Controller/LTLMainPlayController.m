@@ -9,6 +9,8 @@
 #import "LTLMainPlayController.h"
 #import "MusicSlider.h"
 #import "LTLPlayControlIcon.h"
+#import "LTLlistView.h"
+#import "LTLshareWhite.h"
 
 @interface LTLMainPlayController ()<UIGestureRecognizerDelegate,LTLPlayManagerDelegate>
 /*背景*/
@@ -26,6 +28,9 @@
 @property (weak, nonatomic) IBOutlet UIImageView *albumImageView;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *albumImageLeftConstraint;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *albumImageRightConstraint;
+
+@property (weak, nonatomic) IBOutlet LTLlistView *listView;
+@property(nonatomic,assign) BOOL list;
 
 /*收藏行*/
 @property (weak, nonatomic) IBOutlet UIButton *favoriteButton;
@@ -81,6 +86,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.list = NO;
     ///////////设置模式图片
     _cycle = self.player.playerCycle;
     [self setTouchCycle];
@@ -94,6 +100,14 @@
     _tapGesture.delegate = self;
     [_musicSlider addGestureRecognizer:_tapGesture];
     [self setButtonIamge];
+    
+//    UIImage *rightBtnImage = [LTLshareWhite imageOfArtboardWithSize:CGSizeMake(30, 30) resizing:LTLshareWhiteResizingBehaviorAspectFit];
+//    
+//    [ setImage:rightBtnImage forState:UIControlStateNormal];
+    
+    
+    
+    
 }
 -(void)setButtonIamge
 {
@@ -106,12 +120,14 @@
     [_nextMusicButton setImage:NextHeadIamge forState:UIControlStateNormal];
     [_previousMusicButton setImage:LastOneIamge forState:UIControlStateNormal];
 }
-#pragma mark - FYPlayManagerDelegate
+#pragma mark - LTLPlayManagerDelegate
 ///每次下一首的时候将会调用
 -(void)changeMusic
 {
+    self.musicSlider.value = 0;
     self.musicIsPlaying = _player.isPlay;
     [self setData];
+    [self.listView playChange];
 }
 ///播放时被调用，频率为1s，告知当前播放进度和播放时间
 -(void)playNotifyProcess:(CGFloat)percent currentSecond:(NSString *)currentSecond
@@ -130,24 +146,30 @@
 -(void)setData
 {
     XMTrack *Track = self.player.tracksVM;
-    NSURL *url = [NSURL URLWithString:Track.coverUrlLarge];
+    NSURL *url = [NSURL URLWithString:Track.coverUrlSmall];
     [self.albumImageView sd_setImageWithURL:url placeholderImage:[UIImage imageNamed:@"9"]];
     [self.backgroudImageView sd_setImageWithURL:url];
     self.musicNameLabel.text = Track.trackTitle;
     self.singerLabel.text = Track.announcer.nickname;
     self.endTimeLabel.text = Track.playTime;
+    
+    [self musicFavorited];
 }
 #pragma mark - 点击事件
 - (void)setMusicIsPlaying:(BOOL)musicIsPlaying {
     _musicIsPlaying = musicIsPlaying;
     UIImage * iamge ;
+    
+    CGSize size = CGSizeMake(64, 64);
+    
+    
     if (_musicIsPlaying)
     {
-        iamge = [LTLPlayControlIcon imageOfSuspendWithSize:_musicToggleButton.frame.size resizing:LTLPlayControlIconResizingBehaviorAspectFit];
+        iamge = [LTLPlayControlIcon imageOfSuspendWithSize:size resizing:LTLPlayControlIconResizingBehaviorAspectFill];
         
     } else {
         
-        iamge = [LTLPlayControlIcon imageOfPlayWithSize:_musicToggleButton.frame.size resizing:LTLPlayControlIconResizingBehaviorAspectFit];
+        iamge = [LTLPlayControlIcon imageOfPlayWithSize:size resizing:LTLPlayControlIconResizingBehaviorAspectFill];
         
     }
     
@@ -156,8 +178,8 @@
 }
 /** 播放按钮 */
 - (IBAction)didTouchMusicToggleButton:(UIButton *)sender {
-    NSLog(@"播放或暂停");
-    NSLog(@"%d",_player.isPlay);
+    LTLLog(@"播放或暂停");
+    LTLLog(@"%d",_player.isPlay);
     if (_player.status ==  AVPlayerStatusReadyToPlay) {
         
         [_player pauseMusic];
@@ -165,7 +187,7 @@
         self.musicIsPlaying = _player.isPlay;
         
     }else{
-        NSLog(@"当前没有音乐") ;
+        LTLLog(@"当前没有音乐") ;
     }
 }
 ///上一首
@@ -175,7 +197,7 @@
         self.musicIsPlaying = _player.isPlay;
         
     }else{
-         NSLog(@"等待加载音乐");
+         LTLLog(@"等待加载音乐");
     }
     
 }
@@ -190,7 +212,7 @@
         
     }else{
 //        [self showMiddleHint:@"等待加载音乐"];
-        NSLog(@"等待加载音乐");
+        LTLLog(@"等待加载音乐");
     }
    
 }
@@ -226,16 +248,48 @@
     }
 
 }
-- (IBAction)idiTouchFavorite:(id)sender {
+- (IBAction)idiTouchFavorite:(UIButton *)sender {
     
-    [_favoriteButton startDuangAnimation];
-   
+    [sender startDuangAnimation];
+    [self checkMusicFavoritedIcon];
+    
+    
+    
 }
+
+- (void)musicFavorited
+{
+    if (![self.player hasBeenFavoriteMusic])
+    {
+        [_favoriteButton setImage:[UIImage imageNamed:@"empty_heart"] forState:UIControlStateNormal];
+    } else {
+        [_favoriteButton setImage:[UIImage imageNamed:@"red_heart"] forState:UIControlStateNormal];
+    
+    }
+}
+
+- (void)checkMusicFavoritedIcon
+{
+    if ([self.player hasBeenFavoriteMusic])
+    {
+        [self.player setFavoriteMusic]; 
+        [_favoriteButton setImage:[UIImage imageNamed:@"empty_heart"] forState:UIControlStateNormal];
+    } else {
+        [_favoriteButton setImage:[UIImage imageNamed:@"red_heart"] forState:UIControlStateNormal];
+        [self.player delFavoriteMusic];
+    }
+}
+
 /** 更多按钮 */
 - (IBAction)didTouchMoreButton:(id)sender {
 
+    self.list = !self.list;
+    [UIView animateWithDuration:0.5 animations:^{
+        self.listView.alpha = self.list;
+        self.albumImageView.alpha = !self.list;
+    }];
+    
 }
-
 
 - (IBAction)closePlay:(id)sender {
     
@@ -246,12 +300,12 @@
 - (IBAction)changeMusicTime:(MusicSlider *)sender {
     _musicIsChange = NO;
     _tapGesture.enabled = NO;
-    NSLog(@"1");
+    LTLLog(@"1");
 }
 - (IBAction)setMusicTime:(MusicSlider *)sender {
     _tapGesture.enabled = YES;
     _musicIsChange = YES;
-    NSLog(@"2");
+    LTLLog(@"2");
     [_player seekToTime:sender.value];
 
 }
@@ -274,7 +328,7 @@
 
 -(void)dealloc
 {
-    NSLog(@"LTLMainPlayController销毁");
+    LTLLog(@"LTLMainPlayController销毁");
 }
 
 

@@ -10,16 +10,29 @@
 #import "LTLloginSet.h"
 #import "LTLSearchController.h"
 #import "LTLMainInterface.h"
+#import <UMSocialCore/UMSocialCore.h>
+
 //#import "MMDrawerController.h"
 //#import "MMExampleDrawerVisualStateManager.h"
 
 @interface LTLAppDelegate ()<XMReqDelegate>
 @property (nonatomic,strong) MMDrawerController * drawerController;
 @property (nonatomic,strong) LTLMainInterface *mainVC;
+///下载管理
+@property(nonatomic,strong) XMSDKDownloadManager *download;
 @end
 
 @implementation LTLAppDelegate
 
+-(XMSDKDownloadManager *)download
+{
+    if (!_download) {
+        _download = [XMSDKDownloadManager sharedSDKDownloadManager];
+        
+        [_download getDownloadedTracks];
+    }
+    return _download;
+}
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // 在App启动后开启远程控制事件, 接收来自锁屏界面和上拉菜单的控制
@@ -32,6 +45,8 @@
     self.mainVC = (LTLMainInterface *) mianController.topViewController;
     ///右滑视图
     LTLloginSet *log = [[LTLloginSet alloc]initWithNibName:@"LTLloginSet" bundle:nil];
+    
+//    UINavigationController *logNav = [[UINavigationController alloc]initWithRootViewController:log];
     
 //    LTLSearchController *Search = [[LTLSearchController alloc]initWithNibName:@"LTLSearchController" bundle:nil];
 //    UINavigationController *nav = [[UINavigationController alloc]initWithRootViewController:Search];
@@ -58,7 +73,7 @@
      }];
     ///动画类型
     [[MMExampleDrawerVisualStateManager sharedManager]
-     setLeftDrawerAnimationType:MMDrawerAnimationTypeSlideAndScale];
+     setLeftDrawerAnimationType:MMDrawerAnimationTypeParallax];
     [[MMExampleDrawerVisualStateManager sharedManager]
      setRightDrawerAnimationType:MMDrawerAnimationTypeSwingingDoor];
     ///////////////////////////////////////////
@@ -71,11 +86,18 @@
     
     ///////////////////////////////
     UIImage *image = [UIImage imageNamed:@"Stars"];
-    ///window的layer层添加内容
-    self.window.layer.contents = (id) image.CGImage;    // 如果需要背景透明加上下面这句
-    self.window.layer.backgroundColor = [UIColor clearColor].CGColor;
+//    ///window的layer层添加内容
+//    self.window.layer.contents = (id) image.CGImage;    // 如果需要背景透明加上下面这句
+//    self.window.layer.backgroundColor = [UIColor clearColor].CGColor;
+    
+    UIImageView *imageV = [[UIImageView alloc]initWithImage:image];
+    imageV.frame = self.window.bounds;
+//    [self.window insertSubview:imageV atIndex:0];
+    
     //颜色
     [self zhuTi];
+    
+    [self alliesToShare];
     
     return YES;
 }
@@ -84,10 +106,49 @@
 {
     [UINavigationBar appearance].tintColor       = [LTLThemeManager sharedManager].themeColor;
     [UITabBar appearance].tintColor              = [LTLThemeManager sharedManager].themeColor;
-    [UINavigationBar appearance].backgroundColor = [UIColor clearColor];
+//    [UINavigationBar appearance].backgroundColor = [UIColor clearColor];
 }
+////友盟分享 SDK
+-(void)alliesToShare
+{
+    //打开调试日志
+    [[UMSocialManager defaultManager] openLog:YES];
+    
+    //设置友盟appkey
+    [[UMSocialManager defaultManager] setUmSocialAppkey:@"584e18d782b6356f17001414"];
+    
+    // 获取友盟social版本号
+    LTLLog(@"UMeng social version: %@", [UMSocialGlobal umSocialSDKVersion]);
+    
+    //设置分享到QQ互联的appKey和appSecret
+    // U-Share SDK为了兼容大部分平台命名，统一用appKey和appSecret进行参数设置，而QQ平台仅需将appID作为U-Share的appKey参数传进即可。
+    [[UMSocialManager defaultManager] setPlaform:UMSocialPlatformType_QQ appKey:@"3pwdwdmTlW9UQsLL"  appSecret:nil redirectURL:@"http://user.qzone.qq.com/1184676257"];
+    
+    //设置新浪的appKey和appSecret
+    [[UMSocialManager defaultManager] setPlaform:UMSocialPlatformType_Sina appKey:@"487089634"  appSecret:@"42339cdd2f4feee9903780fbc93e96aa" redirectURL:@"https://api.weibo.com/oauth2/default.html"];
+    
+    //设置微信的appKey和appSecret
+    [[UMSocialManager defaultManager] setPlaform:UMSocialPlatformType_WechatSession appKey:@"wxdc1e388c3822c80b" appSecret:@"3baf1193c85774b3fd9d18447d76cab0" redirectURL:@"http://mobile.umeng.com/social"];
+
+    
+//    // 如果不想显示平台下的某些类型，可用以下接口设置
+//        [[UMSocialManager defaultManager] removePlatformProviderWithPlatformTypes:@[@(UMSocialPlatformType_WechatFavorite),@(UMSocialPlatformType_YixinTimeLine),@(UMSocialPlatformType_LaiWangTimeLine),@(UMSocialPlatformType_Qzone)]];
+    
+}
+// 支持所有iOS系统
+- (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation
+{
+    BOOL result = [[UMSocialManager defaultManager] handleOpenURL:url];
+    if (!result) {
+        // 其他如支付等SDK的回调
+        LTLLog(@"回调%@",url);
+    }
+    return result;
+}
+///喜马拉雅 SDK
 -(void)RegisteredHimalaya
 {
+    
 //    [[XMReqMgr sharedInstance]registerXMReqInfoWithKey:appkey appSecret:appsecret];
 //    [XMReqMgr sharedInstance].delegate = self;
 #if DEBUG
@@ -96,18 +157,24 @@
     [[XMReqMgr sharedInstance] registerXMReqInfoWithKey:appkey appSecret:appsecret] ;
 #endif
     [XMReqMgr sharedInstance].delegate = self;
+    
+    [self.download getDownloadedTracks];
+    
 }
 
 
 -(void)didXMInitReqFail:(XMErrorModel *)respModel{
-    NSLog(@"注册失败 %@", respModel);
+    LTLLog(@"注册失败 %@", respModel);
 }
 -(void)didXMInitReqOK:(BOOL)result
 {
-    NSLog(@"注册成功 %d" , result);
+    LTLLog(@"注册成功 %d" , result);
     if (result) {
         ///设置根控制器
-        self.window.rootViewController = self.drawerController;
+//        self.window.rootViewController = self.drawerController;
+        
+        [[NSNotificationCenter defaultCenter] postNotificationName:LTLRefreshKey object:nil userInfo:nil];
+        
     }
 }
 // 接收到内存警告就会调用

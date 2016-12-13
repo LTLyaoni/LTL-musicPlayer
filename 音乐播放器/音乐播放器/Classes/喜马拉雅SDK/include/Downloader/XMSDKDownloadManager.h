@@ -97,7 +97,6 @@ DECLARE_SINGLETON_METHOD(XMSDKDownloadManager, sharedSDKDownloadManager)
 /**
  *  下载单条音频
  *
- *  @param track 
  *  @param ifImmediate 是否立即下载，若否，只注册不下载
  *
  *  @return 返回值含义 (0:已加入下载队列；1:已下载完成；2:URL无效；4:正在下载；5:数据库错误；9:此音频不允许被下载；10:已注册但不立即下载；21:此音频正在下载中；22:此音频已下载)
@@ -226,21 +225,17 @@ DECLARE_SINGLETON_METHOD(XMSDKDownloadManager, sharedSDKDownloadManager)
 
 /**
  *  获取单个音频下载状态
- *  @param trackId
  *
  */
 - (TrackDownloadStatus *)getSingleTrackDownloadStatus:(NSInteger)trackId;
 
 /**
- *  批量获取音频下载状态
- *  @param trackId的数组
- *  @return 字典 key:trackId NSNumber, value:TrackDownloadStatus
+ *  批量获取音频下trackIdsackId NSNumber, value:TrackDownloadStatus
  */
 - (NSMutableDictionary *)getBatchTrackDownloadStatus:(NSMutableArray *)trackIds;
 
 /**
  *  获取某专辑中全部音频的下载状态
- *  @param albumId
  *  @return 字典 key:trackId NSNumber, value:TrackDownloadStatus
  */
 - (NSMutableDictionary *)getTrackInAlbumDownloadStatus:(NSInteger)albumId;

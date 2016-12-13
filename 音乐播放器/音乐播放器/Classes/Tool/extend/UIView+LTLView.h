@@ -25,4 +25,6 @@
 @property(nonatomic,assign) CGFloat centerY;
 /** 从xib中创建一个控件 */
 + (instancetype)viewFromXib;
+///获取父控制器
+- (UIViewController *)viewController;
 @end

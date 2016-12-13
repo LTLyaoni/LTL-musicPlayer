@@ -74,7 +74,8 @@
     self.songImage.layer.cornerRadius = self.songImage.width/2;
     ///接受通知
     [self receiveNotification];
-    self.musicIsPlaying = _player.isPlay;
+    self.musicIsPlaying = self.player.isPlay;
+    [self setData];
 }
 #pragma mark - 点击
 - (void)setMusicIsPlaying:(BOOL)musicIsPlaying {
@@ -95,31 +96,31 @@
 }
 ///上一首
 - (IBAction)LastOne:(UIButton *)sender {
-    NSLog(@"上一首");
+    LTLLog(@"上一首");
     if (_player.status ==  AVPlayerStatusReadyToPlay) {
         [_player previousMusic];
         self.musicIsPlaying = _player.isPlay;
         
     }else{
-        NSLog(@"等待加载音乐");
+        LTLLog(@"等待加载音乐");
     }
 }
 ///播放或暂停
 - (IBAction)play:(UIButton *)sender {
-    NSLog(@"播放或暂停");
+    LTLLog(@"播放或暂停");
     if (_player.status ==  AVPlayerStatusReadyToPlay) {
         
         [_player pauseMusic];
         self.musicIsPlaying = _player.isPlay;
         
     }else{
-        NSLog(@"当前没有音乐") ;
+        LTLLog(@"当前没有音乐") ;
     }
     
 }
 ///下一首
 - (IBAction)nextHead:(UIButton *)sender {
-    NSLog(@"下一首");
+    LTLLog(@"下一首");
     if (_player.status ==  AVPlayerStatusReadyToPlay) {
         
         [_player nextMusic];
@@ -128,7 +129,7 @@
         
     }else{
         //        [self showMiddleHint:@"等待加载音乐"];
-        NSLog(@"等待加载音乐");
+        LTLLog(@"等待加载音乐");
     }
 }
 #pragma mark - 接受播放等通知
@@ -136,7 +137,7 @@
 -(void)receiveNotification
 {
     // 开启一个通知接受,开始播放
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(playNotification:) name:@"LTLPlay" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(playNotification:) name:LTLPlay object:nil];
 }
 -(void)playNotification:(NSNotification *)notification
 {
@@ -181,11 +182,14 @@
 }
 ///点击视图
 - (IBAction)PlayControlClick:(UIButton *)sender {
-    if (!_player.isPlay) {
+    
+    if (self.player.playlist.count == 0) {
         [SVProgressHUD setMinimumDismissTimeInterval:1.8];
         [SVProgressHUD showErrorWithStatus:@"当前没有播放音乐!!!"];
         return;
     }
+    
+    
     LTLMainPlayController *MainPlay = [[LTLMainPlayController alloc]initWithNibName:@"LTLMainPlayController" bundle:nil];
     ///解决 Presenting view controllers on detached view controllers is discouraged 警告
     UIWindow *win = [UIApplication sharedApplication].keyWindow;
@@ -196,16 +200,23 @@
 -(void)setData
 {
     XMTrack *Track = self.player.tracksVM;
-    NSURL *url = [NSURL URLWithString:Track.coverUrlMiddle];
+    
+    NSURL *url = [NSURL URLWithString:Track.coverUrlSmall];
     [self.songImage sd_setImageWithURL:url placeholderImage:[UIImage imageNamed:@"9"]];
     self.songName.text = Track.trackTitle;
     self.SingerName.text = Track.announcer.nickname;
+    
+    if (self.player.playlist.count) {
+        _musicToggleButton.enabled = YES;
+        _NextHead.enabled = YES;
+        _LastOne.enabled = YES;
+    }
 }
 
 -(void)dealloc
 {
     /// 关闭消息中心
     [[NSNotificationCenter defaultCenter] removeObserver:self];
-    NSLog(@"LTLPlayControl销毁");
+    LTLLog(@"LTLPlayControl销毁");
 }
 @end

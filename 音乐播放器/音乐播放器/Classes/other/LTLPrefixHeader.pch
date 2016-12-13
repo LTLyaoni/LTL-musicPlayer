@@ -21,15 +21,20 @@
 #import "UINavigationController+FDFullscreenPopGesture.h"
 #import "NSString+LTLHighlightKey.h"
 #import "UIButton+LTLButton.h"
+#import "UIColor+Separate.h"
+#import "NSObject+LTLNSObject.h"
 //喜马拉雅 SDK
 #import "XMSDK.h"
+#import "XMMetadata.h"
+#import "XMSDKDownloadManager.h"
 //为喜马拉雅 SDK 的模型数据添加分类 因为 SDK.M 文件不开放
 #import "XMAlbum+LTLXMAlbum.h"
 #import "XMTrack+LTLXMTrack.h"
 #import "LTLRecommendAlbums.h"
 /////////////////////////////
 #import "LTLSearchSuggestWords.h"
-
+////数据储存
+#import "LTLDataProcessing.h"
 
 ///手势抽屉效果控件
 #import "MMDrawerController.h"
@@ -37,8 +42,10 @@
 #import "UIViewController+MMDrawerController.h"
 
 #import "SVProgressHUD.h"
+#import "MBProgressHUD.h"
 #import "MJExtension.h"
 #import "MJRefresh.h"
+#import "YTKKeyValueStore.h"
 ///SDImage 框架
 #import "UIImageView+WebCache.h"
 #import "UIButton+WebCache.h"
@@ -46,7 +53,9 @@
 #import "Masonry.h"
 //主题
 #import "LTLThemeManager.h"
-
+///封装的某些效果
+#import "UIScrollView+LTLScrollView.h"
+#import "UITableView+LTLTableView.h"
 
 // Include any system framework and library headers here that should be included in all compilation units.
 // You will also need to set the Prefix Header build setting of one or more of your targets to reference this file.

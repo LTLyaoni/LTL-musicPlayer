@@ -9,6 +9,8 @@
 
 #import "LTLPlayManager.h"
 #import "XMTrack.h"
+#import "XMSDKPlayerDataCollector.h"
+
 #import <MediaPlayer/MediaPlayer.h>
 
 //#import "FYfavoriteItem.h"
@@ -16,6 +18,16 @@
 
 #include <sys/types.h>
 #include <sys/sysctl.h>
+
+
+NSString *const LTLlastPlay =  @"lastPlay";
+NSString *const LTLcycle =  @"cycle";
+NSString *const LTLplayPercent =  @"playPercent";
+
+NSString *const LTLstatus =  @"status";
+NSString *const LTLloadedTimeRanges =  @"loadedTimeRanges";
+NSString *const LTLplaybackBufferEmpty =  @"playbackBufferEmpty";
+NSString *const LTLplaybackLikelyToKeepUp =  @"playbackLikelyToKeepUp";
 
 @interface LTLPlayManager ()
 ///用于缓冲播放
@@ -25,10 +37,12 @@
 ///历史列表
 @property (nonatomic, strong) NSMutableArray *historyMusic;
 ///正在播放列表
-@property (nonatomic, strong)  NSArray *Playlist;
-
-@property (nonatomic) BOOL isLocalVideo; //是否播放本地文件
-@property (nonatomic) BOOL isFinishLoad; //是否下载完毕
+@property (nonatomic, strong)  NSMutableArray *playlist;
+///当前正在播放的
+@property (nonatomic,strong) XMTrack *tracksVM;
+/////是否播放本地文件
+@property (nonatomic,assign) BOOL localVideo; //是否播放本地文件
+//@property (nonatomic) BOOL isFinishLoad; //是否下载完毕
 
 @property (nonatomic, strong) NSMutableDictionary *soundIDs;//音效
 ///当前播放下标
@@ -37,10 +51,9 @@
 @property (nonatomic,assign) NSInteger rowNumber;
 ///播放控件
 @property (nonatomic, strong) AVPlayer *player;
-
-//@property (readonly, strong, nonatomic) NSManagedObjectContext *managedObjectContext;
-//@property (readonly, strong, nonatomic) NSManagedObjectModel *managedObjectModel;
-//@property (readonly, strong, nonatomic) NSPersistentStoreCoordinator *persistentStoreCoordinator;
+///SDK 播放统计
+@property (nonatomic, strong) XMSDKPlayerDataCollector *playerData;
+@property (nonatomic, strong) XMTrackPlayDataCollectItem *item;
 
 @end
 
@@ -51,6 +64,40 @@
     id _timeObserve;
 }
 //////懒加载
+
+-(XMSDKPlayerDataCollector *)playerData
+{
+   if (!_playerData) {
+      _playerData = [XMSDKPlayerDataCollector sharedInstance];
+   }
+   return _playerData;
+}
+-(XMTrackPlayDataCollectItem *)item
+{
+   if (!_item) {
+      _item = [[XMTrackPlayDataCollectItem alloc]init];
+   }
+   return _item;
+}
+
+-(NSMutableArray *)playlist
+{
+   if (!_playlist) {
+      _playlist = [NSMutableArray array];
+   }
+   return _playlist;
+}
+
+-(void)setIndexPathRow:(NSInteger)indexPathRow
+{
+   _indexPathRow = indexPathRow;
+   
+   ///写在偏好设置里
+   NSNumber *userCycle = [NSNumber numberWithLong:indexPathRow];
+   NSUserDefaults *user = [NSUserDefaults standardUserDefaults];
+   [user setObject:userCycle forKey:LTLlastPlay];
+}
+
 /////////////////////单例
 + (instancetype)sharedInstance {
     static LTLPlayManager *_instance = nil;
@@ -68,20 +115,71 @@
     self = [super init];
     
     if (self) {
+       ///取出上一次播放的
+       self.playlist = [LTLDataProcessing getLastPlayList];
+       
+       
         ///初始化声效ID 字典
         _soundIDs = [NSMutableDictionary dictionary];
         ///取出偏好设置
         NSDictionary* defaults = [[NSUserDefaults standardUserDefaults] dictionaryRepresentation];
         ///判断是否有播放模式的偏好
-        if (defaults[@"cycle"]){
+        if (defaults[LTLcycle]){
             //有
-            NSInteger cycleDefaults = [defaults[@"cycle"] integerValue];
+            NSInteger cycleDefaults = [defaults[LTLcycle] integerValue];
             ///赋给属性
             _playerCycle = cycleDefaults;
         }else{
             //没有,给个默认
             _playerCycle = theSong;
         }
+       
+       ///取出偏好设置
+       ///判断是否有上次播放的偏好序号
+       if (defaults[LTLlastPlay]){
+          //有
+          NSInteger cycleDefaults = [defaults[LTLlastPlay] integerValue];
+         
+          LTLLog(@"判断是否有上次播放的偏好序号%ld",cycleDefaults);
+          ///赋给属性
+          self.indexPathRow = cycleDefaults;
+       }else{
+          //没有,给个默认
+          self.playerCycle = 0;
+       }
+       
+       if (self.playlist.count) {
+          
+          
+          _rowNumber = _playlist.count;
+
+          self.tracksVM = self.playlist[self.indexPathRow];
+          
+          
+          NSURL *musicURL = [NSURL URLWithString:self.tracksVM.playUrl64 ] ;
+          self.localVideo = NO;;
+          if (self.tracksVM.filePath) {
+            musicURL = [NSURL URLWithString:self.tracksVM.downloadUrl ] ;
+             self.localVideo = YES;
+          }
+          
+          //缓冲播放实现，可自行查找AVAssetResourceLoader资料,或采用AudioQueue实现
+          //    NSURL *musicURL = [self.tracksVM playURLForRow:self.indexPathRow];
+          
+          _currentPlayerItem = [AVPlayerItem playerItemWithURL:musicURL];
+          _player = [[AVPlayer alloc] initWithPlayerItem:_currentPlayerItem];
+          
+          [self addMusicMonitor];
+          
+          _play = NO;
+          
+          if (defaults[LTLplayPercent]) {
+             self.playPercent = [defaults[LTLplayPercent] floatValue];
+             [self seekToTime:self.playPercent];
+          }
+          
+       }
+       
         // 支持后台播放
         [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryPlayback error:nil];
         // 激活
@@ -89,6 +187,8 @@
     
         //远程控制事件的捕获处理
         [self remoteControlEventHandler];
+       
+       
     }
     return self;
 }
@@ -121,39 +221,39 @@
 ///播放, 暂停
 -(void)playAction:(MPRemoteCommand *)Command
 {
-    NSLog(@"LTL播放");
+    LTLLog(@"LTL播放");
     if (self.status ==  AVPlayerStatusReadyToPlay) {
-        
-        [self pauseMusic];
+
+      [self pauseMusic];
         
     }else{
-        NSLog(@"当前没有音乐") ;
+        LTLLog(@"当前没有音乐") ;
     }
 }
 ///// 暂停
 //-(void)pauseAction:(MPRemoteCommand *)Command
 //{
-//    NSLog(@"LTL暂停");
+//    LTLLog(@"LTL暂停");
 //}
 /// 上一曲
 -(void)previousTrackAction:(MPRemoteCommand *)Command
 {
-    NSLog(@"LTL上一曲");
+    LTLLog(@"LTL上一曲");
     if (_player.status ==  AVPlayerStatusReadyToPlay) {
         [self previousMusic];
     }else{
-        NSLog(@"等待加载音乐");
+        LTLLog(@"等待加载音乐");
     }
 }
 /// 下一曲
 -(void)nextTrackAction:(MPRemoteCommand *)Command
 {
-    NSLog(@"LTL下一曲");
-    NSLog(@"LTL上一曲");
+    LTLLog(@"LTL下一曲");
+    LTLLog(@"LTL上一曲");
     if (_player.status ==  AVPlayerStatusReadyToPlay) {
         [self nextMusic];
     }else{
-        NSLog(@"等待加载音乐");
+        LTLLog(@"等待加载音乐");
     }
 }
 
@@ -167,12 +267,11 @@
 ///删除历史列表
 - (void)delAllHistoryMusic{
     
-    [self.historyMusic removeAllObjects];
+   [LTLDataProcessing deleteHistoryList];
 }
 ///删除喜欢列表
 - (void)delAllFavoriteMusic{
-    
-    [self.favoriteMusic removeAllObjects];
+   [LTLDataProcessing deleteLikeList];
 }
 
 
@@ -186,17 +285,25 @@
  */
 - (void)playWithModel:(XMTrack *)tracks playlist:(NSArray *)playlist
 {
+   
+   
+    [LTLDataProcessing putModelObjectArray:playlist];
+   
+
     if (_currentPlayerItem) {
         ///移除监听
         [self removeMusicMonitor];
     }
     //赋值属性
     _tracksVM = tracks;
-    self.Playlist = playlist;
-    _indexPathRow = tracks.orderNum;
+   
+    [self.playlist removeAllObjects];
+   
+    [self.playlist addObjectsFromArray:playlist];
+    self.indexPathRow = 0;
     _rowNumber = playlist.count;
     //缓冲播放实现，可自行查找AVAssetResourceLoader资料,或采用AudioQueue实现
-//    NSURL *musicURL = [self.tracksVM playURLForRow:_indexPathRow];
+//    NSURL *musicURL = [self.tracksVM playURLForRow:self.indexPathRow];
     NSURL *musicURL = [NSURL URLWithString:tracks.playUrl64 ] ;
     _currentPlayerItem = [AVPlayerItem playerItemWithURL:musicURL];
     _player = [[AVPlayer alloc] initWithPlayerItem:_currentPlayerItem];
@@ -205,6 +312,7 @@
     //正在播放
     _play = YES;
     [_player play];
+   [LTLDataProcessing putModelHistoryListObject:self.tracksVM];
     //代理
     if ([self.delegate respondsToSelector:@selector(changeMusic)]) {
         [self.delegate changeMusic];
@@ -214,7 +322,7 @@
     
 }
 #pragma mark - KVO方法
-///添加监听及锁屏
+///添加监听
 -(void)addMusicMonitor
 {
     //判断currentPlayerItem是否为空
@@ -222,10 +330,10 @@
         return;
     }
 
-    [self.currentPlayerItem addObserver:self forKeyPath:@"status" options:NSKeyValueObservingOptionNew context:nil];
-    [self.currentPlayerItem addObserver:self forKeyPath:@"loadedTimeRanges" options:NSKeyValueObservingOptionNew context:nil];
-    [self.currentPlayerItem addObserver:self forKeyPath:@"playbackBufferEmpty" options:NSKeyValueObservingOptionNew context:nil];
-    [self.currentPlayerItem addObserver:self forKeyPath:@"playbackLikelyToKeepUp" options:NSKeyValueObservingOptionNew context:nil];
+    [self.currentPlayerItem addObserver:self forKeyPath:LTLstatus options:NSKeyValueObservingOptionNew context:nil];
+    [self.currentPlayerItem addObserver:self forKeyPath:LTLloadedTimeRanges options:NSKeyValueObservingOptionNew context:nil];
+    [self.currentPlayerItem addObserver:self forKeyPath:LTLplaybackBufferEmpty options:NSKeyValueObservingOptionNew context:nil];
+    [self.currentPlayerItem addObserver:self forKeyPath:LTLplaybackLikelyToKeepUp options:NSKeyValueObservingOptionNew context:nil];
     [self addMusicTime];
     
 }
@@ -273,10 +381,10 @@
         [_player removeTimeObserver:_timeObserve];
     }
     //移除
-    [self.currentPlayerItem removeObserver:self forKeyPath:@"status"];
-    [self.currentPlayerItem removeObserver:self forKeyPath:@"loadedTimeRanges"];
-    [self.currentPlayerItem removeObserver:self forKeyPath:@"playbackBufferEmpty"];
-    [self.currentPlayerItem removeObserver:self forKeyPath:@"playbackLikelyToKeepUp"];
+    [self.currentPlayerItem removeObserver:self forKeyPath:LTLstatus];
+    [self.currentPlayerItem removeObserver:self forKeyPath:LTLloadedTimeRanges];
+    [self.currentPlayerItem removeObserver:self forKeyPath:LTLplaybackBufferEmpty];
+    [self.currentPlayerItem removeObserver:self forKeyPath:LTLplaybackLikelyToKeepUp];
 
 }
 
@@ -288,14 +396,14 @@
     
         AVPlayerItem *playerItem = (AVPlayerItem *)object;
         
-        if ([keyPath isEqualToString:@"status"])
+        if ([keyPath isEqualToString:LTLstatus])
         {
             if ([playerItem status] == AVPlayerStatusReadyToPlay)
             {
                 //status 点进去看 有三种状态
                 
-                CGFloat duration = playerItem.duration.value / playerItem.duration.timescale; //视频总时间
-                NSLog(@"准备好播放了，总时间：%.2f", duration);//还可以获得播放的进度，这里可以给播放进度条赋值了
+//                CGFloat duration = playerItem.duration.value / playerItem.duration.timescale; //视频总时间
+//                LTLLog(@"准备好播放了，总时间：%.2f", duration);//还可以获得播放的进度，这里可以给播放进度条赋值了
                 [self updateLockedScreenMusic];//控制中心
 
             }
@@ -305,7 +413,7 @@
 //            }
             
         }
-        else if ([keyPath isEqualToString:@"loadedTimeRanges"])
+        else if ([keyPath isEqualToString:LTLloadedTimeRanges])
         {  //监听播放器的下载进度
             
             NSArray *loadedTimeRanges = [playerItem loadedTimeRanges];
@@ -319,16 +427,16 @@
             if ([self.delegate respondsToSelector:@selector(playBufferProcess:)]) {
                 [self.delegate playBufferProcess:_playBuffer];
             }
-            NSLog(@"下载进度：%.2f", timeInterval / totalDuration);
+//            LTLLog(@"下载进度：%.2f", timeInterval / totalDuration);
             
 //        } else if ([keyPath isEqualToString:@"playbackBufferEmpty"]) { //监听播放器在缓冲数据的状态
 //            
-//            NSLog(@"缓冲不足暂停了");
+//            LTLLog(@"缓冲不足暂停了");
 //            
 //            
 //        } else if ([keyPath isEqualToString:@"playbackLikelyToKeepUp"]) {
 //            
-//            NSLog(@"缓冲达到可播放程度了");
+//            LTLLog(@"缓冲达到可播放程度了");
 //            
 //            //由于 AVPlayer 缓存不足就会自动暂停，所以缓存充足了需要手动播放，才能继续播放
 ////            [_player play];
@@ -341,6 +449,8 @@
 #pragma mark - 接收动作
 ///暂停或播放
 - (void)pauseMusic{
+   
+//   [self iPhoneSysctlbyname];
     ///判断AVPlayerItem是否为空
     if (!self.currentPlayerItem) {
         return;
@@ -359,7 +469,6 @@
         [self updateLockedScreenMusic];
     }
 }
-///设置上拉菜单的进度光标的速度 （默认是原速播放）
 
 ///上一首
 - (void)previousMusic{
@@ -390,11 +499,30 @@
     ///模式写在偏好设置里
     NSNumber *userCycle = [NSNumber numberWithInt:cycle];
     NSUserDefaults *user = [NSUserDefaults standardUserDefaults];
-    [user setObject:userCycle forKey:@"cycle"];
+    [user setObject:userCycle forKey:LTLcycle];
     
     _playerCycle = cycle;
     
 }
+
+-(void)setPlayPercent:(CGFloat)playPercent
+{
+   _playPercent = playPercent;
+   
+   ///模式写在偏好设置里
+   NSNumber *userCycle = [NSNumber numberWithFloat:playPercent];
+   NSUserDefaults *user = [NSUserDefaults standardUserDefaults];
+   [user setObject:userCycle forKey:LTLplayPercent];
+   
+   
+   
+   self.item.duration = playPercent;
+   self.item.trackID = self.tracksVM.trackId;
+   self.item.playType = self.isLocalVideo;
+   [self.playerData sendTrackPlayDataWithItem:self.item];
+   
+}
+
 
 #pragma mark - 播放动作
 ///自动下一首播放
@@ -407,7 +535,7 @@
     }else if(_playerCycle == isRandom){
         [self randomMusic];
     }
-    NSLog(@"开始下一首");
+    LTLLog(@"开始下一首");
     if ([self.delegate respondsToSelector:@selector(changeMusic)]) {
         [self.delegate changeMusic];
     }
@@ -415,94 +543,79 @@
 ///播放上一首
 - (void)playPreviousMusic{
     ///移除监听
-    [self removeMusicMonitor];
+   
     if (_currentPlayerItem){
         //防止数组越界
-        if (_indexPathRow > 0) {
-            _indexPathRow--;
+        if (self.indexPathRow > 0) {
+            self.indexPathRow--;
         }else{
-            _indexPathRow = _rowNumber-1;
+            self.indexPathRow = _rowNumber-1;
         }
         
-        _tracksVM  = self.Playlist[_indexPathRow];
-        
-        NSURL *musicURL = [NSURL URLWithString:_tracksVM.playUrl64];
-        _currentPlayerItem = [AVPlayerItem playerItemWithURL:musicURL];
-        
-        //[_player replaceCurrentItemWithPlayerItem:_currentPlayerItem];
-        _player = [[AVPlayer alloc] initWithPlayerItem:_currentPlayerItem];
-        [[NSNotificationCenter defaultCenter] removeObserver:self];
-        ///添加监听
-        [self addMusicMonitor];
-        _play = YES;
-        [_player play];
-        
-        if ([self.delegate respondsToSelector:@selector(changeMusic)]) {
-            [self.delegate changeMusic];
-        }
-         ///监听播放结束自动开始一首
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(playbackFinished:) name:AVPlayerItemDidPlayToEndTimeNotification object:[self.player currentItem]];
+       [self playSong];
     }
 }
 ///播放下一首
 - (void)playNextMusic{
-    [self removeMusicMonitor];
+   
     if (_currentPlayerItem) {
         
         //防止数组越界
-        if (_indexPathRow < _rowNumber-1) {
-            _indexPathRow++;
+        if (self.indexPathRow < _rowNumber-1) {
+            self.indexPathRow++;
         }else{
-            _indexPathRow = 0;
+            self.indexPathRow = 0;
         }
-        
-        _tracksVM  = self.Playlist[_indexPathRow];
-        
-        NSURL *musicURL = [NSURL URLWithString:_tracksVM.playUrl64];
-        _currentPlayerItem = [AVPlayerItem playerItemWithURL:musicURL];
-        
-        _player = [[AVPlayer alloc] initWithPlayerItem:_currentPlayerItem];
-        
-        [[NSNotificationCenter defaultCenter] removeObserver:self];
-        
-        [self addMusicMonitor];
-        _play = YES;
-        [_player play];
-        
-        if ([self.delegate respondsToSelector:@selector(changeMusic)]) {
-            [self.delegate changeMusic];
-        }
-         ///监听播放结束自动开始一首
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(playbackFinished:) name:AVPlayerItemDidPlayToEndTimeNotification object:[self.player currentItem]];
+       [self playSong];
+       
     }
 
 }
+///播放
+-(void)playSong
+{
+   [self removeMusicMonitor];
+   if (_currentPlayerItem) {
+      
+      
+      _tracksVM  = self.playlist[self.indexPathRow];
+      
+      NSURL *musicURL = [NSURL URLWithString:self.tracksVM.playUrl64 ] ;
+      self.localVideo = NO;
+      if (self.tracksVM.filePath) {
+         musicURL = [NSURL URLWithString:self.tracksVM.downloadUrl ] ;
+         self.localVideo = YES;
+      }
+      _currentPlayerItem = [AVPlayerItem playerItemWithURL:musicURL];
+      
+      _player = [[AVPlayer alloc] initWithPlayerItem:_currentPlayerItem];
+      
+      [[NSNotificationCenter defaultCenter] removeObserver:self];
+      
+      [self addMusicMonitor];
+      _play = YES;
+      [_player play];
+      
+      [LTLDataProcessing putModelHistoryListObject:self.tracksVM];
+      
+      if ([self.delegate respondsToSelector:@selector(changeMusic)]) {
+         [self.delegate changeMusic];
+      }
+      ///监听播放结束自动开始一首
+      [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(playbackFinished:) name:AVPlayerItemDidPlayToEndTimeNotification object:[self.player currentItem]];
+   }
+
+}
+
 
 ///随机播放
 - (void)randomMusic{
-    [self removeMusicMonitor];
+   
     if (_currentPlayerItem) {
         ///取随机数
-        _indexPathRow = arc4random() % _rowNumber;
+        self.indexPathRow = arc4random() % _rowNumber;
         
-        _tracksVM  = self.Playlist[_indexPathRow];
-        
-        NSURL *musicURL = [NSURL URLWithString:_tracksVM.playUrl64];
-        _currentPlayerItem = [AVPlayerItem playerItemWithURL:musicURL];
-        
-//        [_player replaceCurrentItemWithPlayerItem:_currentPlayerItem];
-        _player = [[AVPlayer alloc] initWithPlayerItem:_currentPlayerItem];
-        [[NSNotificationCenter defaultCenter] removeObserver:self];
-        
-        [self addMusicMonitor];
-        _play = YES;
-        [_player play];
- 
-        if ([self.delegate respondsToSelector:@selector(changeMusic)]) {
-            [self.delegate changeMusic];
-        }
-         ///监听播放结束自动开始一首
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(playbackFinished:) name:AVPlayerItemDidPlayToEndTimeNotification object:[self.player currentItem]];
+       [self playSong];
     }
 }
 ///再次播放
@@ -514,7 +627,8 @@
     [self updateLockedScreenMusic];
 }
 
-- (void)stopMusic{
+- (void)stopMusic
+{
     
 }
 - (void)seekToTime:(CGFloat)percent
@@ -526,10 +640,71 @@
     [self.player seekToTime:CMTimeMake(time, 1)];
     
 }
+#pragma mark - 列表操作
+- (void)setNumberOfPlay:(NSUInteger)number
+{
+   self.indexPathRow = number;
+   [self playSong];
 
+}
+- (void)removeSong:(NSUInteger)number
+{
+   if (self.indexPathRow == number) {
+      [self nextMusic];
+      self.indexPathRow--;
+   }
+   [self.playlist removeObjectAtIndex:number];
+   [LTLDataProcessing putModelObjectArray:self.playlist];
+}
+
+-(void)songExchangeAtIndex:(NSUInteger)idx1 withObjectAtIndex:(NSUInteger)idx2;
+{
+   [self.playlist exchangeObjectAtIndex:idx1 withObjectAtIndex:idx2];
+   
+   [self.playlist enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+      
+      XMTrack *model = obj;
+      
+      if (model.trackId == self.tracksVM.trackId) {
+         self.indexPathRow = idx;
+         
+//         if ([self.delegate respondsToSelector:@selector(changeMusic)]) {
+//            [self.delegate changeMusic];
+//         }
+         
+      }
+      
+   }];
+   
+   [LTLDataProcessing putModelObjectArray:self.playlist];
+   
+}
+///收藏
+- (BOOL)hasBeenFavoriteMusic
+{
+
+   BOOL hasBeen = [LTLDataProcessing hasBeenFavoriteMusic:self.tracksVM];
+   
+   return hasBeen;
+
+}
+///收藏
+- (void)delFavoriteMusic
+{
+   [LTLDataProcessing putModelObject:self.tracksVM];
+}
+///取消收藏
+- (void)setFavoriteMusic
+{
+   [LTLDataProcessing deleteObjectById:self.tracksVM];
+}
 #pragma mark - 锁屏时候的设置，效果需要在真机上才可以看到
-- (void)updateLockedScreenMusic{
-    
+- (void)updateLockedScreenMusic
+{
+   
+   if ([self.delegate respondsToSelector:@selector(changeMusic)]) {
+      [self.delegate changeMusic];
+   }
     // 播放信息中心
     MPNowPlayingInfoCenter *center = [MPNowPlayingInfoCenter defaultCenter];
     
@@ -559,14 +734,24 @@
     {
         [info setObject:[NSNumber numberWithFloat:1.0] forKey:MPNowPlayingInfoPropertyPlaybackRate];
     }
+   
+   NSURL *url = [NSURL URLWithString:self.tracksVM.coverUrlSmall];
+   
+//   if (!url) {
+//      url = [NSURL URLWithString:self.tracksVM.coverUrlSmall];
+//   }
     ///下载后图片
-    [[SDWebImageManager sharedManager] downloadImageWithURL:[NSURL URLWithString:self.tracksVM.coverUrlLarge] options:SDWebImageRetryFailed progress:^(NSInteger receivedSize, NSInteger expectedSize) {
+    [[SDWebImageManager sharedManager] downloadImageWithURL:url options:SDWebImageRetryFailed progress:^(NSInteger receivedSize, NSInteger expectedSize) {
         
     } completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, BOOL finished, NSURL *imageURL) {
-        // 设置图片
-        info[MPMediaItemPropertyArtwork] = [[MPMediaItemArtwork alloc] initWithImage:image];
-        // 切换播放信息
-        center.nowPlayingInfo = info;
+       
+       if (image) {
+          // 设置图片
+          info[MPMediaItemPropertyArtwork] = [[MPMediaItemArtwork alloc] initWithImage:image];
+          // 切换播放信息
+          center.nowPlayingInfo = info;
+       }
+       
     }];
     
     // 切换播放信息
@@ -631,8 +816,7 @@
     char *machine = malloc(size);
     sysctlbyname("hw.machine", machine, &size, NULL, 0);
     NSString *platform = [NSString stringWithCString:machine encoding:NSUTF8StringEncoding];
-    NSLog(@"iPhone Device%@",[self platformType:platform]);
-    
+    LTLLog(@"iPhone Device%@",[self platformType:platform]);
     free(machine);
 }
 

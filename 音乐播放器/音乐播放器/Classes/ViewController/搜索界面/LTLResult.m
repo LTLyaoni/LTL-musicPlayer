@@ -8,6 +8,8 @@
 
 #import "LTLResult.h"
 #import "PYSearch.h"
+#import "LTLuserInfo.h"
+#import "LTLSongViewController.h"
 #import "KPIndicatorView.h"
 ///专辑cell
 #import "LTLMoreSongsCell.h"
@@ -25,6 +27,8 @@
 @property (nonatomic,strong) NSMutableArray <XMTrack *> *track;
 //提示
 @property(nonatomic,strong) UILabel *label;
+
+@property(nonatomic,assign) NSUInteger page;
 
 @end
 
@@ -80,6 +84,18 @@ static NSString *trackID = @"TrackCell";
         _tableView.rowHeight = UITableViewAutomaticDimension;
         _tableView.estimatedRowHeight = 66;
         
+        
+        _tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
+            self.page = 0;
+            [_tableView.mj_footer resetNoMoreData];
+            [self dataAcquisitionDadt:nil];
+        }];
+        
+        _tableView.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingBlock:^{
+            [self dataAcquisitionDadt:nil];
+        }];
+        
+        
         [self.contentView addSubview:_tableView];
     }
     return _tableView;
@@ -102,7 +118,7 @@ static NSString *trackID = @"TrackCell";
 {
     if (self = [super initWithFrame:frame]) {
         
-        
+        self.page = 0;
         self.tag = 0;
     }
     return self;
@@ -131,7 +147,7 @@ static NSString *trackID = @"TrackCell";
             
             LTLMusicDetailCell *cell = [tableView dequeueReusableCellWithIdentifier:trackID forIndexPath:indexPath];
             
-            cell.TrackData = self.track[indexPath.row];
+            cell.trackData = self.track[indexPath.row];
             
             return cell;
             
@@ -150,6 +166,51 @@ static NSString *trackID = @"TrackCell";
         return nil;
     }
 }
+
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+
+    if (self.indexPath)
+    {
+        if (self.indexPath.section) {
+            
+            NSRange range = NSMakeRange(indexPath.row, self.track.count - indexPath.row);
+            NSArray *arrayL = [self.track subarrayWithRange:range];
+            
+            [self playNotification:[arrayL copy] serialNumber:0];
+            
+        }
+        else
+        {
+            
+             XMAlbum *model = self.album[indexPath.row];
+            LTLSongViewController *song = [[LTLSongViewController alloc]init];
+            song.XMAlbumModel = model;
+        
+            [[self viewController].navigationController pushViewController:song animated:YES];
+            
+        }
+        
+    }
+
+
+}
+-(void)playNotification:(NSMutableArray *)arrya serialNumber:(NSUInteger)serialNumber
+{
+    if (arrya.count != 0 ) {
+        
+        /// 当前播放信息
+        NSMutableDictionary *dic = [NSMutableDictionary dictionary];
+        LTLuserInfo *userInfo = [[LTLuserInfo alloc]init];
+        userInfo.serialNumber = serialNumber;
+        userInfo.songArray = [arrya copy];
+        dic[@"Play"] = userInfo;
+        ///发送播放通知
+        [[NSNotificationCenter defaultCenter] postNotificationName:LTLPlay object:nil userInfo:[dic copy]];
+    }
+    
+}
+
 
 #pragma mark - 处理
 ///处理
@@ -192,37 +253,62 @@ static NSString *trackID = @"TrackCell";
     [self.indicatorView startAnimating];
     self.indicatorView.hidden = NO;
     self.label.text =  @"正在为您搜索...";
-    
-    [LTLNetworkRequest searchtype:self.indexPath.section keyWord:self.searchText page:1 dimension:self.indexPath.row +2 dadt:^(NSArray<XMAlbum *> * _Nullable albumArray, NSArray<XMTrack *> * _Nullable trackArray, XMErrorModel * _Nullable error) {
-        
-        [self.album addObjectsFromArray:albumArray];
-        
-        [self.track addObjectsFromArray:trackArray];
-        
-        [self.indicatorView stopAnimating];
-        self.indicatorView.hidden = YES;
-        
-//        LTLLog(@"track %ld", trackArray.count);
-        
-        if (self.album.count ==0 && self.track.count == 0 ) {
-           
-            self.tableView.hidden = YES;
-            self.label.text = @"不好意思!乐库里没有您想要的!";
-            
-        } else {
-            self.label.hidden = YES;
-            self.tableView.hidden = NO;
-            [self.tableView reloadData];
-            
-        }
-        
+    [self dataAcquisitionDadt:^{
+        self.tableView.hidden = YES;
+        self.label.text = @"不好意思!乐库里没有您想要的!";
     }];
+    
 }
+
+///获取数据
+-(void)dataAcquisitionDadt:( nullable void (^)())LTL
+{
+    self.page++;
+    LTLLog(@"%ld",self.page);
+    [LTLNetworkRequest searchtype:self.indexPath.section keyWord:self.searchText page:self.page dimension:self.indexPath.row +2 dadt:^(NSArray<XMAlbum *> * _Nullable albumArray, NSArray<XMTrack *> * _Nullable trackArray, XMErrorModel * _Nullable error)
+     {
+         if (!error) {
+             
+             if (self.page == 1) {
+                 [self.album removeAllObjects];
+                 [self.track removeAllObjects];
+             }
+             [self.album addObjectsFromArray:albumArray];
+             
+             [self.track addObjectsFromArray:trackArray];
+             
+             [self.indicatorView stopAnimating];
+             self.indicatorView.hidden = YES;
+             
+             
+             if (albumArray.count ==0 && trackArray.count == 0 ) {
+                 
+                 if (LTL) {
+                     LTL();
+                 }
+                 self.page--;
+                 [self.tableView.mj_footer endRefreshingWithNoMoreData];
+             } else {
+                 self.label.hidden = YES;
+                 self.tableView.hidden = NO;
+                 [self.tableView reloadData];
+                 [self.tableView.mj_footer endRefreshing];
+                 [self.tableView.mj_header endRefreshing];
+                 
+             }
+             
+         }
+         
+     }];
+}
+
 -(void)removeData
 {
+    self.page = 0;
     self.searchText = nil;
     self.indexPath = nil;
     [self.album removeAllObjects];
+    [self.track removeAllObjects];
     self.tableView.hidden = YES;
     [self.tableView reloadData];
 }

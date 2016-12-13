@@ -12,7 +12,7 @@
 ///渐变程度  0~1 之间
 @property (nonatomic,assign) CGFloat gradientDegree;
 ///渐变文本
-@property(nonatomic,strong) LTLLabel* LTLlabel;
+@property(nonatomic,strong,readonly) LTLLabel* LTLlabel;
 ///是否进行渐变文本
 @property (nonatomic,assign , getter=isGradient) BOOL gradient;
 

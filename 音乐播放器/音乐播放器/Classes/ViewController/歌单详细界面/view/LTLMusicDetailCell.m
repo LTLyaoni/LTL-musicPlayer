@@ -7,8 +7,11 @@
 //
 
 #import "LTLMusicDetailCell.h"
+#import "LTLDownloadIcon.h"
+#import "LTLalreadyDownload.h"
 
-@interface LTLMusicDetailCell ()
+
+@interface LTLMusicDetailCell ()<SDKDownloadMgrDelegate>
 /** 音乐封面图 */
 @property(nonatomic,strong) UIImageView *coverIV;
 /** 题目标签 */
@@ -27,11 +30,27 @@
 @property(nonatomic,strong) UILabel *durationLb;
 /** 下载按钮 */
 @property(nonatomic,strong) UIButton *downloadBtn;
+///下载管理
+@property(nonatomic,strong) XMSDKDownloadManager *download;
+
 
 @end
 
 @implementation LTLMusicDetailCell
 #pragma mark - 控件懒加载
+-(XMSDKDownloadManager *)download
+{
+    if (!_download) {
+        _download = [XMSDKDownloadManager sharedSDKDownloadManager];
+        
+        [_download getDownloadedTracks];
+        
+//        _download.sdkDownloadMgrDelegate = self;
+    }
+    return _download;
+}
+
+
 /** 音乐封面图 */
 - (UIImageView *)coverIV {
     if(_coverIV == nil) {
@@ -203,8 +222,20 @@
 - (UIButton *)downloadBtn {
     if(_downloadBtn == nil) {
         _downloadBtn = [[UIButton alloc]init];
-        _downloadBtn.backgroundColor = [UIColor blueColor];
+//        _downloadBtn.backgroundColor = [UIColor blueColor];
+        
+        UIImage *downloadIcon = [LTLDownloadIcon imageOfDownloadWithSize:CGSizeMake(25, 25) resizing:LTLDownloadIconResizingBehaviorAspectFit];
+        
+        [_downloadBtn setImage:downloadIcon forState:UIControlStateNormal];
+//        [_downloadBtn setTitle:@"下载" forState:UIControlStateNormal];
+//        
+        _downloadBtn.titleLabel.font = [UIFont systemFontOfSize:12];
+        [_downloadBtn setTitleColor:[LTLThemeManager sharedManager].themeColor forState:UIControlStateNormal];
+        
         [_downloadBtn setBackgroundImage:[UIImage imageNamed:@"cell_download"] forState:UIControlStateNormal];
+        
+        [_downloadBtn addTarget:self action:@selector(download:) forControlEvents:UIControlEventTouchUpInside];
+        
         [self.contentView addSubview:_downloadBtn];
         [_downloadBtn mas_makeConstraints:^(MASConstraintMaker *make) {
             make.bottom.equalTo(self.mas_bottom).offset(-15);
@@ -214,12 +245,63 @@
     }
     return _downloadBtn;
 }
+
+-(void)download:(UIButton*)btn
+{
+
+    self.download.sdkDownloadMgrDelegate = self ;
+    
+    int downloadState = [self.download downloadSingleTrack:self.trackData immediately:YES];
+    
+    LTLLog(@"%d",downloadState);
+    
+}
+
+/**
+ *   下载进度更新时被调用
+ */
+- (void)XMTrack:(XMTrack *)track updateDownloadedPercent:(double)downloadedPercent
+{
+
+    
+    if (track.trackId == self.trackData.trackId) {
+        
+        LTLLog(@"LTL %f",downloadedPercent);
+        
+        [self.downloadBtn setImage:nil forState:UIControlStateNormal];
+        
+        [self.downloadBtn setTitle:[NSString stringWithFormat:@"%d%%",(int)(downloadedPercent*100)] forState:UIControlStateNormal];
+       
+        
+    }
+
+}
+
+/**
+ *   下载完成时被调用
+ */
+- (void)XMTrackDownloadDidFinished:(XMTrack *)track
+{
+    if (track.trackId == self.trackData.trackId) {
+        
+        LTLLog(@"下载完成");
+        UIImage *downloadImage = [LTLalreadyDownload imageOfAlreadyDownloadWithSize:CGSizeMake(25, 25) resizing:LTLalreadyDownloadResizingBehaviorAspectFit];
+        
+        [self.downloadBtn setImage:downloadImage forState:UIControlStateNormal];
+        [self.downloadBtn setTitle:nil forState:UIControlStateNormal];
+        self.downloadBtn.enabled = NO;
+        
+    }
+
+}
+
+
 #pragma mark - cell 初始化
 //cell 初始化
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier{
     if (self=[super initWithStyle:style reuseIdentifier:reuseIdentifier]) {
         //为了触发下载按钮的懒加载
-        self.downloadBtn.hidden = NO;
+//        self.downloadBtn.hidden = NO;
 //        self.contentView.backgroundColor = [UIColor blueColor];
         //设置cell被选中后的背景色
         UIView *view=[UIView new];
@@ -227,24 +309,56 @@
         self.selectedBackgroundView=view;
         //分割线距离左侧空间
         self.separatorInset=UIEdgeInsetsMake(0, 76, 0, 0);
+        
+        [self.download getDownloadedTracks];
+        
     }
     return self;
 }
 #pragma mark - 数据处理
 ///数据处理
--(void)setTrackData:(XMTrack *)TrackData
+-(void)setTrackData:(XMTrack *)trackData
 {
-    _TrackData = TrackData;
-    NSURL *url = [NSURL URLWithString:_TrackData.coverUrlMiddle];
+    _trackData = trackData;
+    NSURL *url = [NSURL URLWithString:_trackData.coverUrlSmall];
     [self.coverIV sd_setImageWithURL:url placeholderImage:[UIImage imageNamed:@"LTL"]];
-    self.titleLb.text = _TrackData.trackTitle;
-    self.sourceLb.text = _TrackData.announcer.nickname;
-    self.playCountLb.text = _TrackData.playNumber;
-    self.updateTimeLb.text = _TrackData.addTime;
-    self.favorCountLb.text = [NSString stringWithFormat:@"%ld",_TrackData.favoriteCount];
-    self.commentCountLb.text = [NSString stringWithFormat:@"%ld",_TrackData.commentCount];
-    self.durationLb.text = _TrackData.playTime;
+    self.titleLb.text = _trackData.trackTitle;
+    self.sourceLb.text = _trackData.announcer.nickname;
+    self.playCountLb.text = _trackData.playNumber;
+    self.updateTimeLb.text = _trackData.addTime;
+    self.favorCountLb.text = [NSString stringWithFormat:@"%ld",_trackData.favoriteCount];
+    self.commentCountLb.text = [NSString stringWithFormat:@"%ld",_trackData.commentCount];
+    self.durationLb.text = _trackData.playTime;
+    
+    self.downloadBtn.enabled = _trackData.canDownload;
+    
+    
+    TrackDownloadStatus *statu = [self.download getSingleTrackDownloadStatus:_trackData.trackId];
+    
+//    [statu mj_keyValues];
+    
+    LTLLog(@"%@",statu);
+    
+    if (statu) {
+//        [self.downloadBtn setTitle:@"已下载" forState:UIControlStateNormal];
+        UIImage *downloadImage = [LTLalreadyDownload imageOfAlreadyDownloadWithSize:CGSizeMake(25, 25) resizing:LTLalreadyDownloadResizingBehaviorAspectFit];
+        
+        [self.downloadBtn setImage:downloadImage forState:UIControlStateNormal];
+        
+        self.downloadBtn.enabled = NO;
+    }
+    else
+    {
+        UIImage *downloadImage = [LTLDownloadIcon imageOfDownloadWithSize:CGSizeMake(25, 25) resizing:LTLDownloadIconResizingBehaviorAspectFit];
+        
+        [self.downloadBtn setImage:downloadImage forState:UIControlStateNormal];
+    
+    }
+    
+    LTLLog(@"LTL %@",[self.download getSingleTrackDownloadStatus:_trackData.trackId]);
     
 }
+
+
 
 @end
